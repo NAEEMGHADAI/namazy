@@ -15,13 +15,15 @@ if (process.env.NODE_ENV === "production") {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <BrowserRouter>
-    <ContextProvider>
-      <Routes>
-        <Route path="/*" element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Routes>
-    </ContextProvider>
-  </BrowserRouter>
+  <section className="flex relative bg-main-dark-bg min-h-screen">
+    <BrowserRouter>
+      <ContextProvider>
+        <Routes>
+          <Route path="/*" element={<App />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Routes>
+      </ContextProvider>
+    </BrowserRouter>
+  </section>
 );

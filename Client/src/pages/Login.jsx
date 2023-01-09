@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import useContent from "../hooks/useContent";
 import useInput from "../hooks/useInput";
+import useLocalStorage from "../hooks/useLocalStorage";
+// import useLogin from "../hooks/useLogin";
 import useToggle from "../hooks/useToggle";
 
 const LOGIN_URL = "/auth";
@@ -21,6 +23,8 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const [check, toggleCheck] = useToggle("persist", false);
+  const [isLogin, setLogin] = useLocalStorage("isLogin", false);
+  console.log(isLogin, setLogin);
 
   useEffect(() => {
     userRef.current.focus();
@@ -47,6 +51,9 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
 
       setAuth({ user, accessToken });
+      console.log("setLogin reached", isLogin);
+
+      setLogin(true);
 
       // setUser("");
       resetUser();
@@ -76,53 +83,56 @@ const Login = () => {
   // }, [persist]);
 
   return (
-    <section>
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-
+    <section className="flex flex-col flex-wrap  justify-center content-center w-full">
       <form
         onSubmit={handleSubmit}
-        className={`bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
-          darkMode ? "text-white bg-gray-800" : ""
-        }`}
+        className={`bg-secondary-dark-bg h-fit  rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
+          darkMode ? "text-white" : ""
+        }  `}
       >
-        <h1 className="text-2xl font-bold mb-4">Welcome Back!</h1>
-        <h2 className="text-lg font-medium mb-4">
-          Sign in to continue to your account
-        </h2>
-        <label htmlFor="username" className="block text-sm font-bold mb-2">
-          Username:
-        </label>
-        <input
-          type="text"
-          id="username"
-          ref={userRef}
-          autoComplete="off"
-          // onChange={(e) => setUser(e.target.value)}
-          // value={user}
-          {...userAttributes}
-          className="shadow appearance-none border text-black rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        />
-        <label htmlFor="password" className="block text-sm font-bold mb-2">
-          Password:
-        </label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e) => setPwd(e.target.value)}
-          value={pwd}
-          className="shadow appearance-none border text-black rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Sign In
-        </button>
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
+        <h1 className="text-3xl font-bold mb-4 text-center">Welcome Back!</h1>
+        <h6 className=" text-sm font-medium text-slate-500 text-center mb-4">
+          Login to Continue
+        </h6>
+        <div className="mb-6">
+          <label htmlFor="username" className="block text-sm font-bold mb-2">
+            Username:
+          </label>
+          <input
+            type="text"
+            id="username"
+            ref={userRef}
+            autoComplete="off"
+            {...userAttributes}
+            className="shadow appearance-none border text-black rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="password" className="block text-sm font-bold mb-2">
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            onChange={(e) => setPwd(e.target.value)}
+            value={pwd}
+            className="shadow appearance-none border text-black rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
+        <div className="text-center mb-6">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline">
+            Sign In
+          </button>
+        </div>
         <div className="mb-6">
           <input
             type="checkbox"
@@ -131,17 +141,17 @@ const Login = () => {
             checked={check}
             className="ml-2 leading-tight"
           />
-          <label htmlFor="persist" className="block text-sm font-bold mb-2">
+          <label htmlFor="persist" className="ml-2 text-sm font-bold mb-2">
             Trust This Device
           </label>
         </div>
+        <p>
+          Need an Account?
+          <span className="line ml-2 text-slate-400">
+            <Link to="/register">Sign Up</Link>
+          </span>
+        </p>
       </form>
-      <p>
-        Need an Account? <br />
-        <span className="line">
-          <Link to="/register">Sign Up</Link>
-        </span>
-      </p>
     </section>
   );
 };

@@ -9,10 +9,11 @@ const RequireAuth = ({ allowedRoles }) => {
   const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
 
   const roles = decoded?.UserInfo?.roles || [];
+  console.log(allowedRoles);
 
   return roles?.find((role) => allowedRoles.includes(role)) ? (
     <Outlet />
-  ) : auth?.user ? (
+  ) : auth?.accessToken ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
