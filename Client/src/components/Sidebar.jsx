@@ -31,7 +31,7 @@ export default function Sidebar() {
 
   const filterNav = () => {
     let nav = links.filter((ele) => {
-      if (auth?.user) {
+      if (auth?.accessToken) {
         return true;
       } else {
         if (!ele.isProtected) {

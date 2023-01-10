@@ -49,12 +49,12 @@ function App() {
               {/* Public Routes */}
 
               <Route path="unauthorized" element={<Unauthorized />} />
-              <Route path="/" element={<Home />} />
 
               {/* we want to protect these routes */}
               <Route element={<PersistLogin />}>
+                <Route path="/" element={<Home />} />
                 <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-                  <Route path="/linkpage" element={<LinkPage />} />
+                  <Route path="linkpage" element={<LinkPage />} />
                 </Route>
                 <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
                   <Route path="editor" element={<Editor />} />

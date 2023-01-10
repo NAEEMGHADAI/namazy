@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <section className="flex relative bg-main-dark-bg min-h-screen">
+  <section className="bg-main-dark-bg min-h-screen overflow-hidden">
     <BrowserRouter>
       <ContextProvider>
         <Routes>

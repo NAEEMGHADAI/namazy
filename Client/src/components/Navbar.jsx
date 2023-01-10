@@ -41,7 +41,7 @@ const Navbar = () => {
     <div className="flex justify-between text-white pt-4 pb-4 sm:pt-10 pl-5 pr-5 sm:pb-5 md:ml-6 md:mr-6 relative">
       <img src={logo2} alt="" width="50" height="50" />
 
-      {auth?.user ? (
+      {auth?.accessToken ? (
         <>
           <>
             <button
@@ -76,10 +76,10 @@ const Navbar = () => {
   ) : (
     screenSize >= 1000 && (
       <>
-        <div className="flex justify-between text-white pt-4 pb-4 sm:pt-10 pl-5 pr-5 sm:pb-5 md:ml-6 md:mr-6 relative">
+        <div className="flex justify-between w-full text-white pt-4 pb-4 sm:pt-10 pl-5 pr-5 sm:pb-5 md:ml-6 md:mr-6 relative">
           <h1 className="text-2xl capitalize">Dashboard</h1>
-          {console.log(auth)}
-          {auth?.user ? (
+
+          {auth?.accessToken ? (
             <>
               <button
                 className="bg-blue-600 text-white rounded-xl hover:bg-blue-800 w-full mr-8 ml-8 md:w-36 md:pt-3 md:pb-3 relative"
