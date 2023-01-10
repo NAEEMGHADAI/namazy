@@ -12,6 +12,7 @@ import Unauthorized from "./pages/Unauthorized";
 import useContent from "./hooks/useContent";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import PrayerLimit from "./pages/PrayerLimit";
 
 // import Register from "./pages/Register";
 
@@ -47,12 +48,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               {/* Public Routes */}
-
-              <Route path="unauthorized" element={<Unauthorized />} />
-
               {/* we want to protect these routes */}
               <Route element={<PersistLogin />}>
                 <Route path="/" element={<Home />} />
+                <Route path="unauthorized" element={<Unauthorized />} />
+                <Route path="prayerlimit" element={<PrayerLimit />} />
                 <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                   <Route path="linkpage" element={<LinkPage />} />
                 </Route>
