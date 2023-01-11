@@ -40,6 +40,29 @@ export const links = [
   },
 ];
 
+export const country = [
+  {
+    id: 1,
+    name: "India",
+  },
+  {
+    id: 2,
+    name: "UK",
+  },
+  {
+    id: 3,
+    name: "Austratia",
+  },
+  {
+    id: 4,
+    name: "USA",
+  },
+  {
+    id: 5,
+    name: "Russia",
+  },
+];
+
 export const city = [
   {
     id: 1,
@@ -73,16 +96,40 @@ export const city = [
     id: 8,
     name: "Kolkatta",
   },
+  {
+    id: 9,
+    name: "Surat",
+  },
+  {
+    id: 10,
+    name: "Jaipur",
+  },
+  {
+    id: 11,
+    name: "London",
+  },
+  {
+    id: 12,
+    name: "Sydney",
+  },
+  {
+    id: 13,
+    name: "New York",
+  },
+  {
+    id: 14,
+    name: "Moscow",
+  },
 ];
 
 export const method = [
   {
-    id: 0,
-    name: "Shia Ithna-Ansari",
-  },
-  {
     id: 1,
     name: "University of Islamic Sciences, Karachi",
+  },
+  {
+    id: 0,
+    name: "Shia Ithna-Ansari",
   },
   {
     id: 2,
@@ -135,5 +182,16 @@ export const method = [
   {
     id: 14,
     name: "Spiritual Administration of Muslims of Russia",
+  },
+];
+
+export const school = [
+  {
+    id: 1,
+    name: "Hanafi",
+  },
+  {
+    id: 0,
+    name: "Shafi",
   },
 ];

@@ -44,7 +44,7 @@ export default function Sidebar() {
     return nav;
   };
   return (
-    <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 z-50 relative">
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
