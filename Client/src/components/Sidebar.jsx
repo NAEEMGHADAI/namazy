@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-
+import jwtDecode from "jwt-decode";
 import { AiOutlineClose } from "react-icons/ai";
 import { links } from "../data/dummy";
 import logo from "../data/logo.PNG";
@@ -18,7 +18,7 @@ export default function Sidebar() {
   const normalLink =
     "flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-200 hover:bg-active-link-bg mt-2 mb-2";
 
-  const handleCloseSideBar = (title) => {
+  const handleCloseSideBar = () => {
     if (activeMenu && screenSize <= 1000) {
       setActiveMenu((prev) => {
         return !prev;
@@ -30,9 +30,18 @@ export default function Sidebar() {
   };
 
   const filterNav = () => {
+    console.log("sidebar accesstoken: ", auth?.accessToken);
+    const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
+    const roles = decoded?.UserInfo?.roles || [];
+    console.log(roles);
+
     let nav = links.filter((ele) => {
       if (auth?.accessToken) {
-        return true;
+        if (roles?.find((role) => ele.roles.includes(role))) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         if (!ele.isProtected) {
           return true;
