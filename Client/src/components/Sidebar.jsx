@@ -33,7 +33,7 @@ export default function Sidebar() {
     console.log("sidebar accesstoken: ", auth?.accessToken);
     const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
     const roles = decoded?.UserInfo?.roles || [];
-    console.log(roles);
+    console.log(decoded, roles);
 
     let nav = links.filter((ele) => {
       if (auth?.accessToken) {

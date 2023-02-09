@@ -1,5 +1,6 @@
-import { FaMap, FaPray, FaUserCheck } from "react-icons/fa";
-import { RiAdminFill, RiLinksFill } from "react-icons/ri";
+import { FaMap, FaPray } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
 
 export const links = [
   {
@@ -17,6 +18,13 @@ export const links = [
     roles: [1000],
   },
   {
+    title: "Edit Namaz Time",
+    link: "edit",
+    icon: <FiEdit />,
+    isProtected: true,
+    roles: [1000],
+  },
+  {
     title: "Map",
     link: "map",
     icon: <FaMap />,
@@ -31,18 +39,11 @@ export const links = [
     roles: [5150],
   },
   {
-    title: "Editor",
-    link: "editor",
-    icon: <FaUserCheck />,
+    title: "Add New User",
+    link: "register",
+    icon: <RiAdminFill />,
     isProtected: true,
-    roles: [2000],
-  },
-  {
-    title: "Linkpage",
-    link: "linkpage",
-    icon: <RiLinksFill />,
-    isProtected: true,
-    roles: [2000, 5150],
+    roles: [5150],
   },
 ];
 

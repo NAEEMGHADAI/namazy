@@ -173,7 +173,7 @@ const Register = () => {
                   className={
                     userFocus && user && !validName
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "absolute -left-full"
+                      : "hidden"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
@@ -214,7 +214,7 @@ const Register = () => {
                   className={
                     pwdFocus && !validPwd
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "absolute -left-full"
+                      : "hidden"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />

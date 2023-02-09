@@ -6,7 +6,6 @@ import { ContextProvider } from "./context/ContextProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 
 if (process.env.NODE_ENV === "production") {
   disableReactDevTools();
@@ -21,7 +20,6 @@ root.render(
         <Routes>
           <Route path="/*" element={<App />} />
           <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
         </Routes>
       </ContextProvider>
     </BrowserRouter>

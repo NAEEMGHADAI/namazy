@@ -3,22 +3,19 @@ import Layout from "./components/Layout";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import Admin from "./pages/Admin";
-import Editor from "./pages/Editor";
 import Home from "./pages/Home";
-import LinkPage from "./pages/LinkPage";
-import Lounge from "./pages/Lounge";
 import Missing from "./pages/Missing";
 import Unauthorized from "./pages/Unauthorized";
 import useContent from "./hooks/useContent";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import PrayerLimit from "./pages/PrayerLimit";
+import Register from "./pages/Register";
 
 // import Register from "./pages/Register";
 
 const ROLES = {
   User: 1000,
-  Editor: 2000,
   Admin: 5150,
 };
 
@@ -53,21 +50,10 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="unauthorized" element={<Unauthorized />} />
                 <Route path="prayerlimit" element={<PrayerLimit />} />
-                <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-                  <Route path="linkpage" element={<LinkPage />} />
-                </Route>
-                <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
-                  <Route path="editor" element={<Editor />} />
-                </Route>
+
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="admin" element={<Admin />} />
-                </Route>
-                <Route
-                  element={
-                    <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
-                  }
-                >
-                  <Route path="lounge" element={<Lounge />} />
+                  <Route path="register" element={<Register />} />
                 </Route>
               </Route>
               {/* catch all */}
