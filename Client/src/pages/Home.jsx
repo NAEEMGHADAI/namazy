@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Pagination from "../components/Pagination";
@@ -10,9 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     const reqApi = async () => {
-      let response = await axios(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true"
-      );
+      let response = await axios("/namaztime");
       console.log(response.data);
       setData(response.data);
     };
@@ -55,9 +53,80 @@ const Home = () => {
         </>
       ) : (
         <section className="text-white">
-          {currentPosts.map((ele) => (
-            <p key={ele.id}>{ele.name}</p>
-          ))}
+          <section className=" grid sm:grid-cols-2 gap-3 content-center">
+            {currentPosts.map((ele) => (
+              <section
+                key={ele._id}
+                className="mx-10 overflow-x-auto shadow-md rounded-lg"
+              >
+                <table class="w-full text-sm text-left border-separate border-spacing-2 border border-slate-500 text-gray-400">
+                  <tbody>
+                    <tr class=" border-b bg-secondary-dark-bg border-gray-700">
+                      <td class="px-6 py-4 text-white text-center" colSpan={2}>
+                        <h2>{ele.mosqueName}</h2>
+                      </td>
+                    </tr>
+
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Fajr
+                      </th>
+                      <td class="px-6 py-4">{ele.fajr}</td>
+                    </tr>
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Zuhr
+                      </th>
+                      <td class="px-6 py-4">{ele.zuhr}</td>
+                    </tr>
+
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Asr
+                      </th>
+                      <td class="px-6 py-4">{ele.asr}</td>
+                    </tr>
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Magrib
+                      </th>
+                      <td class="px-6 py-4">{ele.magrib}</td>
+                    </tr>
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Isha
+                      </th>
+                      <td class="px-6 py-4">{ele.isha}</td>
+                    </tr>
+                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      >
+                        Juma
+                      </th>
+                      <td class="px-6 py-4">{ele.juma}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            ))}
+          </section>
           <Pagination
             totalPosts={data.length}
             postsPerPage={postsPerPage}

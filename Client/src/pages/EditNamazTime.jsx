@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import jwtDecode from "jwt-decode";
 import useContent from "../hooks/useContent";
+import { useNavigate } from "react-router-dom";
 
 const NEW_ENTRY_URL = "/namazTime";
 
@@ -23,6 +24,7 @@ const EditNamazTime = () => {
 
   const { auth } = useContent();
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     nameRef.current.focus();
@@ -108,6 +110,7 @@ const EditNamazTime = () => {
         setSuccess("Successfully Updated");
         console.log(JSON.stringify(response?.data));
       }
+      navigate("/", { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

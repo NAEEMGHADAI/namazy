@@ -13,112 +13,88 @@ const Pagination = ({
   }
   return (
     <div>
-      <div class="flex justify-center w-full px-4 py-3 sm:px-6">
-        <div class="flex flex-1 justify-between sm:hidden">
-          <button
-            onClick={() => {
-              if (currentPage > 1) {
-                setCurrentPage(currentPage - 1);
-              }
-            }}
-            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => {
-              if (currentPage < Math.ceil(totalPosts / postsPerPage)) {
-                setCurrentPage(currentPage + 1);
-              }
-            }}
-            class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Next
-          </button>
-        </div>
-        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <p class="text-sm text-white">
-              Showing
-              <span class="font-medium">
-                {currentPage * postsPerPage - postsPerPage + 1}
-              </span>
-              to
-              <span class="font-medium">{currentPage * postsPerPage}</span>
-              of
-              <span class="font-medium">{totalPosts}</span>
-              results
-            </p>
-          </div>
-          <div>
-            <nav
-              class="isolate inline-flex -space-x-px rounded-md shadow-sm"
-              aria-label="Pagination"
+      <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
+        <div className="lg:w-3/5 w-full  flex items-center justify-between border-t border-gray-200">
+          <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+            <svg
+              width="14"
+              height="8"
+              viewBox="0 0 14 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <button
-                onClick={() => {
-                  if (currentPage > 1) {
-                    setCurrentPage(currentPage - 1);
+              <path
+                d="M1.1665 4H12.8332"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M1.1665 4L4.49984 7.33333"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M1.1665 4.00002L4.49984 0.666687"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
+          </div>
+          <div className="sm:flex hidden">
+            {pages.map((page, i) => (
+              <>
+                <p
+                  key={i}
+                  onClick={() => setCurrentPage(page)}
+                  className={
+                    page === currentPage
+                      ? "text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2"
+                      : "text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 mr-4 px-2"
                   }
-                }}
-                class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-              >
-                <span class="sr-only">Previous</span>
-
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-              {pages.map((page, i) => (
-                <>
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      page === currentPage
-                        ? "relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
-                        : "relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex"
-                    }
-                  >
-                    {page}
-                  </button>
-                </>
-              ))}
-              <button
-                onClick={() => {
-                  if (currentPage < Math.ceil(totalPosts / postsPerPage)) {
-                    setCurrentPage(currentPage + 1);
-                  }
-                }}
-                class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-              >
-                <span class="sr-only">Next</span>
-
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </nav>
+                  {page}
+                </p>
+              </>
+            ))}
+          </div>
+          <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+            <p className="text-sm font-medium leading-none mr-3">Next</p>
+            <svg
+              width="14"
+              height="8"
+              viewBox="0 0 14 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.1665 4H12.8332"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9.5 7.33333L12.8333 4"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9.5 0.666687L12.8333 4.00002"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
         </div>
       </div>

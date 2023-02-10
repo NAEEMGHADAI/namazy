@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  // useLocation,
+  useNavigate,
+} from "react-router-dom";
 import axios from "../api/axios";
 import useContent from "../hooks/useContent";
 import useInput from "../hooks/useInput";
@@ -12,8 +16,8 @@ const Login = () => {
   const { setAuth, darkMode } = useContent();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const errRef = useRef();
@@ -59,7 +63,7 @@ const Login = () => {
       resetUser();
       setPwd("");
       // setSuccess(true);
-      navigate(from, { replace: true });
+      navigate("/edit", { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
