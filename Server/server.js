@@ -8,6 +8,7 @@ const errorHandler = require("./middleware/errorHandler");
 const root = require("./routes/root");
 const employees = require("./routes/api/employees");
 const users = require("./routes/api/users");
+const namazTime = require("./routes/api/namazTime");
 const register = require("./routes/register");
 const auth = require("./routes/auth");
 const refresh = require("./routes/refresh");
@@ -55,6 +56,7 @@ app.use("/logout", logout);
 
 app.use("/employees", employees);
 app.use("/users", users);
+app.use("/namaztime", namazTime);
 
 app.all("*", (req, res) => {
   res.status(404);

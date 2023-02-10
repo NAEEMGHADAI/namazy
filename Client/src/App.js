@@ -11,6 +11,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import PrayerLimit from "./pages/PrayerLimit";
 import Register from "./pages/Register";
+import EditNamazTime from "./pages/EditNamazTime";
 
 // import Register from "./pages/Register";
 
@@ -54,6 +55,13 @@ function App() {
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="admin" element={<Admin />} />
                   <Route path="register" element={<Register />} />
+                </Route>
+                <Route
+                  element={
+                    <RequireAuth allowedRoles={[ROLES.Admin, ROLES.User]} />
+                  }
+                >
+                  <Route path="edit" element={<EditNamazTime />} />
                 </Route>
               </Route>
               {/* catch all */}
