@@ -15,7 +15,15 @@ const Pagination = ({
     <div>
       <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
         <div className="lg:w-4/5 w-full  flex items-center justify-between border-t border-gray-200">
-          <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+          <div
+            className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+            onClick={() => {
+              if (currentPage === 1) {
+                return;
+              }
+              setCurrentPage(currentPage - 1);
+            }}
+          >
             <svg
               width="14"
               height="8"
@@ -64,7 +72,15 @@ const Pagination = ({
               </>
             ))}
           </div>
-          <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+          <div
+            className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+            onClick={() => {
+              if (currentPage === pages.length) {
+                return;
+              }
+              setCurrentPage(currentPage + 1);
+            }}
+          >
             <p className="text-sm font-medium leading-none mr-3">Next</p>
             <svg
               width="14"
