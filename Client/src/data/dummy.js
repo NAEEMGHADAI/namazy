@@ -24,13 +24,13 @@ export const links = [
     isProtected: true,
     roles: [1000],
   },
-  {
-    title: "Map",
-    link: "map",
-    icon: <FaMap />,
-    isProtected: false,
-    roles: [1000],
-  },
+  // {
+  //   title: "Map",
+  //   link: "map",
+  //   icon: <FaMap />,
+  //   isProtected: false,
+  //   roles: [1000],
+  // },
   {
     title: "Admin",
     link: "admin",

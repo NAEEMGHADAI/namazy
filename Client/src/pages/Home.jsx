@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import Pagination from "../components/Pagination";
 
 const Home = () => {
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
 
@@ -17,12 +19,32 @@ const Home = () => {
     reqApi();
   }, []);
 
+  useEffect(() => {
+    let timer;
+    if (search && data) {
+      timer = setTimeout(() => {
+        setFilteredData(
+          data.filter((item) =>
+            item.mosqueName.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }, 500);
+    } else {
+      setFilteredData(undefined);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [data, search]);
+
   let lastPostIndex = currentPage * postsPerPage;
   let firstPostIndex = lastPostIndex - postsPerPage;
-  console.log(data);
+  console.log(data, filteredData);
   let currentPosts;
-  if (data) {
+  if (!filteredData) {
     currentPosts = data.slice(firstPostIndex, lastPostIndex);
+  } else {
+    currentPosts = filteredData.slice(firstPostIndex, lastPostIndex);
   }
 
   return (
@@ -53,86 +75,114 @@ const Home = () => {
         </>
       ) : (
         <section className="text-white">
-          <section className=" grid sm:grid-cols-2 gap-3 content-center">
-            {currentPosts.map((ele) => (
-              <section
-                key={ele._id}
-                className="mx-10 overflow-x-auto shadow-md rounded-lg"
+          <div className="flex justify-end mr-10 mb-4">
+            <div class="flex border-b w-4/5 sm:w-auto border-white py-2">
+              <input
+                class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+                type="text"
+                placeholder="Mosque name..."
+                aria-label="Full name"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              {/* <button
+                class="flex-shrink-0 border-transparent border-4 text-white hover:text-blue-500 text-sm py-1 px-2 rounded"
+                type="button"
               >
-                <table class="w-full text-sm text-left border-separate border-spacing-2 border border-slate-500 text-gray-400">
-                  <tbody>
-                    <tr class=" border-b bg-secondary-dark-bg border-gray-700">
-                      <td class="px-6 py-4 text-white text-center" colSpan={2}>
-                        <h2>{ele.mosqueName}</h2>
-                      </td>
-                    </tr>
+                Search
+              </button> */}
+            </div>
+          </div>
 
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Fajr
-                      </th>
-                      <td class="px-6 py-4">{ele.fajr}</td>
-                    </tr>
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Zuhr
-                      </th>
-                      <td class="px-6 py-4">{ele.zuhr}</td>
-                    </tr>
+          {currentPosts.length === 0 ? (
+            <h1 className="text-center">No Mosque found</h1>
+          ) : (
+            <section>
+              <section className=" grid sm:grid-cols-2 gap-3 content-center">
+                {currentPosts.map((ele) => (
+                  <section
+                    key={ele._id}
+                    className="sm:mx-10 mx-5 overflow-x-auto shadow-md rounded-lg"
+                  >
+                    <table class="w-full text-sm text-left border-separate border-spacing-2 border border-slate-500 text-gray-400">
+                      <tbody>
+                        <tr class=" border-b bg-secondary-dark-bg border-gray-700">
+                          <td
+                            class="px-6 py-4 text-white text-center"
+                            colSpan={2}
+                          >
+                            <h2>{ele.mosqueName}</h2>
+                          </td>
+                        </tr>
 
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Asr
-                      </th>
-                      <td class="px-6 py-4">{ele.asr}</td>
-                    </tr>
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Magrib
-                      </th>
-                      <td class="px-6 py-4">{ele.magrib}</td>
-                    </tr>
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Isha
-                      </th>
-                      <td class="px-6 py-4">{ele.isha}</td>
-                    </tr>
-                    <tr class="border-b bg-secondary-dark-bg border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium  whitespace-nowrap text-white"
-                      >
-                        Juma
-                      </th>
-                      <td class="px-6 py-4">{ele.juma}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Fajr
+                          </th>
+                          <td class="px-6 py-4">{ele.fajr}</td>
+                        </tr>
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Zuhr
+                          </th>
+                          <td class="px-6 py-4">{ele.zuhr}</td>
+                        </tr>
+
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Asr
+                          </th>
+                          <td class="px-6 py-4">{ele.asr}</td>
+                        </tr>
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Magrib
+                          </th>
+                          <td class="px-6 py-4">{ele.magrib}</td>
+                        </tr>
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Isha
+                          </th>
+                          <td class="px-6 py-4">{ele.isha}</td>
+                        </tr>
+                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Juma
+                          </th>
+                          <td class="px-6 py-4">{ele.juma}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </section>
+                ))}
               </section>
-            ))}
-          </section>
-          <Pagination
-            totalPosts={data.length}
-            postsPerPage={postsPerPage}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-          />
+              <Pagination
+                totalPosts={data.length}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
+            </section>
+          )}
         </section>
       )}
     </section>
