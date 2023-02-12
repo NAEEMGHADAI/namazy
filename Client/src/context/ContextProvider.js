@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const StateContext = createContext({});
 export const ContextProvider = ({ children }) => {
@@ -6,6 +7,7 @@ export const ContextProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(true);
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
+  const [bookmark, setBookmark] = useLocalStorage("bookmark", []);
   return (
     <StateContext.Provider
       value={{
@@ -17,6 +19,8 @@ export const ContextProvider = ({ children }) => {
         setActiveMenu,
         screenSize,
         setScreenSize,
+        bookmark,
+        setBookmark,
       }}
     >
       {children}

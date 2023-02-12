@@ -1,7 +1,7 @@
-const NamazTime = require("../model/NamazTime.js");
+const MosqueSchema = require("../model/Mosque.js");
 
 const getAllNamazTime = async (req, res) => {
-  const mosques = await NamazTime.find();
+  const mosques = await MosqueSchema.find();
   if (!mosques) {
     res.status(204).json({ message: "No mosques found" });
   }
@@ -24,7 +24,7 @@ const createNewTime = async (req, res) => {
   }
 
   try {
-    const result = await NamazTime.create({
+    const result = await MosqueSchema.create({
       username: req.body.username,
       mosqueName: req.body.mosqueName,
       fajr: req.body.fajr,
@@ -46,7 +46,7 @@ const updateNamazTime = async (req, res) => {
     return res.status(400).json({ message: "username parameter is required." });
   }
 
-  const mosque = await NamazTime.findOne({
+  const mosque = await MosqueSchema.findOne({
     username: req.body.username,
   }).exec();
   if (!mosque) {
@@ -73,7 +73,7 @@ const getNamazTime = async (req, res) => {
     res.status(400).json({ message: "username is required" });
   }
 
-  let mosque = await NamazTime.findOne({
+  let mosque = await MosqueSchema.findOne({
     username: req.params.username,
   }).exec();
   console.log("getNamazTime: ", mosque);

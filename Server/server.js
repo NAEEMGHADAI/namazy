@@ -6,9 +6,8 @@ const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const root = require("./routes/root");
-const employees = require("./routes/api/employees");
 const users = require("./routes/api/users");
-const namazTime = require("./routes/api/namazTime");
+const Mosque = require("./routes/api/Mosque");
 const register = require("./routes/register");
 const auth = require("./routes/auth");
 const refresh = require("./routes/refresh");
@@ -54,9 +53,8 @@ app.use("/auth", auth);
 app.use("/refresh", refresh);
 app.use("/logout", logout);
 
-app.use("/employees", employees);
 app.use("/users", users);
-app.use("/namaztime", namazTime);
+app.use("/mosque", Mosque);
 
 app.all("*", (req, res) => {
   res.status(404);

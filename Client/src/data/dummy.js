@@ -4,10 +4,11 @@ import {
 } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
+import { IoBookmarks } from "react-icons/io5";
 
 export const links = [
   {
-    title: "namaz timing",
+    title: "Mosque Near by",
     link: "",
     icon: <FaPray />,
     isProtected: false,
@@ -17,6 +18,13 @@ export const links = [
     title: "Prayer Limit",
     link: "prayerlimit",
     icon: <FaPray />,
+    isProtected: false,
+    roles: [1000],
+  },
+  {
+    title: "Bookmarks",
+    link: "bookmark",
+    icon: <IoBookmarks />,
     isProtected: false,
     roles: [1000],
   },

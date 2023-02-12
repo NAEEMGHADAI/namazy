@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import useContent from "../hooks/useContent";
 import { useNavigate } from "react-router-dom";
 
-const NEW_ENTRY_URL = "/namazTime";
+const NEW_ENTRY_URL = "/mosque";
 
 const EditNamazTime = () => {
   const [errMsg, setErrMsg] = useState("");
@@ -44,7 +44,7 @@ const EditNamazTime = () => {
 
     const getNamazTime = async () => {
       try {
-        const response = await axiosPrivate.get(`/namazTime/${username}`, {
+        const response = await axiosPrivate.get(`/mosque/${username}`, {
           signal: controller.signal,
         });
         console.log(response);

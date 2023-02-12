@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import PrayerLimit from "./pages/PrayerLimit";
 import Register from "./pages/Register";
 import EditNamazTime from "./pages/EditNamazTime";
+import Bookmark from "./pages/Bookmark";
 
 // import Register from "./pages/Register";
 
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="unauthorized" element={<Unauthorized />} />
                 <Route path="prayerlimit" element={<PrayerLimit />} />
+                <Route path="bookmark" element={<Bookmark />} />
 
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="admin" element={<Admin />} />

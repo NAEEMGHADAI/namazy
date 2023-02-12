@@ -9,7 +9,7 @@ const {
   updateNamazTime,
   getAllNamazTime,
   getNamazTime,
-} = require("../../controllers/namazTimeController");
+} = require("../../controllers/MosqueController");
 
 router
   .route("/")

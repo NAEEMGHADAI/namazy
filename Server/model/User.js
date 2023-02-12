@@ -1,8 +1,21 @@
 const mongoose = require("mongoose");
+var uuidv4 = require("uuid").v4;
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phonenumber: {
+    type: String,
+    required: true,
+  },
+  address: {
     type: String,
     required: true,
   },
@@ -16,7 +29,13 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    default: uuidv4(),
     required: true,
+  },
+  isApproved: {
+    type: String,
+    enum: ["Approved", "Pending", "Rejected"],
+    default: "Pending",
   },
   refreshToken: [String],
 });
