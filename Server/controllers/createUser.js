@@ -1,9 +1,12 @@
 const User = require("../model/User");
 const sendEmail = require("../services/email");
+const formSubmissionEmail = require("../utils/formSubmissionEmail");
+const rejectionEmailTemplate = require("../utils/rejectionEmailTemplate");
 const successEmailTemplate = require("../utils/successEmailTemplate");
 
 const handleNewUser = async (req, res) => {
   const { user, email, phonenumber, address } = req.body;
+  console.log(user, email, phonenumber, address);
 
   if (!user) {
     return res.status(400).json({ message: "Username is required" });
@@ -33,7 +36,24 @@ const handleNewUser = async (req, res) => {
     });
 
     console.log(result);
-    res.status(201).json({ success: `New User ${user} created!` });
+
+    sendEmail({
+      from: "mohdnaeemghadai@gmail.com",
+      to: email,
+      subject: "Thank you for registering",
+      text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
+      html: formSubmissionEmail({
+        emailFrom: "mohdnaeemghadai@gmail.com",
+        username: user,
+      }),
+    })
+      .then(async () => {
+        return res.status(201).json({ success: `New User ${user} created!` });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ error: "Error in sending email." });
+      });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -50,13 +70,13 @@ const verifyUser = async (req, res) => {
       return res.status(400).json({ message: "Username is required" });
     }
 
-    if (isApproved === "Approved") {
-      let userFound = await User.findOne({ username: user }).exec();
-      userFound.isApproved = isApproved;
+    let userFound = await User.findOne({ username: user }).exec();
+    userFound.isApproved = isApproved;
+    if (userFound.isApproved === "Approved" && userFound) {
       sendEmail({
         from: "mohdnaeemghadai@gmail.com",
         to: userFound.email,
-        subject: "Ypu are approved",
+        subject: "You are approved",
         text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
         html: successEmailTemplate({
           emailFrom: "mohdnaeemghadai@gmail.com",
@@ -66,12 +86,33 @@ const verifyUser = async (req, res) => {
       })
         .then(async () => {
           await userFound.save();
-          res.status(201).json({ success: `User ${user} is approved!` });
+          return res.status(201).json({ success: `User ${user} is approved!` });
         })
         .catch((err) => {
           console.log(err);
           return res.status(500).json({ error: "Error in sending email." });
         });
+    } else if (userFound.isApproved === "Rejected" && userFound) {
+      sendEmail({
+        from: "mohdnaeemghadai@gmail.com",
+        to: userFound.email,
+        subject: "Your Application is Rejected",
+        text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
+        html: rejectionEmailTemplate({
+          emailFrom: "mohdnaeemghadai@gmail.com",
+          username: userFound.username,
+        }),
+      })
+        .then(async () => {
+          await userFound.save();
+          return res.status(201).json({ success: `User ${user} is rejected!` });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({ error: "Error in sending email." });
+        });
+    } else {
+      return res.status(400).json({ message: "User not found" });
     }
   } catch (err) {
     console.log(err);
