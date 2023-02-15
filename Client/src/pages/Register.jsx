@@ -10,8 +10,10 @@ import axios from "../api/axios";
 import useContent from "../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGITSER_URL = "/register";
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
+const NUMBER_REGEX = /^[0-9]{10}$/;
+const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
+const REGITSER_URL = "/create";
 
 const Register = () => {
   const userRef = useRef();
@@ -22,20 +24,24 @@ const Register = () => {
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
+  const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  const [number, setNumber] = useState("");
+  const [validNumber, setValidNumber] = useState(false);
+  const [numberFocus, setNumberFocus] = useState(false);
+
+  const [address, setAddress] = useState("");
+  const [validAddress, setValidAddress] = useState(false);
+  const [addressFocus, setAddressFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, []);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
@@ -45,39 +51,53 @@ const Register = () => {
   }, [user]);
 
   useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
+    const result = EMAIL_REGEX.test(email);
     console.log(result);
-    console.log(pwd);
-    setValidPwd(result);
-    const match = pwd === matchPwd;
-    setValidMatch(match);
-  }, [pwd, matchPwd]);
+    console.log(email);
+    setValidEmail(result);
+  }, [email]);
+
+  useEffect(() => {
+    const result = NUMBER_REGEX.test(number);
+    console.log(result);
+    console.log(number);
+    setValidNumber(result);
+  }, [number]);
+
+  useEffect(() => {
+    const result = ADDRESS_REGEX.test(address);
+    console.log(result);
+    console.log(address);
+    setValidAddress(result);
+  }, [address]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd]);
+  }, [user, email, number, address]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    const match = pwd === matchPwd;
-    console.log(v1, v2);
-    if (!v1 || !v2 || !match) {
+    const v2 = EMAIL_REGEX.test(email);
+    const v3 = NUMBER_REGEX.test(number);
+    const v4 = ADDRESS_REGEX.test(address);
+
+    console.log(v1, v2, v3, v4);
+    if (!v1 || !v2 || !v3 || !v4) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
       const response = await axios.post(
         REGITSER_URL,
-        JSON.stringify({ user, pwd }),
+        JSON.stringify({ user, email, phonenumber: number, address }),
         {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       console.log(response.data);
-      console.log(response.accessToken);
       console.log(JSON.stringify(response));
       setSuccess(true);
       //clear input fields
@@ -87,7 +107,7 @@ const Register = () => {
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg("Form Submission Failed");
       }
       errRef.current.focus();
     }
@@ -96,30 +116,44 @@ const Register = () => {
   return (
     <>
       {success ? (
-        <section className="flex flex-col flex-wrap content-center justify-center w-full">
-          <div
-            className={`bg-secondary-dark-bg h-fit grid place-content-center xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
-              darkMode ? "text-white" : ""
-            }  `}
-          >
-            <div className="flex flex-row">
-              <h1 className=" text-2xl mt-2 mr-2">Success!</h1>
-              <img
-                src="https://img.icons8.com/color/48/null/ok--v1.png"
-                alt="success icon"
-              />
+        <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
+          <div className="bg-gray-800 rounded-md p-4 text-green-500">
+            <div className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span className="font-medium">Email sent!</span>
             </div>
-
-            <p className=" text-2xl mt-2 ml-4 text-slate-400">
-              <Link to="/login">Sign In</Link>
+            <p className="mt-2 text-sm">
+              Thank you for submitting your registration request. Please keep a
+              watch on your email for further instructions.
             </p>
+            <div className="flex justify-center">
+              <Link
+                to="/"
+                className="mt-4 text-gray-400 hover:text-gray-300 text-sm underline"
+              >
+                Go to home page
+              </Link>
+            </div>
           </div>
         </section>
       ) : (
-        <section className="flex flex-col flex-wrap content-center justify-center w-full">
+        <section className="flex flex-col flex-wrap content-center justify-center w-full  h-screen">
           <form
             onSubmit={handleSubmit}
-            className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
+            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
               darkMode ? "text-white" : ""
             }  `}
           >
@@ -182,101 +216,141 @@ const Register = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Password:
-                  <span className={validPwd ? "text-green-600 ml-1" : "hidden"}>
+                <label htmlFor="email" className="block text-sm font-bold mb-2">
+                  Email:
+                  <span
+                    className={validEmail ? "text-green-600 ml-1" : "hidden"}
+                  >
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                   <span
                     className={
-                      validPwd || !pwd ? "hidden" : "text-red-600 ml-1"
+                      validEmail || !email ? "hidden" : "text-red-600 ml-1"
                     }
                   >
                     <FontAwesomeIcon icon={faTimes} />
                   </span>
                 </label>
                 <input
-                  type="password"
-                  id="password"
-                  onChange={(e) => setPwd(e.target.value)}
+                  type="email"
+                  id="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="off"
                   required
-                  aria-invalid={validPwd ? "false" : "true"}
-                  aria-describedby="pwdnote"
-                  onFocus={() => setPwdFocus(true)}
-                  onBlur={() => setPwdFocus(false)}
+                  aria-invalid={validEmail ? "false" : "true"}
+                  aria-describedby="emailnote"
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
                 <p
-                  id="pwdnote"
+                  id="emailnote"
                   className={
-                    pwdFocus && !validPwd
+                    emailFocus && email && !validEmail
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
                       : "hidden"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  8 to 24 characters. <br /> Must include uppercase and
-                  lowercase letters, a number and a special characters:{" "}
-                  <span aria-label="exclamation mark">!</span>
-                  <span aria-label="at symbol">@</span>
-                  <span aria-label="hashtag">#</span>
-                  <span aria-label="percent">%</span>
+                  {/*write message for invalid email */}
+                  Please enter a valid email address.
                 </p>
               </div>
               <div className="mb-6">
-                <label
-                  htmlFor="confirm_pwd"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Confirm Password:
+                <label htmlFor="tel" className="block text-sm font-bold mb-2">
+                  Phone Number:
                   <span
-                    className={
-                      validMatch && matchPwd ? "text-green-600 ml-1" : "hidden"
-                    }
+                    className={validNumber ? "text-green-600 ml-1" : "hidden"}
                   >
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                   <span
                     className={
-                      validMatch || !matchPwd ? "hidden" : "text-red-600 ml-1"
+                      validNumber || !number ? "hidden" : "text-red-600 ml-1"
                     }
                   >
                     <FontAwesomeIcon icon={faTimes} />
                   </span>
                 </label>
                 <input
-                  type="password"
-                  id="confirm_pwd"
-                  onChange={(e) => setMatchPwd(e.target.value)}
+                  type="tel"
+                  id="tel"
+                  onChange={(e) => setNumber(e.target.value)}
+                  autoComplete="off"
                   required
-                  aria-invalid={validMatch ? "false" : "true"}
-                  aria-describedby="confirmnote"
-                  onFocus={() => setMatchFocus(true)}
-                  onBlur={() => setMatchFocus(false)}
+                  aria-invalid={validNumber ? "false" : "true"}
+                  aria-describedby="telnote"
+                  onFocus={() => setNumberFocus(true)}
+                  onBlur={() => setNumberFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
                 <p
-                  id="confirmnote"
+                  id="telnote"
                   className={
-                    matchFocus && !validPwd
+                    numberFocus && number && !validNumber
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "absolute -left-full"
+                      : "hidden"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  Must Match the first password input field.
+                  {/*write message for invalid number */}
+                  Please enter a valid phone number.
                 </p>
               </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Address:
+                  <span
+                    className={validAddress ? "text-green-600 ml-1" : "hidden"}
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                  <span
+                    className={
+                      validAddress || !address ? "hidden" : "text-red-600 ml-1"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </span>
+                </label>
+                <textarea
+                  type="text"
+                  id="address"
+                  onChange={(e) => setAddress(e.target.value)}
+                  autoComplete="off"
+                  required
+                  aria-invalid={validAddress ? "false" : "true"}
+                  aria-describedby="addressnote"
+                  onFocus={() => setAddressFocus(true)}
+                  onBlur={() => setAddressFocus(false)}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                />
+                <p
+                  id="addressnote"
+                  className={
+                    addressFocus && address && !validAddress
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  {/*write message for invalid address */}
+                  Please enter a valid address.
+                </p>
+              </div>
+
               <div className="text-center mb-6">
                 <button
                   disabled={
-                    !validName || !validPwd || !validMatch ? true : false
+                    !validName || !validEmail || !validNumber || !validAddress
+                      ? true
+                      : false
                   }
                   className={`${
-                    !validName || !validPwd || !validMatch
+                    !validName || !validEmail || !validNumber || !validAddress
                       ? "bg-blue-300"
                       : "bg-blue-500 hover:bg-blue-700"
                   } text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline`}
@@ -284,12 +358,6 @@ const Register = () => {
                   Sign Up
                 </button>
               </div>
-              <p>
-                Already registered?
-                <span className="line ml-2 text-slate-400">
-                  <Link to="/login">Sign In</Link>
-                </span>
-              </p>
             </div>
           </form>
         </section>

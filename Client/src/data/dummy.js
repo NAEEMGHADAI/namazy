@@ -51,7 +51,7 @@ export const links = [
   },
   {
     title: "Add New User",
-    link: "register",
+    link: "adminregister",
     icon: <RiAdminFill />,
     isProtected: true,
     roles: [5150],

@@ -10,11 +10,9 @@ import useContent from "./hooks/useContent";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import PrayerLimit from "./pages/PrayerLimit";
-import Register from "./pages/Register";
+import AdminRegister from "./pages/AdminRegister";
 import EditNamazTime from "./pages/EditNamazTime";
 import Bookmark from "./pages/Bookmark";
-
-// import Register from "./pages/Register";
 
 const ROLES = {
   User: 1000,
@@ -56,7 +54,7 @@ function App() {
 
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="admin" element={<Admin />} />
-                  <Route path="register" element={<Register />} />
+                  <Route path="adminregister" element={<AdminRegister />} />
                 </Route>
                 <Route
                   element={

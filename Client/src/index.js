@@ -6,6 +6,9 @@ import { ContextProvider } from "./context/ContextProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PersistLogin from "./components/PersistLogin";
+import Footer from "./components/Footer";
 
 if (process.env.NODE_ENV === "production") {
   disableReactDevTools();
@@ -18,9 +21,13 @@ root.render(
     <BrowserRouter>
       <ContextProvider>
         <Routes>
-          <Route path="/*" element={<App />} />
-          <Route path="login" element={<Login />} />
+          <Route element={<PersistLogin />}>
+            <Route path="/*" element={<App />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
         </Routes>
+        <Footer />
       </ContextProvider>
     </BrowserRouter>
   </section>
