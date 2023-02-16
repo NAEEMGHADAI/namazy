@@ -13,6 +13,7 @@ import PrayerLimit from "./pages/PrayerLimit";
 import AdminRegister from "./pages/AdminRegister";
 import EditNamazTime from "./pages/EditNamazTime";
 import Bookmark from "./pages/Bookmark";
+import RequestHandler from "./pages/RequestHandler";
 
 const ROLES = {
   User: 1000,
@@ -55,6 +56,7 @@ function App() {
                 <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="admin" element={<Admin />} />
                   <Route path="adminregister" element={<AdminRegister />} />
+                  <Route path="requesthandler" element={<RequestHandler />} />
                 </Route>
                 <Route
                   element={

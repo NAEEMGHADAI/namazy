@@ -13,106 +13,74 @@ const Pagination = ({
   }
   return (
     <div>
-      <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
-        <div className="lg:w-4/5 w-full  flex items-center justify-between border-t border-gray-200">
-          <div
-            className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
-            onClick={() => {
-              if (currentPage === 1) {
-                return;
-              }
-              setCurrentPage(currentPage - 1);
-            }}
+      <div class="flex items-center justify-between mt-6">
+        <button
+          className="flex items-center px-5 py-2 text-sm  capitalize transition-colors duration-200 border rounded-md gap-x-2  bg-gray-900 text-gray-200 border-gray-700 hover:bg-gray-800"
+          onClick={() => {
+            if (currentPage === 1) {
+              return;
+            }
+            setCurrentPage(currentPage - 1);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5 rtl:-scale-x-100"
           >
-            <svg
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.1665 4H12.8332"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M1.1665 4L4.49984 7.33333"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M1.1665 4.00002L4.49984 0.666687"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
-          </div>
-          <div className="sm:flex hidden">
-            {pages.map((page, i) => (
-              <>
-                <p
-                  key={i}
-                  onClick={() => setCurrentPage(page)}
-                  className={
-                    page === currentPage
-                      ? "text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2"
-                      : "text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 mr-4 px-2"
-                  }
-                >
-                  {page}
-                </p>
-              </>
-            ))}
-          </div>
-          <div
-            className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
-            onClick={() => {
-              if (currentPage === pages.length) {
-                return;
-              }
-              setCurrentPage(currentPage + 1);
-            }}
-          >
-            <p className="text-sm font-medium leading-none mr-3">Next</p>
-            <svg
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.1665 4H12.8332"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M9.5 7.33333L12.8333 4"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M9.5 0.666687L12.8333 4.00002"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+            />
+          </svg>
+          <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
+        </button>
+        <div class="items-center hidden md:flex gap-x-3">
+          {pages.map((page, i) => (
+            <>
+              <p
+                key={i}
+                onClick={() => setCurrentPage(page)}
+                className={
+                  page === currentPage
+                    ? "px-2 py-1 text-sm text-blue-500 rounded-md bg-gray-800"
+                    : "px-2 py-1 text-sm rounded-md hover:bg-gray-800 text-gray-300"
+                }
+              >
+                {page}
+              </p>
+            </>
+          ))}
         </div>
+        <button
+          className="flex items-center px-5 py-2 text-sm capitalize transition-colors duration-200 border rounded-md gap-x-2  bg-gray-900 text-gray-200 border-gray-700 hover:bg-gray-800"
+          onClick={() => {
+            if (currentPage === pages.length) {
+              return;
+            }
+            setCurrentPage(currentPage + 1);
+          }}
+        >
+          <p className="text-sm font-medium leading-none mr-3">Next</p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5 rtl:-scale-x-100"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );

@@ -196,7 +196,7 @@ const ShowNamazTime = ({ data }) => {
                 ))}
               </section>
               <Pagination
-                totalPosts={data.length}
+                totalPosts={filteredData ? filteredData.length : data.length}
                 postsPerPage={postsPerPage}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}

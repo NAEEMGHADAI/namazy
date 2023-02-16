@@ -56,6 +56,13 @@ export const links = [
     isProtected: true,
     roles: [5150],
   },
+  {
+    title: "Request Handler",
+    link: "requesthandler",
+    icon: <RiAdminFill />,
+    isProtected: true,
+    roles: [5150],
+  },
 ];
 
 export const country = [
