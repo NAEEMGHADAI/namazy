@@ -13,7 +13,13 @@ const handleLogin = async (req, res) => {
     return res.sendStatus(401); //Unauthorized
   }
   //evaluate password
-  const match = await bcrypt.compare(pwd, foundUser.password);
+  let match;
+  if (foundUser.newUser) {
+    match = pwd === foundUser.password;
+  } else {
+    match = await bcrypt.compare(pwd, foundUser.password);
+  }
+
   if (match) {
     const roles = Object.values(foundUser.roles).filter(Boolean);
     console.log(roles);

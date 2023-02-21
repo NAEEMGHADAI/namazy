@@ -1,13 +1,13 @@
 require("dotenv").config;
 
-module.exports = ({ emailFrom, username, password }) => {
+module.exports = ({ emailFrom, username }) => {
   return `
         <!doctype html>
             <html>
             <head>
                 <meta name="viewport" content="width=device-width">
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <title>Conformation Email</title>
+                <title>Simple Transactional Email</title>
                 <style>
                 @media only screen and (max-width: 620px) {
                 table[class=body] h1 {
@@ -94,7 +94,7 @@ module.exports = ({ emailFrom, username, password }) => {
                     <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
             
                         <!-- START CENTERED WHITE CONTAINER -->
-                        <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Congratulations ${username} &nbsp;</span>
+                        <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">We are Sorry &nbsp;</span>
                         <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
             
                         <!-- START MAIN CONTENT AREA -->
@@ -105,19 +105,14 @@ module.exports = ({ emailFrom, username, password }) => {
                                 <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                                     <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi there,</p>
                                     <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">You have a message from <b>${emailFrom}</b>.</p>
-                                    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                                    <table border="0" cellpadding="0" cellspacing="0"  style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                                     <tbody>
                                         <tr>
                                         <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
                                             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
                                             <tbody>
                                                 <tr>
-                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Congratulations your application as been approved</p>
-                                                <br/>
-                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Here is your username and password:</p>
-                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><b>Username:</b> ${username}</p>
-                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><b>Password:</b> ${password}</p>
-                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Please Change your password by clicking on this <a href="localhost:3000/changepassword">link</a> by 24 hours to make your account secure.</p>
+                                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><b>${username}</b> your account has been deleted</p>
                                                 </tr>
                                             </tbody>
                                             </table>
@@ -126,7 +121,7 @@ module.exports = ({ emailFrom, username, password }) => {
                                     </tbody>
                                     </table>
                                     <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thank you for using Namazzyy.</p>
-                                    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Good luck! Hope it works.</p>
+                                    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Good luck! You can apply again</p>
                                 </td>
                                 </tr>
                             </table>

@@ -1,8 +1,11 @@
 const User = require("../model/User");
+const bcrypt = require("bcrypt");
 const sendEmail = require("../services/email");
 const formSubmissionEmail = require("../utils/formSubmissionEmail");
 const rejectionEmailTemplate = require("../utils/rejectionEmailTemplate");
 const successEmailTemplate = require("../utils/successEmailTemplate");
+const deleteUserEmailTemplate = require("../utils/deleteUserEmailTemplate");
+const newRequestEmailTemplate = require("../utils/newRequestEmailTemplate");
 
 const handleNewUser = async (req, res) => {
   const { user, email, phonenumber, address } = req.body;
@@ -46,9 +49,66 @@ const handleNewUser = async (req, res) => {
         emailFrom: "mohdnaeemghadai@gmail.com",
         username: user,
       }),
+    }).catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: "Error in sending email." });
+    });
+    sendEmail({
+      from: email,
+      to: "mohdnaeemghadai@gmail.com",
+      subject: "New User Registration",
+      text: `Namazzyy app have a message for you.`,
+      html: newRequestEmailTemplate({
+        emailFrom: email,
+        username: user,
+      }),
     })
       .then(async () => {
         return res.status(201).json({ success: `New User ${user} created!` });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ error: "Error in sending email." });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { user } = req.params;
+  console.log("delete user body", user, req.params);
+
+  if (!user) {
+    return res.status(400).json({ message: "Username is required" });
+  }
+
+  //Check for duplicate username in the db
+
+  const userFound = await User.findOne({ username: user }).exec();
+  if (!userFound) {
+    return res.sendStatus(404); //Conflict
+  }
+  try {
+    //delete User
+    const result = await User.deleteOne({
+      username: user,
+    });
+
+    console.log("delete: ", result);
+
+    sendEmail({
+      from: "mohdnaeemghadai@gmail.com",
+      to: userFound.email,
+      subject: "Your Account has been deleted",
+      text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
+      html: deleteUserEmailTemplate({
+        emailFrom: "mohdnaeemghadai@gmail.com",
+        username: user,
+      }),
+    })
+      .then(async () => {
+        return res.status(201).json({ success: `User ${user} deleted!` });
       })
       .catch((err) => {
         console.log(err);
@@ -120,4 +180,38 @@ const verifyUser = async (req, res) => {
   }
 };
 
-module.exports = { handleNewUser, verifyUser };
+const changePassword = async (req, res) => {
+  try {
+    const { pwd, user, newPwd } = req.body;
+
+    if (!pwd) {
+      return res.status(400).json({ message: "old password is required" });
+    }
+    if (!user) {
+      return res.status(400).json({ message: "Username is required" });
+    }
+    if (!newPwd) {
+      return res.status(400).json({ message: "new password is required" });
+    }
+
+    let userFound = await User.findOne({ username: user }).exec();
+    if (!userFound) {
+      return res.sendStatus(404); //Not Found
+    }
+
+    if (pwd !== userFound.password) {
+      return res.sendStatus(401); //Unauthorized
+    }
+
+    userFound.password = await bcrypt.hash(newPwd, 10);
+    userFound.newUser = false;
+    userFound.save();
+
+    res.status(200).json({ success: `Password updated successfully!` });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong." });
+  }
+};
+
+module.exports = { handleNewUser, verifyUser, deleteUser, changePassword };

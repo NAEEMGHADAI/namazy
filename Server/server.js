@@ -9,7 +9,7 @@ const root = require("./routes/root");
 const users = require("./routes/api/users");
 const Mosque = require("./routes/api/Mosque");
 const register = require("./routes/register");
-const create = require("./routes/create");
+const manageUser = require("./routes/manageUser");
 const auth = require("./routes/auth");
 const refresh = require("./routes/refresh");
 const logout = require("./routes/logout");
@@ -50,7 +50,7 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 
 app.use("/", root);
 app.use("/register", register);
-app.use("/create", create);
+app.use("/manageuser", manageUser);
 app.use("/auth", auth);
 app.use("/refresh", refresh);
 app.use("/logout", logout);

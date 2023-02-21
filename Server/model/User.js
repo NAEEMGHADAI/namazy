@@ -32,6 +32,10 @@ const userSchema = new Schema({
     default: uuidv4(),
     required: true,
   },
+  newUser: {
+    type: Boolean,
+    default: true,
+  },
   isApproved: {
     type: String,
     enum: ["Approved", "Pending", "Rejected"],
