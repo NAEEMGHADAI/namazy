@@ -8,6 +8,7 @@ export const ContextProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
   const [bookmark, setBookmark] = useLocalStorage("bookmark", []);
+  const [changed, setChanged] = useState("");
   return (
     <StateContext.Provider
       value={{
@@ -21,6 +22,8 @@ export const ContextProvider = ({ children }) => {
         setScreenSize,
         bookmark,
         setBookmark,
+        changed,
+        setChanged,
       }}
     >
       {children}

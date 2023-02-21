@@ -10,12 +10,10 @@ import axios from "../api/axios";
 import useContent from "../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
-const NUMBER_REGEX = /^[0-9]{10}$/;
-const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
-const REGITSER_URL = "/manageuser";
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGITSER_URL = "/manageuser/changepassword";
 
-const Register = () => {
+const ChangePassword = () => {
   const userRef = useRef();
   const errRef = useRef();
   const { darkMode } = useContent();
@@ -24,24 +22,22 @@ const Register = () => {
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
+  const [pwd, setPwd] = useState("");
 
-  const [number, setNumber] = useState("");
-  const [validNumber, setValidNumber] = useState(false);
-  const [numberFocus, setNumberFocus] = useState(false);
+  const [newPwd, setNewPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setNewPwdFocus] = useState(false);
 
-  const [address, setAddress] = useState("");
-  const [validAddress, setValidAddress] = useState(false);
-  const [addressFocus, setAddressFocus] = useState(false);
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
@@ -51,50 +47,34 @@ const Register = () => {
   }, [user]);
 
   useEffect(() => {
-    const result = EMAIL_REGEX.test(email);
+    const result = PWD_REGEX.test(newPwd);
     console.log(result);
-    console.log(email);
-    setValidEmail(result);
-  }, [email]);
-
-  useEffect(() => {
-    const result = NUMBER_REGEX.test(number);
-    console.log(result);
-    console.log(number);
-    setValidNumber(result);
-  }, [number]);
-
-  useEffect(() => {
-    const result = ADDRESS_REGEX.test(address);
-    console.log(result);
-    console.log(address);
-    setValidAddress(result);
-  }, [address]);
+    console.log(newPwd);
+    setValidPwd(result);
+    const match = newPwd === matchPwd;
+    setValidMatch(match);
+  }, [newPwd, matchPwd]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, email, number, address]);
+  }, [user, newPwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
-    const v2 = EMAIL_REGEX.test(email);
-    const v3 = NUMBER_REGEX.test(number);
-    const v4 = ADDRESS_REGEX.test(address);
-
-    console.log(v1, v2, v3, v4);
-    if (!v1 || !v2 || !v3 || !v4) {
+    const v2 = PWD_REGEX.test(newPwd);
+    const match = newPwd === matchPwd;
+    console.log(v1, v2);
+    if (!v1 || !v2 || !match) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         REGITSER_URL,
-        JSON.stringify({ user, email, phonenumber: number, address }),
+        JSON.stringify({ user, pwd, newPwd }),
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
       console.log(response.data);
@@ -104,10 +84,10 @@ const Register = () => {
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+      } else if (err.response?.status === 404 || err.response?.status === 401) {
+        setErrMsg("Username or Password is wrong");
       } else {
-        setErrMsg("Form Submission Failed");
+        setErrMsg("Password Update Failed");
       }
       errRef.current.focus();
     }
@@ -133,15 +113,14 @@ const Register = () => {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span className="font-medium">Email sent!</span>
+              <span className="font-medium">Password Reset Successfull!</span>
             </div>
             <p className="mt-2 text-sm">
-              Thank you for submitting your registration request. Please keep a
-              watch on your email for further instructions.
+              Congratulations! You have successfully changed your password.
             </p>
             <div className="flex justify-center">
               <Link
-                to="/"
+                to="/login"
                 className="mt-4 text-gray-400 hover:text-gray-300 text-sm underline"
               >
                 Go to home page
@@ -150,10 +129,10 @@ const Register = () => {
           </div>
         </section>
       ) : (
-        <section className="flex flex-col flex-wrap content-center justify-center w-full  h-screen">
+        <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
           <form
             onSubmit={handleSubmit}
-            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
+            className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
               darkMode ? "text-white" : ""
             }  `}
           >
@@ -169,7 +148,9 @@ const Register = () => {
               {errMsg}
             </p>
             <div className="mx-5">
-              <h1 className="text-3xl font-bold mb-4 text-center">Register</h1>
+              <h1 className="text-3xl font-bold mb-4 text-center">
+                Change Password
+              </h1>
               <div className="mb-6">
                 <label
                   htmlFor="username"
@@ -216,141 +197,121 @@ const Register = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <label htmlFor="email" className="block text-sm font-bold mb-2">
-                  Email:
-                  <span
-                    className={validEmail ? "text-green-600 ml-1" : "hidden"}
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
-                    className={
-                      validEmail || !email ? "hidden" : "text-red-600 ml-1"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Password:
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="off"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPwd(e.target.value)}
                   required
-                  aria-invalid={validEmail ? "false" : "true"}
-                  aria-describedby="emailnote"
-                  onFocus={() => setEmailFocus(true)}
-                  onBlur={() => setEmailFocus(false)}
+                  aria-describedby="pwdnote"
+                  //   onFocus={() => setPwdFocus(true)}
+                  //   onBlur={() => setPwdFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
-                <p
-                  id="emailnote"
-                  className={
-                    emailFocus && email && !validEmail
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid email */}
-                  Please enter a valid email address.
-                </p>
               </div>
               <div className="mb-6">
-                <label htmlFor="tel" className="block text-sm font-bold mb-2">
-                  Phone Number:
-                  <span
-                    className={validNumber ? "text-green-600 ml-1" : "hidden"}
-                  >
+                <label
+                  htmlFor="newPassword"
+                  className="block text-sm font-bold mb-2"
+                >
+                  New Password:
+                  <span className={validPwd ? "text-green-600 ml-1" : "hidden"}>
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                   <span
                     className={
-                      validNumber || !number ? "hidden" : "text-red-600 ml-1"
+                      validPwd || !newPwd ? "hidden" : "text-red-600 ml-1"
                     }
                   >
                     <FontAwesomeIcon icon={faTimes} />
                   </span>
                 </label>
                 <input
-                  type="tel"
-                  id="tel"
-                  onChange={(e) => setNumber(e.target.value)}
-                  autoComplete="off"
+                  type="password"
+                  id="newPassword"
+                  onChange={(e) => setNewPwd(e.target.value)}
                   required
-                  aria-invalid={validNumber ? "false" : "true"}
-                  aria-describedby="telnote"
-                  onFocus={() => setNumberFocus(true)}
-                  onBlur={() => setNumberFocus(false)}
+                  aria-invalid={validPwd ? "false" : "true"}
+                  aria-describedby="pwdnote"
+                  onFocus={() => setNewPwdFocus(true)}
+                  onBlur={() => setNewPwdFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
                 <p
-                  id="telnote"
+                  id="pwdnote"
                   className={
-                    numberFocus && number && !validNumber
+                    pwdFocus && !validPwd
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
                       : "hidden"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid number */}
-                  Please enter a valid phone number.
+                  8 to 24 characters. <br /> Must include uppercase and
+                  lowercase letters, a number and a special characters:{" "}
+                  <span aria-label="exclamation mark">!</span>
+                  <span aria-label="at symbol">@</span>
+                  <span aria-label="hashtag">#</span>
+                  <span aria-label="percent">%</span>
                 </p>
               </div>
               <div className="mb-6">
                 <label
-                  htmlFor="address"
+                  htmlFor="confirm_pwd"
                   className="block text-sm font-bold mb-2"
                 >
-                  Address:
+                  Confirm Password:
                   <span
-                    className={validAddress ? "text-green-600 ml-1" : "hidden"}
+                    className={
+                      validMatch && matchPwd ? "text-green-600 ml-1" : "hidden"
+                    }
                   >
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                   <span
                     className={
-                      validAddress || !address ? "hidden" : "text-red-600 ml-1"
+                      validMatch || !matchPwd ? "hidden" : "text-red-600 ml-1"
                     }
                   >
                     <FontAwesomeIcon icon={faTimes} />
                   </span>
                 </label>
-                <textarea
-                  type="text"
-                  id="address"
-                  onChange={(e) => setAddress(e.target.value)}
-                  autoComplete="off"
+                <input
+                  type="password"
+                  id="confirm_pwd"
+                  onChange={(e) => setMatchPwd(e.target.value)}
                   required
-                  aria-invalid={validAddress ? "false" : "true"}
-                  aria-describedby="addressnote"
-                  onFocus={() => setAddressFocus(true)}
-                  onBlur={() => setAddressFocus(false)}
+                  aria-invalid={validMatch ? "false" : "true"}
+                  aria-describedby="confirmnote"
+                  onFocus={() => setMatchFocus(true)}
+                  onBlur={() => setMatchFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
                 <p
-                  id="addressnote"
+                  id="confirmnote"
                   className={
-                    addressFocus && address && !validAddress
+                    matchFocus && !validPwd
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
+                      : "absolute -left-full"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid address */}
-                  Please enter a valid address.
+                  Must Match the first password input field.
                 </p>
               </div>
-
               <div className="text-center mb-6">
                 <button
                   disabled={
-                    !validName || !validEmail || !validNumber || !validAddress
+                    !validName || !validPwd || !validMatch || !pwd
                       ? true
                       : false
                   }
                   className={`${
-                    !validName || !validEmail || !validNumber || !validAddress
+                    !validName || !validPwd || !validMatch || !pwd
                       ? "bg-blue-300"
                       : "bg-blue-500 hover:bg-blue-700"
                   } text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline`}
@@ -366,4 +327,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ChangePassword;

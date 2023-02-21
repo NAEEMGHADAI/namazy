@@ -4,6 +4,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Pagination from "../components/Pagination";
 import AcceptUserModal from "../components/modals/AcceptUserModal";
 import RejectUserModal from "../components/modals/RejectUserModal";
+import useContent from "../hooks/useContent";
 
 const RequestHandler = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +15,7 @@ const RequestHandler = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+  const { changed } = useContent();
 
   useEffect(() => {
     let isMounted = true;
@@ -31,7 +33,6 @@ const RequestHandler = () => {
         isMounted && setUsers(filterData);
       } catch (err) {
         console.error(err);
-        navigate("/login", { state: { from: location }, replace: true });
       }
     };
     getUsers();
@@ -40,7 +41,7 @@ const RequestHandler = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [axiosPrivate, location, navigate]);
+  }, [axiosPrivate, location, navigate, changed]);
 
   useEffect(() => {
     let timer;

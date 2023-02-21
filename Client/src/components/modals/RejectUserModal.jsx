@@ -1,23 +1,22 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useContent from "../../hooks/useContent";
 
 const RejectUserModal = ({ username }) => {
   const [showModal, setShowModal] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { setChanged } = useContent();
   const handleSubmit = async () => {
     try {
-      const response = await axiosPrivate.patch("/create/verify", {
+      const response = await axiosPrivate.patch("/manageuser/verify", {
         user: username,
         isApproved: "Rejected",
       });
       console.log(response);
+      setChanged(response);
       setShowModal(false);
     } catch (err) {
       console.error(err);
-      navigate("/login", { state: { from: location }, replace: true });
     }
   };
   return (
