@@ -82,9 +82,13 @@ const ShowNamazTime = ({ data }) => {
                               <h2 className="pt-2">{ele.mosqueName}</h2>
 
                               {bookmark.some((e) => e._id === ele._id) ? (
-                                <div className="group relative inline-block">
-                                  <img
-                                    src="https://img.icons8.com/dotty/35/ffffff/bookmark-ribbon.png"
+                                <div className="group ">
+                                  <svg
+                                    width="21"
+                                    height="21"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
                                     alt="bookmark"
                                     className=" cursor-pointer"
                                     data-tooltip-target="tooltip-default"
@@ -95,23 +99,35 @@ const ShowNamazTime = ({ data }) => {
                                         )
                                       )
                                     }
-                                  />
+                                  >
+                                    <path d="M6 4.8a2.4 2.4 0 0 1 2.4-2.4h7.2A2.4 2.4 0 0 1 18 4.8v16.8l-6-3-6 3V4.8Z"></path>
+                                  </svg>
                                   <div class="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
                                     <span class="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
                                     Remove Bookmark
                                   </div>
                                 </div>
                               ) : (
-                                <div className="group relative inline-block">
-                                  <img
-                                    src="https://img.icons8.com/dotty/35/ffffff/add-bookmark.png"
+                                <div className="group">
+                                  <svg
+                                    width="21"
+                                    height="21"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
                                     alt="bookmark"
                                     className=" cursor-pointer"
                                     data-tooltip-target="tooltip-default"
                                     onClick={() =>
                                       setBookmark([...bookmark, ele])
                                     }
-                                  />
+                                  >
+                                    <path d="M5.586 3.586A2 2 0 0 0 5 5v16l7-3.5 7 3.5V5a2 2 0 0 0-2-2H7a2 2 0 0 0-1.414.586Z"></path>
+                                  </svg>
                                   <div class="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
                                     <span class="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
                                     Bookmark
@@ -195,12 +211,14 @@ const ShowNamazTime = ({ data }) => {
                   </section>
                 ))}
               </section>
-              <Pagination
-                totalPosts={filteredData ? filteredData.length : data.length}
-                postsPerPage={postsPerPage}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-              />
+              <section className="sm:px-10 px-5">
+                <Pagination
+                  totalPosts={filteredData ? filteredData.length : data.length}
+                  postsPerPage={postsPerPage}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                />
+              </section>
             </section>
           )}
         </section>
