@@ -37,7 +37,7 @@ const handleNewUser = async (req, res) => {
       phonenumber: phonenumber,
       address: address,
       createdAt: new Date(),
-      modifiedAt: new Date(),
+      updatedAt: new Date(),
     });
 
     console.log(result);
@@ -109,7 +109,7 @@ const handleNewUserByAdmin = async (req, res) => {
       phonenumber: phonenumber,
       address: address,
       createdAt: new Date(),
-      modifiedAt: new Date(),
+      updatedAt: new Date(),
       newUser: false,
       password: hashedPwd,
       isApproved: "Approved",

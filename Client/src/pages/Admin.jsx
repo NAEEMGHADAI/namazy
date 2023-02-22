@@ -112,6 +112,13 @@ const Admin = () => {
                       scope="col"
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
                     >
+                      last Update
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
+                    >
                       Roles
                     </th>
                     <th
@@ -144,6 +151,9 @@ const Admin = () => {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {!user.createdAt ? "" : timeSince(user.createdAt)}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {!user.updatedAt ? "" : timeSince(user.updatedAt)}
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">

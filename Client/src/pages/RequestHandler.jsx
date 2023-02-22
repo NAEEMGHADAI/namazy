@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination";
 import AcceptUserModal from "../components/modals/AcceptUserModal";
 import RejectUserModal from "../components/modals/RejectUserModal";
 import useContent from "../hooks/useContent";
+import timeSince from "../helper/timeSince";
 
 const RequestHandler = () => {
   const [users, setUsers] = useState([]);
@@ -142,7 +143,7 @@ const RequestHandler = () => {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          Jan 6, 2022
+                          {!user.createdAt ? "" : timeSince(user.createdAt)}
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center px-3 py-1 text-gray-500 rounded-full gap-x-2 bg-gray-800">
