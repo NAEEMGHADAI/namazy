@@ -1,4 +1,5 @@
 const User = require("../model/User");
+const MosqueSchema = require("../model/Mosque");
 const bcrypt = require("bcrypt");
 const sendEmail = require("../services/email");
 const formSubmissionEmail = require("../utils/formSubmissionEmail");
@@ -134,6 +135,8 @@ const deleteUser = async (req, res) => {
   //Check for duplicate username in the db
 
   const userFound = await User.findOne({ username: user }).exec();
+  const mosqueFound = await MosqueSchema.findOne({ username: user }).exec();
+
   if (!userFound) {
     return res.sendStatus(404); //Conflict
   }
@@ -143,6 +146,12 @@ const deleteUser = async (req, res) => {
       username: user,
     });
 
+    //delete Mosque
+    if (mosqueFound) {
+      const resultMosque = await MosqueSchema.deleteOne({
+        username: user,
+      });
+    }
     console.log("delete: ", result);
 
     sendEmail({

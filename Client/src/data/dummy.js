@@ -28,13 +28,7 @@ export const links = [
     isProtected: false,
     roles: [1000],
   },
-  {
-    title: "Edit Namaz Time",
-    link: "edit",
-    icon: <FiEdit />,
-    isProtected: true,
-    roles: [1000],
-  },
+
   // {
   //   title: "Map",
   //   link: "map",
@@ -50,15 +44,22 @@ export const links = [
     roles: [5150],
   },
   {
-    title: "Add New User",
-    link: "adminregister",
+    title: "Request Handler",
+    link: "requesthandler",
     icon: <RiAdminFill />,
     isProtected: true,
     roles: [5150],
   },
   {
-    title: "Request Handler",
-    link: "requesthandler",
+    title: "Edit Namaz Time",
+    link: "edit",
+    icon: <FiEdit />,
+    isProtected: true,
+    roles: [1000],
+  },
+  {
+    title: "Add New User",
+    link: "adminregister",
     icon: <RiAdminFill />,
     isProtected: true,
     roles: [5150],
