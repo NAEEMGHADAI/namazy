@@ -6,6 +6,12 @@ const verifyJWT = require("../middleware/verifyJWT");
 const verifyRoles = require("../middleware/verifyRoles");
 
 router.post("/", registerController.handleNewUser);
+router.post(
+  "/adminregister",
+  verifyJWT,
+  verifyRoles(ROLES_LIST.Admin),
+  registerController.handleNewUserByAdmin
+);
 router.delete(
   "/:user",
   verifyJWT,

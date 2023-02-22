@@ -3,6 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Pagination from "../components/Pagination";
 import DeleteUserModal from "../components/modals/DeleteUserModal";
 import useContent from "../hooks/useContent";
+import timeSince from "../helper/timeSince";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -142,7 +143,7 @@ const Admin = () => {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          Jan 6, 2022
+                          {!user.createdAt ? "" : timeSince(user.createdAt)}
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">

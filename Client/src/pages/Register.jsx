@@ -133,7 +133,7 @@ const Register = () => {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span className="font-medium">Email sent!</span>
+              <span className="font-medium">Request sent!</span>
             </div>
             <p className="mt-2 text-sm">
               Thank you for submitting your registration request. Please keep a

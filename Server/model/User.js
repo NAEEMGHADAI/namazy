@@ -42,6 +42,12 @@ const userSchema = new Schema({
     default: "Pending",
   },
   refreshToken: [String],
+  createdAt: {
+    type: Date,
+  },
+  updatedAt: {
+    type: Date,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

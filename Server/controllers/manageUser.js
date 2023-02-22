@@ -36,6 +36,8 @@ const handleNewUser = async (req, res) => {
       email: email,
       phonenumber: phonenumber,
       address: address,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
     });
 
     console.log(result);
@@ -70,6 +72,52 @@ const handleNewUser = async (req, res) => {
         console.log(err);
         return res.status(500).json({ error: "Error in sending email." });
       });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const handleNewUserByAdmin = async (req, res) => {
+  const { user, pwd, email, phonenumber, address } = req.body;
+  console.log(req);
+  if (!user || !pwd) {
+    return res.status(400).json({ message: "Username and password required" });
+  }
+
+  if (!phonenumber) {
+    return res.status(400).json({ message: "phonenumber is required" });
+  }
+  if (!address) {
+    return res.status(400).json({ message: "Address is required" });
+  }
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  //Check for duplicate username in the db
+  const duplicate = await User.findOne({ username: user }).exec();
+  if (duplicate) {
+    return res.sendStatus(409); //Conflict
+  }
+  try {
+    //encrypt the password
+    const hashedPwd = await bcrypt.hash(pwd, 10);
+    //create and store new user
+    const result = await User.create({
+      username: user,
+      email: email,
+      phonenumber: phonenumber,
+      address: address,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+      newUser: false,
+      password: hashedPwd,
+      isApproved: "Approved",
+    });
+
+    console.log(result);
+
+    res.status(201).json({ success: `New User ${user} created!` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -132,6 +180,7 @@ const verifyUser = async (req, res) => {
 
     let userFound = await User.findOne({ username: user }).exec();
     userFound.isApproved = isApproved;
+    userFound.updatedAt = new Date();
     if (userFound.isApproved === "Approved" && userFound) {
       sendEmail({
         from: "mohdnaeemghadai@gmail.com",
@@ -202,16 +251,26 @@ const changePassword = async (req, res) => {
     if (pwd !== userFound.password) {
       return res.sendStatus(401); //Unauthorized
     }
+    if (userFound.newUser === true) {
+      userFound.password = await bcrypt.hash(newPwd, 10);
+      userFound.newUser = false;
+      userFound.updatedAt = new Date();
+      userFound.save();
 
-    userFound.password = await bcrypt.hash(newPwd, 10);
-    userFound.newUser = false;
-    userFound.save();
-
-    res.status(200).json({ success: `Password updated successfully!` });
+      res.status(200).json({ success: `Password updated successfully!` });
+    } else {
+      return res.status(400).json({ message: "User is not new" });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Something went wrong." });
   }
 };
 
-module.exports = { handleNewUser, verifyUser, deleteUser, changePassword };
+module.exports = {
+  handleNewUser,
+  verifyUser,
+  deleteUser,
+  changePassword,
+  handleNewUserByAdmin,
+};
