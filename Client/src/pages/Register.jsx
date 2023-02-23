@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import Loading from "../components/Loading";
 import useContent from "../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -36,6 +37,11 @@ const Register = () => {
   const [validAddress, setValidAddress] = useState(false);
   const [addressFocus, setAddressFocus] = useState(false);
 
+  const [file, setFile] = useState(null);
+  const [fileFocus, setFileFocus] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -45,35 +51,27 @@ const Register = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = NUMBER_REGEX.test(number);
-    console.log(result);
-    console.log(number);
     setValidNumber(result);
   }, [number]);
 
   useEffect(() => {
     const result = ADDRESS_REGEX.test(address);
-    console.log(result);
-    console.log(address);
     setValidAddress(result);
   }, [address]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, email, number, address]);
+  }, [user, email, number, address, file]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,23 +81,30 @@ const Register = () => {
     const v4 = ADDRESS_REGEX.test(address);
 
     console.log(v1, v2, v3, v4);
-    if (!v1 || !v2 || !v3 || !v4) {
+    if (!v1 || !v2 || !v3 || !v4 || !file) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
-      const response = await axios.post(
-        REGITSER_URL,
-        JSON.stringify({ user, email, phonenumber: number, address }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const form = new FormData();
+      form.append("user", user);
+      form.append("phonenumber", number);
+      form.append("email", email);
+      form.append("address", address);
+      form.append("file", file);
+
+      console.log(form);
+      setLoading(true);
+
+      const response = await axios.post(REGITSER_URL, form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(response.data);
       console.log(JSON.stringify(response));
       setSuccess(true);
+      setLoading(false);
       //clear input fields
     } catch (err) {
       if (!err?.response) {
@@ -115,7 +120,9 @@ const Register = () => {
 
   return (
     <>
-      {success ? (
+      {loading ? (
+        <Loading />
+      ) : success ? (
         <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
           <div className="bg-gray-800 rounded-md p-4 text-green-500">
             <div className="flex items-center">
@@ -341,16 +348,54 @@ const Register = () => {
                   Please enter a valid address.
                 </p>
               </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 font-bold mb-2"
+                  htmlFor="file"
+                >
+                  Upload file
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="file"
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onFocus={() => setFileFocus(true)}
+                  onBlur={() => setFileFocus(false)}
+                  aria-describedby="filenote"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <p
+                  id="filenote"
+                  className={
+                    fileFocus && !file
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  {/*write message for invalid file */}
+                  Please upload a file.
+                </p>
+              </div>
 
               <div className="text-center mb-6">
                 <button
                   disabled={
-                    !validName || !validEmail || !validNumber || !validAddress
+                    !validName ||
+                    !validEmail ||
+                    !validNumber ||
+                    !validAddress ||
+                    !file
                       ? true
                       : false
                   }
                   className={`${
-                    !validName || !validEmail || !validNumber || !validAddress
+                    !validName ||
+                    !validEmail ||
+                    !validNumber ||
+                    !validAddress ||
+                    !file
                       ? "bg-blue-300"
                       : "bg-blue-500 hover:bg-blue-700"
                   } text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline`}

@@ -3,7 +3,6 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import jwtDecode from "jwt-decode";
 import useContent from "../hooks/useContent";
 import { useNavigate } from "react-router-dom";
-
 const NEW_ENTRY_URL = "/mosque";
 
 const EditNamazTime = () => {

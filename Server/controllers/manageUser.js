@@ -7,11 +7,10 @@ const rejectionEmailTemplate = require("../utils/rejectionEmailTemplate");
 const successEmailTemplate = require("../utils/successEmailTemplate");
 const deleteUserEmailTemplate = require("../utils/deleteUserEmailTemplate");
 const newRequestEmailTemplate = require("../utils/newRequestEmailTemplate");
+const cloudinary = require("../middleware/cloudinary");
 
 const handleNewUser = async (req, res) => {
   const { user, email, phonenumber, address } = req.body;
-  console.log(user, email, phonenumber, address);
-
   if (!user) {
     return res.status(400).json({ message: "Username is required" });
   }
@@ -25,54 +24,73 @@ const handleNewUser = async (req, res) => {
     return res.status(400).json({ message: "Email is required" });
   }
 
-  //Check for duplicate username in the db
+  if (!req.file.path) {
+    return res.status(400).json({ message: "Please upload a file" });
+  }
+
   const duplicate = await User.findOne({ username: user }).exec();
   if (duplicate) {
     return res.sendStatus(409); //Conflict
   }
   try {
     //create and store new user
-    const result = await User.create({
-      username: user,
-      email: email,
-      phonenumber: phonenumber,
-      address: address,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    const fileUrl = req.file.path;
 
-    console.log(result);
+    // send uploaded file to Cloudinary
+    cloudinary.uploader.upload(fileUrl, async (error, result) => {
+      if (error) {
+        // handle Cloudinary upload error
+        console.error(error);
+        return res.status(500).send("Error uploading file to Cloudinary");
+      }
 
-    sendEmail({
-      from: "mohdnaeemghadai@gmail.com",
-      to: email,
-      subject: "Thank you for registering",
-      text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
-      html: formSubmissionEmail({
-        emailFrom: "mohdnaeemghadai@gmail.com",
+      // handle successful Cloudinary upload
+      const file = result.secure_url;
+
+      // save form data and uploaded file to database
+
+      await User.create({
         username: user,
-      }),
-    }).catch((err) => {
-      console.log(err);
-      return res.status(500).json({ error: "Error in sending email." });
-    });
-    sendEmail({
-      from: email,
-      to: "mohdnaeemghadai@gmail.com",
-      subject: "New User Registration",
-      text: `Namazzyy app have a message for you.`,
-      html: newRequestEmailTemplate({
-        emailFrom: email,
-        username: user,
-      }),
-    })
-      .then(async () => {
-        return res.status(201).json({ success: `New User ${user} created!` });
-      })
-      .catch((err) => {
+        email: email,
+        phonenumber: phonenumber,
+        address: address,
+        imageUrl: file,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      sendEmail({
+        from: "mohdnaeemghadai@gmail.com",
+        to: email,
+        subject: "Thank you for registering",
+        text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
+        html: formSubmissionEmail({
+          emailFrom: "mohdnaeemghadai@gmail.com",
+          username: user,
+        }),
+      }).catch((err) => {
         console.log(err);
         return res.status(500).json({ error: "Error in sending email." });
       });
+
+      sendEmail({
+        from: email,
+        to: "mohdnaeemghadai@gmail.com",
+        subject: "New User Registration",
+        text: `Namazzyy app have a message for you.`,
+        html: newRequestEmailTemplate({
+          emailFrom: email,
+          username: user,
+        }),
+      })
+        .then(async () => {
+          return res.status(201).json({ success: `New User ${user} created!` });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({ error: "Error in sending email." });
+        });
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

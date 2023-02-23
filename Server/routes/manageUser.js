@@ -4,8 +4,9 @@ const registerController = require("../controllers/manageUser");
 const ROLES_LIST = require("../config/roles_list");
 const verifyJWT = require("../middleware/verifyJWT");
 const verifyRoles = require("../middleware/verifyRoles");
+const upload = require("../middleware/multer");
 
-router.post("/", registerController.handleNewUser);
+router.post("/", upload.single("file"), registerController.handleNewUser);
 router.post(
   "/adminregister",
   verifyJWT,

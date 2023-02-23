@@ -48,6 +48,9 @@ const userSchema = new Schema({
   updatedAt: {
     type: Date,
   },
+  imageUrl: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
