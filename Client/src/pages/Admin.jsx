@@ -4,6 +4,7 @@ import Pagination from "../components/Pagination";
 import DeleteUserModal from "../components/modals/DeleteUserModal";
 import useContent from "../hooks/useContent";
 import timeSince from "../helper/timeSince";
+import UserDetailsModal from "../components/modals/UserDetailsModal";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -266,23 +267,7 @@ const Admin = () => {
                               </svg>
                             </button>
                             <DeleteUserModal username={user.username} />
-                            <button className=" text-blue-400 flex transition-colors duration-200 hover:text-blue-500 focus:outline-none gap-2">
-                              <svg
-                                width="17"
-                                height="17"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"></path>
-                                <path d="M12 8h.01"></path>
-                                <path d="M11 12h1v4h1"></path>
-                              </svg>
-                            </button>
+                            <UserDetailsModal user={user} />
                           </div>
                         </td>
                       </tr>
