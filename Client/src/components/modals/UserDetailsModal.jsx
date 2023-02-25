@@ -5,6 +5,7 @@ import { PaperClipIcon } from "@heroicons/react/20/solid";
 import timeSince from "../../helper/timeSince";
 import { Accordion, AccordionBody } from "@material-tailwind/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import ImageModal from "./ImageModal";
 
 export default function UserDetailsModal({ user }) {
   const [open, setOpen] = useState(false);
@@ -125,6 +126,7 @@ export default function UserDetailsModal({ user }) {
                               </span>
                             ) : null}
                           </Dialog.Title>
+                          <ImageModal file={user.imageUrl} />
                           <div className="flex justify-between mt-3"></div>
                         </div>
                         <div className="relative mt-6 flex-1 px-4 sm:px-6">

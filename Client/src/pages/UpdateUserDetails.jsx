@@ -17,7 +17,7 @@ const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 const REGITSER_URL = "/manageuser";
 
-const Register = () => {
+const UpdateUserDetails = () => {
   const userRef = useRef();
   const errRef = useRef();
   const { darkMode } = useContent();
@@ -115,7 +115,6 @@ const Register = () => {
       } else {
         setErrMsg("Form Submission Failed");
       }
-      setLoading(false);
       errRef.current.focus();
     }
   };
@@ -412,4 +411,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UpdateUserDetails;

@@ -96,6 +96,83 @@ const handleNewUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user, phonenumber, email, address, isApproved } = req.body;
+
+    if (!user) {
+      return res.status(400).json({ message: "Username is required" });
+    }
+    if (!phonenumber) {
+      return res.status(400).json({ message: "phonenumber is required" });
+    }
+    if (!address) {
+      return res.status(400).json({ message: "Address is required" });
+    }
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // check if the user exists
+    const userData = await User.findById(id);
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const details = await User.findOne({ username: user }).exec();
+    if (details && details._id != id) {
+      return res.sendStatus(409); //Conflict
+    }
+
+    // update user details
+    userData.username = user;
+    userData.phonenumber = phonenumber;
+    userData.address = address;
+    userData.email = email;
+    if (isApproved) {
+      userData.isApproved = isApproved;
+      sendEmail({
+        from: "mohdnaeemghadai@gmail.com",
+        to: userData.email,
+        subject: "You are approved",
+        text: `${"mohdnaeemghadai@gmail.com"} have a message for you.`,
+        html: successEmailTemplate({
+          emailFrom: "mohdnaeemghadai@gmail.com",
+          username: userData.username,
+          password: userData.password,
+        }),
+      }).catch((err) => {
+        console.log(err);
+        return res.status(500).json({ error: "Error in sending email." });
+      });
+    }
+
+    // check if a new image was uploaded
+    if (req.file) {
+      // upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
+
+      // delete the previous image from Cloudinary if it exists
+      if (userData.imageUrl) {
+        const publicId = userData.imageUrl.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(publicId);
+      }
+
+      // set the new image URL
+      userData.imageUrl = result.secure_url;
+    }
+
+    // save the updated user details to MongoDB
+    userData.updatedAt = new Date();
+    await userData.save();
+
+    return res.status(201).json({ success: `User ${user} data updated!` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const handleNewUserByAdmin = async (req, res) => {
   const { user, pwd, email, phonenumber, address } = req.body;
   console.log(req);
@@ -300,4 +377,5 @@ module.exports = {
   deleteUser,
   changePassword,
   handleNewUserByAdmin,
+  updateUser,
 };

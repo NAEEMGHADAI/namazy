@@ -6,6 +6,7 @@ import AcceptUserModal from "../components/modals/AcceptUserModal";
 import RejectUserModal from "../components/modals/RejectUserModal";
 import useContent from "../hooks/useContent";
 import timeSince from "../helper/timeSince";
+import UserDetailsModal from "../components/modals/UserDetailsModal";
 
 const RequestHandler = () => {
   const [users, setUsers] = useState([]);
@@ -182,6 +183,7 @@ const RequestHandler = () => {
                           <div className="flex items-center gap-x-6">
                             <AcceptUserModal username={user.username} />
                             <RejectUserModal username={user.username} />
+                            <UserDetailsModal user={user} />
                           </div>
                         </td>
                       </tr>

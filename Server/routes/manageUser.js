@@ -13,6 +13,7 @@ router.post(
   verifyRoles(ROLES_LIST.Admin),
   registerController.handleNewUserByAdmin
 );
+router.put("/:id", upload.single("file"), registerController.updateUser);
 router.delete(
   "/:user",
   verifyJWT,

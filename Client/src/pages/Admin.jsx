@@ -5,6 +5,7 @@ import DeleteUserModal from "../components/modals/DeleteUserModal";
 import useContent from "../hooks/useContent";
 import timeSince from "../helper/timeSince";
 import UserDetailsModal from "../components/modals/UserDetailsModal";
+import UserDetailEditModal from "../components/modals/UserDetailEditModal";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -249,23 +250,7 @@ const Admin = () => {
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
-                            <button className="text-blue-600 flex transition-colors duration-200 hover:text-blue-500 focus:outline-none gap-2">
-                              <svg
-                                width="18"
-                                height="18"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M9 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-3"></path>
-                                <path d="M9 14.996h3l8.5-8.5a2.121 2.121 0 0 0-3-3l-8.5 8.5v3Z"></path>
-                                <path d="m16 5 3 3"></path>
-                              </svg>
-                            </button>
+                            <UserDetailEditModal user={user} />
                             <DeleteUserModal username={user.username} />
                             <UserDetailsModal user={user} />
                           </div>
