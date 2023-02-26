@@ -5,21 +5,19 @@ const Footer = () => {
   return (
     <footer className="text-center bg-main-dark-bg text-white">
       <div className="container p-6">
-        <div className="">
-          <p className="flex justify-center flex-row items-center">
-            <span className="mr-4">
-              Your mosque's name isn't listed here. Fill out this form to sign
-              up right now.
-            </span>
-            <Link to="/register">
-              <button
-                type="button"
-                className="inline-block px-10 py-2 border-2 border-white text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-              >
-                Sign up!
-              </button>
-            </Link>
-          </p>
+        <div className="flex justify-center md:flex-row flex-col items-center">
+          <span className="md:mr-4">
+            Your mosque's name isn't listed here. Fill out this form to sign up
+            right now.
+          </span>
+          <Link to="/register">
+            <button
+              type="button"
+              className="inline-block px-10 py-2  md:mt-0 mt-5  border-2 border-white text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+            >
+              Sign up!
+            </button>
+          </Link>
         </div>
       </div>
       {/* <div className="container px-6 pt-6">

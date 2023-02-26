@@ -87,7 +87,7 @@ const Login = () => {
   // }, [persist]);
 
   return (
-    <section className="flex flex-col flex-wrap content-center justify-center w-full">
+    <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
       <form
         onSubmit={handleSubmit}
         className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${

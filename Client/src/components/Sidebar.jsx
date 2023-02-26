@@ -69,7 +69,9 @@ export default function Sidebar() {
             <button
               type="button"
               onClick={handleCloseSideBar}
-              className="text-xl rounded-full p-3 hover:bg-slate-600 mt-4 block md:hidden text-white"
+              className={`text-xl rounded-full p-3 hover:bg-slate-600 mt-4 text-white ${
+                screenSize > 1000 ? "hidden" : "block"
+              }`}
             >
               <AiOutlineClose />
             </button>

@@ -45,7 +45,9 @@ const Navbar = () => {
         <>
           <>
             <button
-              className="bg-blue-600 text-white rounded-xl hover:bg-blue-800 w-full mr-8 ml-8 md:w-36 md:pt-3 md:pb-3 relative"
+              className={`bg-blue-600 text-white rounded-xl hover:bg-blue-800  mr-8 ml-8  relative ${
+                screenSize > 1000 ? "w-36 pt-3 pb-3" : "w-full"
+              }`}
               onClick={signout}
             >
               Log Out
@@ -54,7 +56,9 @@ const Navbar = () => {
         </>
       ) : (
         <button
-          className="bg-blue-600 text-white rounded-xl hover:bg-blue-800 w-full mr-8 ml-8 md:w-36 md:pt-3 md:pb-3 relative"
+          className={`bg-blue-600 text-white rounded-xl hover:bg-blue-800  mr-8 ml-8  relative ${
+            screenSize > 1000 ? "w-36 pt-3 pb-3" : "w-full"
+          }`}
           onClick={() => navigate("/login")}
         >
           Login
@@ -82,7 +86,9 @@ const Navbar = () => {
           {auth?.accessToken ? (
             <>
               <button
-                className="bg-blue-600 text-white rounded-xl hover:bg-blue-800 w-full mr-8 ml-8 md:w-36 md:pt-3 md:pb-3 relative"
+                className={`bg-blue-600 text-white rounded-xl hover:bg-blue-800  mr-8 ml-8  relative ${
+                  screenSize > 1000 ? "w-36 pt-3 pb-3" : "w-full"
+                }`}
                 onClick={signout}
               >
                 Log Out
@@ -90,7 +96,9 @@ const Navbar = () => {
             </>
           ) : (
             <button
-              className="bg-blue-600 text-white rounded-xl hover:bg-blue-800 w-full mr-8 ml-8 md:w-36 md:pt-3 md:pb-3 relative"
+              className={`bg-blue-600 text-white rounded-xl hover:bg-blue-800  mr-8 ml-8  relative ${
+                screenSize > 1000 ? "w-36 pt-3 pb-3" : "w-full"
+              }`}
               onClick={() => navigate("/login")}
             >
               Login

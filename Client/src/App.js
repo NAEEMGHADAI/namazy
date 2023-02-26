@@ -25,7 +25,11 @@ function App() {
   return (
     <div className="flex relative bg-main-dark-bg">
       {activeMenu ? (
-        <div className="w-full md:w-48 fixed sidebar bg-secondary-dark-bg">
+        <div
+          className={`fixed sidebar bg-secondary-dark-bg ${
+            screenSize > 1000 ? "w-48" : "w-full"
+          }`}
+        >
           <Sidebar />
         </div>
       ) : (

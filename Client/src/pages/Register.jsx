@@ -159,7 +159,7 @@ const Register = () => {
           </div>
         </section>
       ) : (
-        <section className="flex flex-col flex-wrap content-center justify-center w-full  h-screen">
+        <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen mb-10">
           <form
             onSubmit={handleSubmit}
             className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
