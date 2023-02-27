@@ -8,6 +8,7 @@ const successEmailTemplate = require("../utils/successEmailTemplate");
 const deleteUserEmailTemplate = require("../utils/deleteUserEmailTemplate");
 const newRequestEmailTemplate = require("../utils/newRequestEmailTemplate");
 const cloudinary = require("../middleware/cloudinary");
+const Mosque = require("../model/Mosque");
 
 const handleNewUser = async (req, res) => {
   const { user, email, phonenumber, address } = req.body;
@@ -96,6 +97,20 @@ const handleNewUser = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -125,6 +140,16 @@ const updateUser = async (req, res) => {
     }
 
     // update user details
+    if (userData.username !== user) {
+      userData.username = user;
+      let mosqueDetails = await Mosque.findOne({
+        username: userData.username,
+      }).exec();
+      if (mosqueDetails) {
+        mosqueDetails.username = user;
+        await mosqueDetails.save();
+      }
+    }
     userData.username = user;
     userData.phonenumber = phonenumber;
     userData.address = address;
@@ -378,4 +403,5 @@ module.exports = {
   changePassword,
   handleNewUserByAdmin,
   updateUser,
+  getUser,
 };

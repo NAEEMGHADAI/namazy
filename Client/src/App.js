@@ -14,6 +14,8 @@ import AdminRegister from "./pages/AdminRegister";
 import EditNamazTime from "./pages/EditNamazTime";
 import Bookmark from "./pages/Bookmark";
 import RequestHandler from "./pages/RequestHandler";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 
 const ROLES = {
   User: 1000,
@@ -68,6 +70,8 @@ function App() {
                   }
                 >
                   <Route path="edit" element={<EditNamazTime />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="editprofile" element={<EditProfile />} />
                 </Route>
               </Route>
               {/* catch all */}

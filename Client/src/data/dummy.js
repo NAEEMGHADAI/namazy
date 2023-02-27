@@ -28,7 +28,6 @@ export const links = [
     isProtected: false,
     roles: [1000],
   },
-
   // {
   //   title: "Map",
   //   link: "map",
@@ -63,6 +62,13 @@ export const links = [
     icon: <RiAdminFill />,
     isProtected: true,
     roles: [5150],
+  },
+  {
+    title: "Profile",
+    link: "profile",
+    icon: <RiAdminFill />,
+    isProtected: true,
+    roles: [1000],
   },
 ];
 

@@ -10,17 +10,23 @@ import axios from "../api/axios";
 import Loading from "../components/Loading";
 import ImageModal from "../components/modals/ImageModal";
 import useContent from "../hooks/useContent";
+import jwtDecode from "jwt-decode";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
-const REGITSER_URL = "/manageuser";
 
-const UpdateUserDetails = () => {
+const EditProfile = () => {
   const userRef = useRef();
   const errRef = useRef();
   const { darkMode } = useContent();
+
+  const { auth } = useContent();
+  const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
+  const id = decoded?.UserInfo?.id || "";
+  const axiosPrivate = useAxiosPrivate();
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -39,7 +45,6 @@ const UpdateUserDetails = () => {
   const [addressFocus, setAddressFocus] = useState(false);
 
   const [file, setFile] = useState(null);
-  const [fileFocus, setFileFocus] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -74,6 +79,33 @@ const UpdateUserDetails = () => {
     setErrMsg("");
   }, [user, email, number, address, file]);
 
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getUser = async () => {
+      try {
+        const response = await axiosPrivate.get(`manageuser/${id}`, {
+          signal: controller.signal,
+        });
+
+        console.log(response.data);
+        isMounted && setUser(response.data.username);
+        isMounted && setEmail(response.data.email);
+        isMounted && setNumber(response.data.phonenumber);
+        isMounted && setAddress(response.data.address);
+        isMounted && setFile(response.data.imageUrl);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getUser();
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [axiosPrivate, id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
@@ -97,7 +129,7 @@ const UpdateUserDetails = () => {
       console.log(form);
       setLoading(true);
 
-      const response = await axios.post(REGITSER_URL, form, {
+      const response = await axios.put(`/manageuser/${id}`, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -112,9 +144,11 @@ const UpdateUserDetails = () => {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
+        setUser("");
       } else {
         setErrMsg("Form Submission Failed");
       }
+      setLoading(false);
       errRef.current.focus();
     }
   };
@@ -141,18 +175,15 @@ const UpdateUserDetails = () => {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span className="font-medium">Request sent!</span>
+              <span className="font-medium">Profile updated successfully</span>
             </div>
-            <p className="mt-2 text-sm">
-              Thank you for submitting your registration request. Please keep a
-              watch on your email for further instructions.
-            </p>
+
             <div className="flex justify-center">
               <Link
-                to="/"
+                to="/profile"
                 className="mt-4 text-gray-400 hover:text-gray-300 text-sm underline"
               >
-                Go to home page
+                Go to Profile
               </Link>
             </div>
           </div>
@@ -200,6 +231,7 @@ const UpdateUserDetails = () => {
                 <input
                   type="text"
                   id="username"
+                  value={user}
                   ref={userRef}
                   autoComplete="off"
                   onChange={(e) => setUser(e.target.value)}
@@ -242,6 +274,7 @@ const UpdateUserDetails = () => {
                 <input
                   type="email"
                   id="email"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="off"
                   required
@@ -283,6 +316,7 @@ const UpdateUserDetails = () => {
                 <input
                   type="tel"
                   id="tel"
+                  value={number}
                   onChange={(e) => setNumber(e.target.value)}
                   autoComplete="off"
                   required
@@ -327,6 +361,7 @@ const UpdateUserDetails = () => {
                 <textarea
                   type="text"
                   id="address"
+                  value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   autoComplete="off"
                   required
@@ -351,32 +386,22 @@ const UpdateUserDetails = () => {
               </div>
               <div className="mb-4 flex items-center space-x-6 justify-center">
                 <ImageModal file={file} />
-                <label class="block">
-                  <span class="sr-only">Choose File</span>
-                  <input
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                    // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="file"
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    onFocus={() => setFileFocus(true)}
-                    onBlur={() => setFileFocus(false)}
-                    aria-describedby="filenote"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-                </label>
-                <p
-                  id="filenote"
-                  className={
-                    fileFocus && !file
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid file */}
-                  Please upload a file.
-                </p>
+                <br />
+                <div className="flex justify-center">
+                  <label class="block">
+                    <span class="sr-only">Choose File</span>
+                    <input
+                      class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="file"
+                      //   value={file}
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      aria-describedby="filenote"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </label>
+                </div>
               </div>
 
               <div className="text-center mb-6">
@@ -411,4 +436,4 @@ const UpdateUserDetails = () => {
   );
 };
 
-export default UpdateUserDetails;
+export default EditProfile;
