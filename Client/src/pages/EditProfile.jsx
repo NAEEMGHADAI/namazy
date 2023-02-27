@@ -14,6 +14,7 @@ import jwtDecode from "jwt-decode";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
@@ -31,6 +32,10 @@ const EditProfile = () => {
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+
+  const [name, setName] = useState("");
+  const [validOgName, setValidOgName] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
 
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
@@ -59,6 +64,11 @@ const EditProfile = () => {
     const result = USER_REGEX.test(user);
     setValidName(result);
   }, [user]);
+
+  useEffect(() => {
+    const result = NAME_REGEX.test(name);
+    setValidOgName(result);
+  }, [name]);
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
@@ -91,6 +101,7 @@ const EditProfile = () => {
 
         console.log(response.data);
         isMounted && setUser(response.data.username);
+        isMounted && setName(response.data.name);
         isMounted && setEmail(response.data.email);
         isMounted && setNumber(response.data.phonenumber);
         isMounted && setAddress(response.data.address);
@@ -112,15 +123,17 @@ const EditProfile = () => {
     const v2 = EMAIL_REGEX.test(email);
     const v3 = NUMBER_REGEX.test(number);
     const v4 = ADDRESS_REGEX.test(address);
+    const v5 = NAME_REGEX.test(name);
 
     console.log(v1, v2, v3, v4);
-    if (!v1 || !v2 || !v3 || !v4 || !file) {
+    if (!v1 || !v2 || !v3 || !v4 || !v5 || !file) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
       const form = new FormData();
       form.append("user", user);
+      form.append("name", name);
       form.append("phonenumber", number);
       form.append("email", email);
       form.append("address", address);
@@ -246,6 +259,48 @@ const EditProfile = () => {
                   id="uidnote"
                   className={
                     userFocus && user && !validName
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
+                  Letters, numbers, underscores, hyphens allowed.
+                </p>
+              </div>
+              <div className="mb-6">
+                <label htmlFor="name" className="block text-sm font-bold mb-2">
+                  Name:
+                  <span
+                    className={validOgName ? "text-green-600 ml-1" : "hidden"}
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                  <span
+                    className={
+                      validOgName || !name ? "hidden" : "text-red-600 ml-1"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  autoComplete="off"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  aria-invalid={validOgName ? "false" : "true"}
+                  aria-describedby="namenote"
+                  onFocus={() => setNameFocus(true)}
+                  onBlur={() => setNameFocus(false)}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                />
+                <p
+                  id="namenote"
+                  className={
+                    nameFocus && name && !validOgName
                       ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
                       : "hidden"
                   }
@@ -408,6 +463,7 @@ const EditProfile = () => {
                 <button
                   disabled={
                     !validName ||
+                    !validOgName ||
                     !validEmail ||
                     !validNumber ||
                     !validAddress ||
@@ -417,6 +473,7 @@ const EditProfile = () => {
                   }
                   className={`${
                     !validName ||
+                    !validOgName ||
                     !validEmail ||
                     !validNumber ||
                     !validAddress ||

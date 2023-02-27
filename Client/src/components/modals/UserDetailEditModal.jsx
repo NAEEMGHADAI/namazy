@@ -11,6 +11,7 @@ import ImageModal from "./ImageModal";
 import useContent from "../../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
@@ -31,6 +32,9 @@ export default function UserDetailEditModal({ user }) {
   const [username, setUserName] = useState(user.username);
   const [validName, setValidName] = useState(false);
 
+  const [name, setName] = useState(user.name);
+  const [validOgName, setValidOgName] = useState(false);
+
   const [email, setEmail] = useState(user.email);
   const [validEmail, setValidEmail] = useState(false);
 
@@ -50,6 +54,11 @@ export default function UserDetailEditModal({ user }) {
   }, [username]);
 
   useEffect(() => {
+    const result = NAME_REGEX.test(name);
+    setValidOgName(result);
+  }, [name]);
+
+  useEffect(() => {
     const result = EMAIL_REGEX.test(email);
     setValidEmail(result);
   }, [email]);
@@ -66,7 +75,7 @@ export default function UserDetailEditModal({ user }) {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, email, number, address, file]);
+  }, [user, name, email, number, address, file]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,15 +83,17 @@ export default function UserDetailEditModal({ user }) {
     const v2 = EMAIL_REGEX.test(email);
     const v3 = NUMBER_REGEX.test(number);
     const v4 = ADDRESS_REGEX.test(address);
+    const v5 = NAME_REGEX.test(name);
 
     console.log(v1, v2, v3, v4);
-    if (!v1 || !v2 || !v3 || !v4 || !file) {
+    if (!v1 || !v2 || !v3 || !v4 || !v5 || !file) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
       const form = new FormData();
       form.append("user", username);
+      form.append("name", name);
       form.append("phonenumber", number);
       form.append("email", email);
       form.append("address", address);
@@ -277,7 +288,7 @@ export default function UserDetailEditModal({ user }) {
                                 <dl>
                                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
-                                      Full name{" "}
+                                      Username{" "}
                                       <span
                                         className={
                                           validName
@@ -325,6 +336,47 @@ export default function UserDetailEditModal({ user }) {
                                             User
                                           </p>
                                         )}
+                                      </div>
+                                    </dd>
+                                  </div>
+                                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-500">
+                                      Full name{" "}
+                                      <span
+                                        className={
+                                          validOgName
+                                            ? "text-green-600 ml-1"
+                                            : "hidden"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faCheck} />
+                                      </span>
+                                      <span
+                                        className={
+                                          validOgName || !name
+                                            ? "hidden"
+                                            : "text-red-600 ml-1"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                      </span>
+                                    </dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                      <div className="flex items-center justify-between">
+                                        <input
+                                          type="text"
+                                          id="name"
+                                          value={name}
+                                          autoComplete="off"
+                                          onChange={(e) =>
+                                            setName(e.target.value)
+                                          }
+                                          required
+                                          aria-invalid={
+                                            validOgName ? "false" : "true"
+                                          }
+                                          className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                        />
                                       </div>
                                     </dd>
                                   </div>
@@ -661,6 +713,7 @@ export default function UserDetailEditModal({ user }) {
                                       onClick={handleSubmit}
                                       disabled={
                                         !validName ||
+                                        !validOgName ||
                                         !validEmail ||
                                         !validNumber ||
                                         !validAddress ||
@@ -670,6 +723,7 @@ export default function UserDetailEditModal({ user }) {
                                       }
                                       className={`${
                                         !validName ||
+                                        !validOgName ||
                                         !validEmail ||
                                         !validNumber ||
                                         !validAddress ||

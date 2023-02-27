@@ -70,7 +70,7 @@ const ChangePassword = () => {
       return;
     }
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         REGITSER_URL,
         JSON.stringify({ user, pwd, newPwd }),
         {
@@ -82,6 +82,7 @@ const ChangePassword = () => {
       setSuccess(true);
       //clear input fields
     } catch (err) {
+      console.log(err);
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 404 || err.response?.status === 401) {

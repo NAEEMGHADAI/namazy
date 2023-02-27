@@ -11,9 +11,12 @@ const cloudinary = require("../middleware/cloudinary");
 const Mosque = require("../model/Mosque");
 
 const handleNewUser = async (req, res) => {
-  const { user, email, phonenumber, address } = req.body;
+  const { user, name, email, phonenumber, address } = req.body;
   if (!user) {
     return res.status(400).json({ message: "Username is required" });
+  }
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
   }
   if (!phonenumber) {
     return res.status(400).json({ message: "phonenumber is required" });
@@ -52,6 +55,7 @@ const handleNewUser = async (req, res) => {
 
       await User.create({
         username: user,
+        name: name,
         email: email,
         phonenumber: phonenumber,
         address: address,
@@ -114,11 +118,15 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { user, phonenumber, email, address, isApproved } = req.body;
+    const { user, name, phonenumber, email, address, isApproved } = req.body;
 
     if (!user) {
       return res.status(400).json({ message: "Username is required" });
     }
+    if (!name) {
+      return res.status(400).json({ message: "Name is required" });
+    }
+
     if (!phonenumber) {
       return res.status(400).json({ message: "phonenumber is required" });
     }
@@ -141,7 +149,6 @@ const updateUser = async (req, res) => {
 
     // update user details
     if (userData.username !== user) {
-      userData.username = user;
       let mosqueDetails = await Mosque.findOne({
         username: userData.username,
       }).exec();
@@ -149,8 +156,10 @@ const updateUser = async (req, res) => {
         mosqueDetails.username = user;
         await mosqueDetails.save();
       }
+      userData.username = user;
     }
     userData.username = user;
+    userData.name = name;
     userData.phonenumber = phonenumber;
     userData.address = address;
     userData.email = email;
@@ -199,12 +208,14 @@ const updateUser = async (req, res) => {
 };
 
 const handleNewUserByAdmin = async (req, res) => {
-  const { user, pwd, email, phonenumber, address } = req.body;
+  const { user, name, pwd, email, phonenumber, address } = req.body;
   console.log(req);
   if (!user || !pwd) {
     return res.status(400).json({ message: "Username and password required" });
   }
-
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
   if (!phonenumber) {
     return res.status(400).json({ message: "phonenumber is required" });
   }
@@ -244,6 +255,7 @@ const handleNewUserByAdmin = async (req, res) => {
       //create and store new user
       await User.create({
         username: user,
+        name: name,
         email: email,
         phonenumber: phonenumber,
         address: address,

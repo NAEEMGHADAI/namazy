@@ -27,7 +27,7 @@ router.delete(
   verifyRoles(ROLES_LIST.Admin),
   registerController.deleteUser
 );
-router.put("/changePassword", registerController.changePassword);
+router.patch("/changePassword", registerController.changePassword);
 router.patch(
   "/verify",
   verifyJWT,

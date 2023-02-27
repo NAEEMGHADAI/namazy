@@ -150,7 +150,7 @@ export default function UserDetailsModal({ user }) {
                                   <dl>
                                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
-                                        Full name
+                                        User name
                                       </dt>
                                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <div className="flex items-center justify-between">
@@ -167,7 +167,18 @@ export default function UserDetailsModal({ user }) {
                                         </div>
                                       </dd>
                                     </div>
-                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className=" bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                      <dt className="text-sm font-medium text-gray-500">
+                                        Full name
+                                      </dt>
+                                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <div className="flex items-center justify-between">
+                                          {user.name}
+                                        </div>
+                                      </dd>
+                                    </div>
+
+                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Application status
                                       </dt>
@@ -245,7 +256,7 @@ export default function UserDetailsModal({ user }) {
                                         )}
                                       </dd>
                                     </div>
-                                    <div className=" bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className=" bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Email address
                                       </dt>
@@ -253,7 +264,7 @@ export default function UserDetailsModal({ user }) {
                                         {user.email}
                                       </dd>
                                     </div>
-                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Phone Number
                                       </dt>
@@ -261,7 +272,7 @@ export default function UserDetailsModal({ user }) {
                                         {user.phonenumber}
                                       </dd>
                                     </div>
-                                    <div className="bg-gray-50 px-4 py-5 sm:gap-4 sm:px-6">
+                                    <div className="bg-white px-4 py-5 sm:gap-4 sm:px-6">
                                       <Fragment>
                                         <Accordion open={accordion === 1}>
                                           <h1
@@ -329,7 +340,7 @@ export default function UserDetailsModal({ user }) {
                                       </Fragment>
                                     </div>
 
-                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Address
                                       </dt>
@@ -337,7 +348,7 @@ export default function UserDetailsModal({ user }) {
                                         {user.address}
                                       </dd>
                                     </div>
-                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Attachments
                                       </dt>
@@ -367,7 +378,7 @@ export default function UserDetailsModal({ user }) {
                                         </ul>
                                       </dd>
                                     </div>
-                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Applied on
                                       </dt>
@@ -391,7 +402,7 @@ export default function UserDetailsModal({ user }) {
                                       </dd>
                                     </div>
 
-                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                       <dt className="text-sm font-medium text-gray-500">
                                         Last updated
                                       </dt>
