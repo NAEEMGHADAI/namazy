@@ -215,30 +215,49 @@ const handleNewUserByAdmin = async (req, res) => {
     return res.status(400).json({ message: "Email is required" });
   }
 
+  if (!req.file.path) {
+    return res.status(400).json({ message: "Please upload a file" });
+  }
+
   //Check for duplicate username in the db
   const duplicate = await User.findOne({ username: user }).exec();
   if (duplicate) {
     return res.sendStatus(409); //Conflict
   }
   try {
-    //encrypt the password
-    const hashedPwd = await bcrypt.hash(pwd, 10);
     //create and store new user
-    const result = await User.create({
-      username: user,
-      email: email,
-      phonenumber: phonenumber,
-      address: address,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      newUser: false,
-      password: hashedPwd,
-      isApproved: "Approved",
+    const fileUrl = req.file.path;
+
+    // send uploaded file to Cloudinary
+    cloudinary.uploader.upload(fileUrl, async (error, result) => {
+      if (error) {
+        // handle Cloudinary upload error
+        console.error(error);
+        return res.status(500).send("Error uploading file to Cloudinary");
+      }
+
+      // handle successful Cloudinary upload
+      const file = result.secure_url;
+
+      // save form data and uploaded file to database
+      const hashedPwd = await bcrypt.hash(pwd, 10);
+      //create and store new user
+      await User.create({
+        username: user,
+        email: email,
+        phonenumber: phonenumber,
+        address: address,
+        password: hashedPwd,
+        imageUrl: file,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        newUser: false,
+        isApproved: "Approved",
+      });
+
+      res.status(201).json({ success: `New User ${user} created!` });
     });
-
-    console.log(result);
-
-    res.status(201).json({ success: `New User ${user} created!` });
+    //encrypt the password
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

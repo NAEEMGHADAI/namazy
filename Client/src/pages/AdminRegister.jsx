@@ -6,6 +6,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import ImageModal from "../components/modals/ImageModal";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useContent from "../hooks/useContent";
 
@@ -45,6 +47,11 @@ const AdminRegister = () => {
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
+
+  const [file, setFile] = useState(null);
+  const [fileFocus, setFileFocus] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -92,7 +99,7 @@ const AdminRegister = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd, email, number, address]);
+  }, [user, pwd, matchPwd, email, number, address, file]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,19 +110,31 @@ const AdminRegister = () => {
     const v5 = ADDRESS_REGEX.test(address);
     const match = pwd === matchPwd;
     console.log(v1, v2);
-    if (!v1 || !v2 || !v3 || !v4 || !v5 || !match) {
+    if (!v1 || !v2 || !v3 || !v4 || !v5 || !match || !file) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
-      const response = await axiosPrivate.post(
-        REGITSER_URL,
-        JSON.stringify({ user, pwd, email, phonenumber: number, address })
-      );
+      const form = new FormData();
+      form.append("user", user);
+      form.append("pwd", pwd);
+      form.append("phonenumber", number);
+      form.append("email", email);
+      form.append("address", address);
+      form.append("file", file);
+
+      setLoading(true);
+
+      const response = await axiosPrivate.post(REGITSER_URL, form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(response);
       console.log(response.accessToken);
       console.log(JSON.stringify(response));
       setSuccess(true);
+      setLoading(false);
       //clear input fields
     } catch (err) {
       if (!err?.response) {
@@ -125,13 +144,16 @@ const AdminRegister = () => {
       } else {
         setErrMsg("Registration Failed");
       }
+      setLoading(false);
       errRef.current.focus();
     }
   };
 
   return (
     <>
-      {success ? (
+      {loading ? (
+        <Loading />
+      ) : success ? (
         <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
           <div className="bg-gray-800 rounded-md p-4 text-green-500">
             <div className="flex items-center">
@@ -446,6 +468,35 @@ const AdminRegister = () => {
                   Must Match the first password input field.
                 </p>
               </div>
+              <div className="mb-4 flex items-center space-x-6 justify-center">
+                <ImageModal file={file} />
+                <label class="block">
+                  <span class="sr-only">Choose File</span>
+                  <input
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="file"
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    onFocus={() => setFileFocus(true)}
+                    onBlur={() => setFileFocus(false)}
+                    aria-describedby="filenote"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </label>
+                <p
+                  id="filenote"
+                  className={
+                    fileFocus && !file
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  {/*write message for invalid file */}
+                  Please upload a file.
+                </p>
+              </div>
               <div className="text-center mb-6">
                 <button
                   disabled={
@@ -453,7 +504,8 @@ const AdminRegister = () => {
                     !validPwd ||
                     !validMatch | !validEmail ||
                     !validNumber ||
-                    !validAddress
+                    !validAddress ||
+                    !file
                       ? true
                       : false
                   }
@@ -462,7 +514,8 @@ const AdminRegister = () => {
                     !validPwd ||
                     !validMatch | !validEmail ||
                     !validNumber ||
-                    !validAddress
+                    !validAddress ||
+                    !file
                       ? "bg-blue-300"
                       : "bg-blue-500 hover:bg-blue-700"
                   } text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline`}

@@ -11,6 +11,7 @@ router.post(
   "/adminregister",
   verifyJWT,
   verifyRoles(ROLES_LIST.Admin),
+  upload.single("file"),
   registerController.handleNewUserByAdmin
 );
 router.get(
