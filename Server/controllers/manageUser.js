@@ -11,7 +11,8 @@ const cloudinary = require("../middleware/cloudinary");
 const Mosque = require("../model/Mosque");
 
 const handleNewUser = async (req, res) => {
-  const { user, name, email, phonenumber, address } = req.body;
+  const { user, name, email, phonenumber, address, mosqueName, mosqueAddress } =
+    req.body;
   if (!user) {
     return res.status(400).json({ message: "Username is required" });
   }
@@ -21,11 +22,14 @@ const handleNewUser = async (req, res) => {
   if (!phonenumber) {
     return res.status(400).json({ message: "phonenumber is required" });
   }
-  if (!address) {
-    return res.status(400).json({ message: "Address is required" });
-  }
   if (!email) {
     return res.status(400).json({ message: "Email is required" });
+  }
+  if (!mosqueName) {
+    return res.status(400).json({ message: "Mosque Name is required" });
+  }
+  if (!mosqueAddress) {
+    return res.status(400).json({ message: "Mosque Address is required" });
   }
 
   if (!req.file.path) {
@@ -59,6 +63,8 @@ const handleNewUser = async (req, res) => {
         email: email,
         phonenumber: phonenumber,
         address: address,
+        mosqueName: mosqueName,
+        mosqueAddress: mosqueAddress,
         imageUrl: file,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -118,7 +124,16 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { user, name, phonenumber, email, address, isApproved } = req.body;
+    const {
+      user,
+      name,
+      phonenumber,
+      email,
+      address,
+      isApproved,
+      mosqueName,
+      mosqueAddress,
+    } = req.body;
 
     if (!user) {
       return res.status(400).json({ message: "Username is required" });
@@ -130,11 +145,16 @@ const updateUser = async (req, res) => {
     if (!phonenumber) {
       return res.status(400).json({ message: "phonenumber is required" });
     }
-    if (!address) {
-      return res.status(400).json({ message: "Address is required" });
-    }
+
     if (!email) {
       return res.status(400).json({ message: "Email is required" });
+    }
+
+    if (!mosqueName) {
+      return res.status(400).json({ message: "Mosque Name is required" });
+    }
+    if (!mosqueAddress) {
+      return res.status(400).json({ message: "Mosque Address is required" });
     }
 
     // check if the user exists
@@ -163,6 +183,9 @@ const updateUser = async (req, res) => {
     userData.phonenumber = phonenumber;
     userData.address = address;
     userData.email = email;
+    userData.mosqueName = mosqueName;
+    userData.mosqueAddress = mosqueAddress;
+
     if (isApproved) {
       userData.isApproved = isApproved;
       sendEmail({
@@ -208,7 +231,16 @@ const updateUser = async (req, res) => {
 };
 
 const handleNewUserByAdmin = async (req, res) => {
-  const { user, name, pwd, email, phonenumber, address } = req.body;
+  const {
+    user,
+    name,
+    pwd,
+    email,
+    phonenumber,
+    address,
+    mosqueName,
+    mosqueAddress,
+  } = req.body;
   console.log(req);
   if (!user || !pwd) {
     return res.status(400).json({ message: "Username and password required" });
@@ -219,11 +251,16 @@ const handleNewUserByAdmin = async (req, res) => {
   if (!phonenumber) {
     return res.status(400).json({ message: "phonenumber is required" });
   }
-  if (!address) {
-    return res.status(400).json({ message: "Address is required" });
-  }
+
   if (!email) {
     return res.status(400).json({ message: "Email is required" });
+  }
+
+  if (!mosqueName) {
+    return res.status(400).json({ message: "Mosque Name is required" });
+  }
+  if (!mosqueAddress) {
+    return res.status(400).json({ message: "Mosque Address is required" });
   }
 
   if (!req.file.path) {
@@ -259,6 +296,8 @@ const handleNewUserByAdmin = async (req, res) => {
         email: email,
         phonenumber: phonenumber,
         address: address,
+        mosqueName: mosqueName,
+        mosqueAddress: mosqueAddress,
         password: hashedPwd,
         imageUrl: file,
         createdAt: new Date(),

@@ -14,7 +14,9 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
-const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
+const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]*$/;
+const MOSQUE_NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const MOSQUE_ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 
 export default function UserDetailEditModal({ user }) {
   const [open, setOpen] = useState(false);
@@ -43,6 +45,12 @@ export default function UserDetailEditModal({ user }) {
 
   const [address, setAddress] = useState(user.address);
   const [validAddress, setValidAddress] = useState(false);
+
+  const [mosqueName, setMosqueName] = useState(user.mosqueName);
+  const [validMosqueName, setValidMosqueName] = useState(false);
+
+  const [mosqueAddress, setMosqueAddress] = useState(user.mosqueAddress);
+  const [validMosqueAddress, setValidMosqueAddress] = useState(false);
 
   const [file, setFile] = useState(user.imageUrl);
 
@@ -74,19 +82,31 @@ export default function UserDetailEditModal({ user }) {
   }, [address]);
 
   useEffect(() => {
+    const result = MOSQUE_NAME_REGEX.test(mosqueName);
+    setValidMosqueName(result);
+    console.log(result);
+  }, [mosqueName]);
+
+  useEffect(() => {
+    const result = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
+    setValidMosqueAddress(result);
+  }, [mosqueAddress]);
+
+  useEffect(() => {
     setErrMsg("");
-  }, [user, name, email, number, address, file]);
+  }, [user, name, email, number, address, file, mosqueName, mosqueAddress]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(username);
     const v2 = EMAIL_REGEX.test(email);
     const v3 = NUMBER_REGEX.test(number);
-    const v4 = ADDRESS_REGEX.test(address);
-    const v5 = NAME_REGEX.test(name);
+    const v4 = MOSQUE_NAME_REGEX.test(mosqueName);
+    const v5 = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
+    const v6 = NAME_REGEX.test(name);
 
     console.log(v1, v2, v3, v4);
-    if (!v1 || !v2 || !v3 || !v4 || !v5 || !file) {
+    if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !file) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -97,6 +117,9 @@ export default function UserDetailEditModal({ user }) {
       form.append("phonenumber", number);
       form.append("email", email);
       form.append("address", address);
+      form.append("mosqueName", mosqueName);
+      form.append("mosqueAddress", mosqueAddress);
+
       if (isApproved) {
         form.append("isApproved", "Approved");
       }
@@ -117,7 +140,7 @@ export default function UserDetailEditModal({ user }) {
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
-        setErrMsg("Form Submission Failed");
+        setErrMsg(err.response?.data?.message);
       }
       errRef.current.focus();
     }
@@ -131,7 +154,7 @@ export default function UserDetailEditModal({ user }) {
     const controller = new AbortController();
     const getNamazTime = async () => {
       try {
-        const response = await axiosPrivate.get(`/mosque/${user.username}`, {
+        const response = await axiosPrivate.get(`/mosque/${user._id}`, {
           signal: controller.signal,
         });
         console.log(response);
@@ -472,6 +495,91 @@ export default function UserDetailEditModal({ user }) {
                                       )}
                                     </dd>
                                   </div>
+                                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-500">
+                                      Mosque Name{" "}
+                                      <span
+                                        className={
+                                          validMosqueName
+                                            ? "text-green-600 ml-1"
+                                            : "hidden"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faCheck} />
+                                      </span>
+                                      <span
+                                        className={
+                                          validMosqueName || !mosqueName
+                                            ? "hidden"
+                                            : "text-red-600 ml-1"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                      </span>
+                                    </dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                      <div className="flex items-center justify-between">
+                                        <input
+                                          type="text"
+                                          id="mosqueName"
+                                          value={mosqueName}
+                                          autoComplete="off"
+                                          onChange={(e) =>
+                                            setMosqueName(e.target.value)
+                                          }
+                                          required
+                                          aria-invalid={
+                                            validMosqueName ? "false" : "true"
+                                          }
+                                          className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                        />
+                                      </div>
+                                    </dd>
+                                  </div>
+                                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-500">
+                                      Mosque Address{" "}
+                                      <span
+                                        className={
+                                          validMosqueAddress
+                                            ? "text-green-600 ml-1"
+                                            : "hidden"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faCheck} />
+                                      </span>
+                                      <span
+                                        className={
+                                          validMosqueAddress || !mosqueAddress
+                                            ? "hidden"
+                                            : "text-red-600 ml-1"
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                      </span>
+                                    </dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                      <div className="flex items-center justify-between">
+                                        <textarea
+                                          type="text"
+                                          id="mosqueAddress"
+                                          value={mosqueAddress}
+                                          onChange={(e) =>
+                                            setMosqueAddress(e.target.value)
+                                          }
+                                          autoComplete="off"
+                                          required
+                                          aria-invalid={
+                                            validMosqueAddress
+                                              ? "false"
+                                              : "true"
+                                          }
+                                          aria-describedby="addressnote"
+                                          className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                        />
+                                      </div>
+                                    </dd>
+                                  </div>
                                   <div className=" bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                       Email address{" "}
@@ -651,7 +759,6 @@ export default function UserDetailEditModal({ user }) {
                                           setAddress(e.target.value)
                                         }
                                         autoComplete="off"
-                                        required
                                         aria-invalid={
                                           validAddress ? "false" : "true"
                                         }
@@ -716,7 +823,8 @@ export default function UserDetailEditModal({ user }) {
                                         !validOgName ||
                                         !validEmail ||
                                         !validNumber ||
-                                        !validAddress ||
+                                        !validMosqueName ||
+                                        !validMosqueAddress ||
                                         !file
                                           ? true
                                           : false
@@ -726,7 +834,8 @@ export default function UserDetailEditModal({ user }) {
                                         !validOgName ||
                                         !validEmail ||
                                         !validNumber ||
-                                        !validAddress ||
+                                        !validMosqueName ||
+                                        !validMosqueAddress ||
                                         !file
                                           ? "bg-blue-300"
                                           : "bg-blue-500 hover:bg-blue-700"

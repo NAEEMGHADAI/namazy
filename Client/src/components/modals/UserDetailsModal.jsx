@@ -21,7 +21,7 @@ export default function UserDetailsModal({ user }) {
     const controller = new AbortController();
     const getNamazTime = async () => {
       try {
-        const response = await axiosPrivate.get(`/mosque/${user.username}`, {
+        const response = await axiosPrivate.get(`/mosque/${user._id}`, {
           signal: controller.signal,
         });
         console.log(response);
@@ -174,6 +174,26 @@ export default function UserDetailsModal({ user }) {
                                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <div className="flex items-center justify-between">
                                           {user.name}
+                                        </div>
+                                      </dd>
+                                    </div>
+                                    <div className=" bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                      <dt className="text-sm font-medium text-gray-500">
+                                        Mosque Name
+                                      </dt>
+                                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <div className="flex items-center justify-between">
+                                          {user.mosqueName}
+                                        </div>
+                                      </dd>
+                                    </div>
+                                    <div className=" bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                      <dt className="text-sm font-medium text-gray-500">
+                                        Mosque Name
+                                      </dt>
+                                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <div className="flex items-center justify-between">
+                                          {user.mosqueAddress}
                                         </div>
                                       </dd>
                                     </div>

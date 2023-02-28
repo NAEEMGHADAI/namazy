@@ -16,7 +16,9 @@ const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
-const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
+const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]*$/;
+const MOSQUE_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const MOSQUE_ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 const REGITSER_URL = "/manageuser/adminregister";
 
 const AdminRegister = () => {
@@ -44,6 +46,14 @@ const AdminRegister = () => {
   const [address, setAddress] = useState("");
   const [validAddress, setValidAddress] = useState(false);
   const [addressFocus, setAddressFocus] = useState(false);
+
+  const [mosqueName, setMosqueName] = useState("");
+  const [validMosqueName, setValidMosqueName] = useState(false);
+  const [mosqueNameFocus, setMosqueNameFocus] = useState(false);
+
+  const [mosqueAddress, setMosqueAddress] = useState("");
+  const [validMosqueAddress, setValidMosqueAddress] = useState(false);
+  const [mosqueAddressFocus, setMosqueAddressFocus] = useState(false);
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -101,6 +111,16 @@ const AdminRegister = () => {
   }, [address]);
 
   useEffect(() => {
+    const result = MOSQUE_REGEX.test(mosqueName);
+    setValidMosqueName(result);
+  }, [mosqueName]);
+
+  useEffect(() => {
+    const result = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
+    setValidMosqueAddress(result);
+  }, [mosqueAddress]);
+
+  useEffect(() => {
     const result = PWD_REGEX.test(pwd);
     console.log(result);
     console.log(pwd);
@@ -111,7 +131,18 @@ const AdminRegister = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, name, pwd, matchPwd, email, number, address, file]);
+  }, [
+    user,
+    name,
+    pwd,
+    matchPwd,
+    email,
+    number,
+    address,
+    mosqueAddress,
+    mosqueName,
+    file,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,10 +151,23 @@ const AdminRegister = () => {
     const v3 = EMAIL_REGEX.test(email);
     const v4 = NUMBER_REGEX.test(number);
     const v5 = ADDRESS_REGEX.test(address);
-    const v6 = NAME_REGEX.test(name);
+    const v6 = MOSQUE_REGEX.test(mosqueName);
+    const v7 = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
+    const v8 = NAME_REGEX.test(name);
     const match = pwd === matchPwd;
     console.log(v1, v2);
-    if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !match || !file) {
+    if (
+      !v1 ||
+      !v2 ||
+      !v3 ||
+      !v4 ||
+      !v5 ||
+      !v6 ||
+      !v7 ||
+      !v8 ||
+      !match ||
+      !file
+    ) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -135,6 +179,8 @@ const AdminRegister = () => {
       form.append("phonenumber", number);
       form.append("email", email);
       form.append("address", address);
+      form.append("mosqueName", mosqueName);
+      form.append("mosqueAddress", mosqueAddress);
       form.append("file", file);
 
       setLoading(true);
@@ -156,9 +202,10 @@ const AdminRegister = () => {
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg(err.response?.data?.message);
       }
       setLoading(false);
+
       errRef.current.focus();
     }
   };
@@ -226,7 +273,8 @@ const AdminRegister = () => {
                   htmlFor="username"
                   className="block text-sm font-bold mb-2"
                 >
-                  Username:
+                  Username:{" "}
+                  {!user ? <span className="text-red-600 mr-2">*</span> : null}
                   <span
                     className={validName ? "text-green-600 ml-1" : "hidden"}
                   >
@@ -244,6 +292,7 @@ const AdminRegister = () => {
                   type="text"
                   id="username"
                   ref={userRef}
+                  value={user}
                   autoComplete="off"
                   onChange={(e) => setUser(e.target.value)}
                   required
@@ -268,7 +317,8 @@ const AdminRegister = () => {
               </div>
               <div className="mb-6">
                 <label htmlFor="name" className="block text-sm font-bold mb-2">
-                  Name:
+                  Full Name:{" "}
+                  {!name ? <span className="text-red-600 mr-2">*</span> : null}
                   <span
                     className={validOgName ? "text-green-600 ml-1" : "hidden"}
                   >
@@ -286,6 +336,7 @@ const AdminRegister = () => {
                   type="text"
                   id="name"
                   autoComplete="off"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                   aria-invalid={validOgName ? "false" : "true"}
@@ -309,7 +360,8 @@ const AdminRegister = () => {
               </div>
               <div className="mb-6">
                 <label htmlFor="email" className="block text-sm font-bold mb-2">
-                  Email:
+                  Email:{" "}
+                  {!email ? <span className="text-red-600 mr-2">*</span> : null}
                   <span
                     className={validEmail ? "text-green-600 ml-1" : "hidden"}
                   >
@@ -328,6 +380,7 @@ const AdminRegister = () => {
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="off"
+                  value={email}
                   required
                   aria-invalid={validEmail ? "false" : "true"}
                   aria-describedby="emailnote"
@@ -350,7 +403,10 @@ const AdminRegister = () => {
               </div>
               <div className="mb-6">
                 <label htmlFor="tel" className="block text-sm font-bold mb-2">
-                  Phone Number:
+                  Phone Number:{" "}
+                  {!number ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
                   <span
                     className={validNumber ? "text-green-600 ml-1" : "hidden"}
                   >
@@ -369,6 +425,7 @@ const AdminRegister = () => {
                   id="tel"
                   onChange={(e) => setNumber(e.target.value)}
                   autoComplete="off"
+                  value={number}
                   required
                   aria-invalid={validNumber ? "false" : "true"}
                   aria-describedby="telnote"
@@ -413,7 +470,7 @@ const AdminRegister = () => {
                   id="address"
                   onChange={(e) => setAddress(e.target.value)}
                   autoComplete="off"
-                  required
+                  value={address}
                   aria-invalid={validAddress ? "false" : "true"}
                   aria-describedby="addressnote"
                   onFocus={() => setAddressFocus(true)}
@@ -439,7 +496,8 @@ const AdminRegister = () => {
                   htmlFor="password"
                   className="block text-sm font-bold mb-2"
                 >
-                  Password:
+                  Password:{" "}
+                  {!pwd ? <span className="text-red-600 mr-2">*</span> : null}
                   <span className={validPwd ? "text-green-600 ml-1" : "hidden"}>
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
@@ -456,6 +514,7 @@ const AdminRegister = () => {
                   id="password"
                   onChange={(e) => setPwd(e.target.value)}
                   required
+                  value={pwd}
                   aria-invalid={validPwd ? "false" : "true"}
                   aria-describedby="pwdnote"
                   onFocus={() => setPwdFocus(true)}
@@ -484,7 +543,10 @@ const AdminRegister = () => {
                   htmlFor="confirm_pwd"
                   className="block text-sm font-bold mb-2"
                 >
-                  Confirm Password:
+                  Confirm Password:{" "}
+                  {!matchPwd ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
                   <span
                     className={
                       validMatch && matchPwd ? "text-green-600 ml-1" : "hidden"
@@ -505,6 +567,7 @@ const AdminRegister = () => {
                   id="confirm_pwd"
                   onChange={(e) => setMatchPwd(e.target.value)}
                   required
+                  value={matchPwd}
                   aria-invalid={validMatch ? "false" : "true"}
                   aria-describedby="confirmnote"
                   onFocus={() => setMatchFocus(true)}
@@ -523,12 +586,124 @@ const AdminRegister = () => {
                   Must Match the first password input field.
                 </p>
               </div>
+              <div className="mx-auto lg:mx-0 w-full pt-3 border-b-2 border-blue-500 opacity-25"></div>
+              <h2 className="text-xl font-bold text-left py-2">
+                Mosque Details
+              </h2>
+              <div className="mb-6">
+                <label
+                  htmlFor="mosqueName"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Mosque Name:{" "}
+                  {!mosqueName ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
+                  <span
+                    className={
+                      validMosqueName ? "text-green-600 ml-1" : "hidden"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                  <span
+                    className={
+                      validMosqueName || !mosqueName
+                        ? "hidden"
+                        : "text-red-600 ml-1"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  id="mosqueName"
+                  autoComplete="off"
+                  onChange={(e) => setMosqueName(e.target.value)}
+                  required
+                  value={mosqueName}
+                  aria-invalid={validMosqueName ? "false" : "true"}
+                  aria-describedby="mosquenamenote"
+                  onFocus={() => setMosqueNameFocus(true)}
+                  onBlur={() => setMosqueNameFocus(false)}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                />
+                <p
+                  id="mosquenamenote"
+                  className={
+                    mosqueNameFocus && mosqueName && !validMosqueName
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
+                  Letters, numbers, underscores, hyphens allowed.
+                </p>
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Mosque Address:{" "}
+                  {!mosqueAddress ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
+                  <span
+                    className={
+                      validMosqueAddress ? "text-green-600 ml-1" : "hidden"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                  <span
+                    className={
+                      validMosqueAddress || !mosqueAddress
+                        ? "hidden"
+                        : "text-red-600 ml-1"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </span>
+                </label>
+                <textarea
+                  type="text"
+                  id="mosqueAddress"
+                  onChange={(e) => setMosqueAddress(e.target.value)}
+                  autoComplete="off"
+                  required
+                  value={mosqueAddress}
+                  aria-invalid={validMosqueAddress ? "false" : "true"}
+                  aria-describedby="mosqueaddressnote"
+                  onFocus={() => setMosqueAddressFocus(true)}
+                  onBlur={() => setMosqueAddressFocus(false)}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                />
+                <p
+                  id="mosqueaddressnote"
+                  className={
+                    mosqueAddressFocus && mosqueAddress && !validMosqueAddress
+                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                      : "hidden"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  {/*write message for invalid address */}
+                  Please enter a valid address.
+                </p>
+              </div>
+              <span className="block text-sm font-bold text-left mb-2">
+                Proof of Ownership:{" "}
+                {!user ? <span className="text-red-600 mr-2">*</span> : null}
+              </span>
               <div className="mb-4 flex items-center space-x-6 justify-center">
                 <ImageModal file={file} />
-                <label class="block">
-                  <span class="sr-only">Choose File</span>
+                <label className="block">
+                  <span className="sr-only">Choose File</span>
                   <input
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="file"
                     type="file"
@@ -560,7 +735,8 @@ const AdminRegister = () => {
                     !validPwd ||
                     !validMatch | !validEmail ||
                     !validNumber ||
-                    !validAddress ||
+                    !validMosqueName ||
+                    !validMosqueAddress ||
                     !file
                       ? true
                       : false
@@ -571,7 +747,8 @@ const AdminRegister = () => {
                     !validPwd ||
                     !validMatch | !validEmail ||
                     !validNumber ||
-                    !validAddress ||
+                    !validMosqueName ||
+                    !validMosqueAddress ||
                     !file
                       ? "bg-blue-300"
                       : "bg-blue-500 hover:bg-blue-700"

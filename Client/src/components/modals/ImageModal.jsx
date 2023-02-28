@@ -6,7 +6,7 @@ const ImageModal = ({ file }) => {
   const cancelButtonRef = useRef(null);
   return (
     <div className="flex justify-center">
-      <div class="shrink-0">
+      <div className="shrink-0">
         <img
           className="object-cover w-16 h-16 rounded-full cursor-pointer"
           // src="https://cdn.pixabay.com/photo/2016/04/22/04/57/graduation-1345143__340.png"

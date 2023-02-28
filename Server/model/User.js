@@ -21,6 +21,13 @@ const userSchema = new Schema({
   },
   address: {
     type: String,
+  },
+  mosqueName: {
+    type: String,
+    required: true,
+  },
+  mosqueAddress: {
+    type: String,
     required: true,
   },
   roles: {
