@@ -39,11 +39,12 @@ const EditNamazTime = () => {
     const controller = new AbortController();
     const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
     const username = decoded?.UserInfo?.username || "";
+    const userId = decoded?.UserInfo?.id || "";
     console.log("EditNamaz Time", decoded, username);
 
     const getNamazTime = async () => {
       try {
-        const response = await axiosPrivate.get(`/mosque/${username}`, {
+        const response = await axiosPrivate.get(`/mosque/${userId}`, {
           signal: controller.signal,
         });
         console.log(response);
@@ -74,6 +75,7 @@ const EditNamazTime = () => {
 
     const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
     const username = decoded?.UserInfo?.username || "";
+    const userId = decoded?.UserInfo?.id || "";
     const data = {
       mosqueName,
       fajr,
@@ -82,6 +84,7 @@ const EditNamazTime = () => {
       magrib,
       isha,
       username,
+      userId,
       juma: jummah,
       lastModified: new Date(),
     };

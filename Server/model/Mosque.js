@@ -6,6 +6,10 @@ const NamazSchema = new Schema({
     type: String,
     required: true,
   },
+  userId: {
+    type: String,
+    required: true,
+  },
   mosqueName: {
     type: String,
     required: true,

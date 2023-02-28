@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useEffect } from "react";
+import { Tooltip } from "@material-tailwind/react";
 import Pagination from "../components/Pagination";
 import Loading from "../components/Loading";
 import useContent from "../hooks/useContent";
+import MosqueInfo from "./modals/MosqueInfo";
 
 const ShowNamazTime = ({ data }) => {
   const [filteredData, setFilteredData] = useState([]);
@@ -81,59 +83,71 @@ const ShowNamazTime = ({ data }) => {
                             <div className="flex justify-between">
                               <h2 className="pt-2">{ele.mosqueName}</h2>
 
-                              {bookmark.some((e) => e._id === ele._id) ? (
-                                <div className="group ">
-                                  <svg
-                                    width="21"
-                                    height="21"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    alt="bookmark"
-                                    className=" cursor-pointer"
-                                    data-tooltip-target="tooltip-default"
-                                    onClick={() =>
-                                      setBookmark(
-                                        bookmark.filter(
-                                          (item) => item._id !== ele._id
-                                        )
-                                      )
-                                    }
+                              <div className="flex justify-between w-20 mt-2">
+                                {bookmark.some((e) => e._id === ele._id) ? (
+                                  <Fragment>
+                                    <Tooltip
+                                      content="Remove from bookmark"
+                                      placement="bottom"
+                                    >
+                                      <svg
+                                        width="21"
+                                        height="21"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        alt="bookmark"
+                                        className=" cursor-pointer"
+                                        data-tooltip-target="tooltip-default"
+                                        onClick={() =>
+                                          setBookmark(
+                                            bookmark.filter(
+                                              (item) => item._id !== ele._id
+                                            )
+                                          )
+                                        }
+                                      >
+                                        <path d="M6 4.8a2.4 2.4 0 0 1 2.4-2.4h7.2A2.4 2.4 0 0 1 18 4.8v16.8l-6-3-6 3V4.8Z"></path>
+                                      </svg>
+                                    </Tooltip>
+                                  </Fragment>
+                                ) : (
+                                  <Fragment>
+                                    <Tooltip
+                                      content="Add to bookmark"
+                                      placement="bottom"
+                                    >
+                                      <svg
+                                        width="21"
+                                        height="21"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        alt="bookmark"
+                                        className=" cursor-pointer"
+                                        data-tooltip-target="tooltip-default"
+                                        onClick={() =>
+                                          setBookmark([...bookmark, ele])
+                                        }
+                                      >
+                                        <path d="M5.586 3.586A2 2 0 0 0 5 5v16l7-3.5 7 3.5V5a2 2 0 0 0-2-2H7a2 2 0 0 0-1.414.586Z"></path>
+                                      </svg>
+                                    </Tooltip>
+                                  </Fragment>
+                                )}
+                                <Fragment>
+                                  <Tooltip
+                                    content="Mosque details"
+                                    placement="bottom"
                                   >
-                                    <path d="M6 4.8a2.4 2.4 0 0 1 2.4-2.4h7.2A2.4 2.4 0 0 1 18 4.8v16.8l-6-3-6 3V4.8Z"></path>
-                                  </svg>
-                                  <div class="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
-                                    <span class="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
-                                    Remove Bookmark
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="group">
-                                  <svg
-                                    width="21"
-                                    height="21"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    alt="bookmark"
-                                    className=" cursor-pointer"
-                                    data-tooltip-target="tooltip-default"
-                                    onClick={() =>
-                                      setBookmark([...bookmark, ele])
-                                    }
-                                  >
-                                    <path d="M5.586 3.586A2 2 0 0 0 5 5v16l7-3.5 7 3.5V5a2 2 0 0 0-2-2H7a2 2 0 0 0-1.414.586Z"></path>
-                                  </svg>
-                                  <div class="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
-                                    <span class="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
-                                    Bookmark
-                                  </div>
-                                </div>
-                              )}
+                                    <MosqueInfo userId={ele.userId} />
+                                  </Tooltip>
+                                </Fragment>
+                              </div>
 
                               {/* <div class="group relative inline-block">
                                 <img

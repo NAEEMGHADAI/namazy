@@ -26,7 +26,7 @@ router
   );
 
 router
-  .route("/:username")
+  .route("/:userId")
   .get(verifyJWT, verifyRoles(ROLES_LIST.User, ROLES_LIST.Admin), getNamazTime);
 
 module.exports = router;

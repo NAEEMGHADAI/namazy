@@ -11,6 +11,7 @@ const getAllNamazTime = async (req, res) => {
 const createNewTime = async (req, res) => {
   if (
     !req?.body?.username ||
+    !req?.body?.userId ||
     !req?.body?.mosqueName ||
     !req?.body?.fajr ||
     !req?.body?.zuhr ||
@@ -26,6 +27,7 @@ const createNewTime = async (req, res) => {
   try {
     const result = await MosqueSchema.create({
       username: req.body.username,
+      userId: req.body.userId,
       mosqueName: req.body.mosqueName,
       fajr: req.body.fajr,
       zuhr: req.body.zuhr,
@@ -42,17 +44,17 @@ const createNewTime = async (req, res) => {
 };
 
 const updateNamazTime = async (req, res) => {
-  if (!req?.body?.username) {
-    return res.status(400).json({ message: "username parameter is required." });
+  if (!req?.body?.userId) {
+    return res.status(400).json({ message: "userId parameter is required." });
   }
 
   const mosque = await MosqueSchema.findOne({
-    username: req.body.username,
+    userId: req.body.userId,
   }).exec();
   if (!mosque) {
     return res
       .status(204)
-      .json({ message: `No mosque matches username ${req.body.username}.` });
+      .json({ message: `No mosque matches userId ${req.body.userId}.` });
   }
 
   if (req.body?.mosqueName) mosque.mosqueName = req.body.mosqueName;
@@ -69,17 +71,17 @@ const updateNamazTime = async (req, res) => {
 };
 
 const getNamazTime = async (req, res) => {
-  if (!req?.params?.username) {
+  if (!req?.params?.userId) {
     res.status(400).json({ message: "username is required" });
   }
 
   let mosque = await MosqueSchema.findOne({
-    username: req.params.username,
+    userId: req.params.userId,
   }).exec();
   console.log("getNamazTime: ", mosque);
   if (!mosque) {
     return res.status(204).json({
-      message: `No Mosque matches username ${req.params.username}.`,
+      message: `No Mosque matches username ${req.params.userId}.`,
     });
   }
   return res.json(mosque);
