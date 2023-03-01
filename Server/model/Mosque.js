@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const NamazSchema = new Schema({
+const MosqueSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -23,4 +23,4 @@ const NamazSchema = new Schema({
   lastModified: Date,
 });
 
-module.exports = mongoose.model("NamazTime", NamazSchema);
+module.exports = mongoose.model("Mosque", MosqueSchema);

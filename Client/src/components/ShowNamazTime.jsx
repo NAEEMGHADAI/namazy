@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination";
 import Loading from "../components/Loading";
 import useContent from "../hooks/useContent";
 import MosqueInfo from "./modals/MosqueInfo";
+import timeSince from "../helper/timeSince";
 
 const ShowNamazTime = ({ data }) => {
   const [filteredData, setFilteredData] = useState([]);
@@ -219,6 +220,17 @@ const ShowNamazTime = ({ data }) => {
                             Juma
                           </th>
                           <td class="px-6 py-4">{ele.juma}</td>
+                        </tr>
+                        <tr class=" border-b bg-secondary-dark-bg border-gray-700">
+                          <th
+                            scope="row"
+                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                          >
+                            Last Update
+                          </th>
+                          <td class="px-6 py-4 ">
+                            {timeSince(ele.lastModified)}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
