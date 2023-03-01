@@ -17,7 +17,6 @@ const EditNamazTime = () => {
   const [jummah, setJummah] = useState("");
   const [success, setSuccess] = useState("");
 
-  const nameRef = useRef();
   const errRef = useRef();
   const successRef = useRef();
 
@@ -26,13 +25,9 @@ const EditNamazTime = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    nameRef.current.focus();
-  }, []);
-
-  useEffect(() => {
     setErrMsg("");
     setSuccess("");
-  }, [mosqueName, fajr, zuhr, asr, magrib, isha, jummah]);
+  }, [fajr, zuhr, asr, magrib, isha, jummah]);
 
   useEffect(() => {
     let isMounted = true;
@@ -50,7 +45,6 @@ const EditNamazTime = () => {
         console.log(response);
 
         isMounted && setNamazTime(response.data);
-
         setMosqueName(response.data.mosqueName);
         setFajr(response.data.fajr);
         setZuhr(response.data.zuhr);
@@ -77,7 +71,6 @@ const EditNamazTime = () => {
     const username = decoded?.UserInfo?.username || "";
     const userId = decoded?.UserInfo?.id || "";
     const data = {
-      mosqueName,
       fajr,
       zuhr,
       asr,
@@ -132,7 +125,7 @@ const EditNamazTime = () => {
     <section className="flex flex-col flex-wrap content-center justify-center w-full">
       <form
         onSubmit={handleSubmit}
-        className={`bg-secondary-dark-bg h-fit w-5/6  rounded-2xl pr-4 pl-4 pt-6 pb-6 text-white`}
+        className={`bg-secondary-dark-bg h-fit w-5/6 rounded-2xl py-6 text-white`}
       >
         <p
           ref={errRef}
@@ -157,129 +150,131 @@ const EditNamazTime = () => {
           {success}
         </p>
         <div className="mx-5">
-          <h1 className="text-3xl font-bold mb-4 text-center">
-            {!namazTime ? "Add New Entry" : "Upadate Values here"}
+          <h1 className="sm:text-3xl font-bold mb-4 text-center">
+            {!namazTime
+              ? "Add New Entry"
+              : `Upadate Values here: ${mosqueName}`}
           </h1>
 
-          <div className="mb-6">
-            <label htmlFor="username" className="block text-sm font-bold mb-2">
-              Mosque Name:
-            </label>
-            <input
-              type="text"
-              id="username"
-              ref={nameRef}
-              autoComplete="off"
-              name="mosqueName"
-              value={mosqueName || ""}
-              onChange={(e) => setMosqueName(e.target.value)}
-              className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-              required
-            />
-          </div>
-          <div className="grid sm:grid-cols-2">
-            <div className="sm:w-4/5 sm:ml-10">
-              <label
-                htmlFor="fajrTime"
-                className="block text-sm font-bold mb-2"
-              >
-                Fajr:
-              </label>
-              <input
-                type="text"
-                id="fajrTime"
-                onChange={(e) => setFajr(e.target.value)}
-                name="fajr"
-                value={fajr || ""}
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="sm:w-4/5 sm:ml-10">
-              <label
-                htmlFor="zuhrTime"
-                className="block text-sm font-bold mb-2"
-              >
-                zuhr:
-              </label>
-              <input
-                type="text"
-                id="zuhrTime"
-                onChange={(e) => setZuhr(e.target.value)}
-                value={zuhr || ""}
-                name="zuhr"
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="sm:w-4/5 sm:ml-10">
-              <label htmlFor="asrTime" className="block text-sm font-bold mb-2">
-                Asr:
-              </label>
-              <input
-                type="text"
-                id="asrTime"
-                onChange={(e) => setAsr(e.target.value)}
-                name="asr"
-                value={asr || ""}
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="sm:w-4/5 sm:ml-10">
-              <label
-                htmlFor="magribTime"
-                className="block text-sm font-bold mb-2"
-              >
-                maghrib:
-              </label>
-              <input
-                type="text"
-                id="magribTime"
-                onChange={(e) => setMagrib(e.target.value)}
-                name="magrib"
-                value={magrib || ""}
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="sm:w-4/5 sm:ml-10">
-              <label
-                htmlFor="ishaTime"
-                className="block text-sm font-bold mb-2"
-              >
-                Isha:
-              </label>
-              <input
-                type="text"
-                id="ishaTime"
-                onChange={(e) => setIsha(e.target.value)}
-                name="isha"
-                value={isha || ""}
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="sm:w-4/5 sm:ml-10">
-              <label
-                htmlFor="jummaTime"
-                className="block text-sm font-bold mb-2"
-              >
-                Jumma:
-              </label>
-              <input
-                type="text"
-                id="jummaTime"
-                onChange={(e) => setJummah(e.target.value)}
-                value={jummah || ""}
-                name="juma"
-                className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                required
-              />
+          <div className="flex flex-col flex-wrap content-center justify-center w-full h-fit">
+            <div className="grid sm:grid-cols-2 sm:w-11/12 gap-x-16">
+              <div className="">
+                <label
+                  htmlFor="fajrTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Fajr:
+                </label>
+                <input
+                  type="text"
+                  id="fajrTime"
+                  onChange={(e) => setFajr(e.target.value)}
+                  name="fajr"
+                  value={fajr || ""}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="">
+                <label
+                  htmlFor="zuhrTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  zuhr:
+                </label>
+                <input
+                  type="text"
+                  id="zuhrTime"
+                  onChange={(e) => setZuhr(e.target.value)}
+                  value={zuhr || ""}
+                  name="zuhr"
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="">
+                <label
+                  htmlFor="asrTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Asr:
+                </label>
+                <input
+                  type="text"
+                  id="asrTime"
+                  onChange={(e) => setAsr(e.target.value)}
+                  name="asr"
+                  value={asr || ""}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="">
+                <label
+                  htmlFor="magribTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  maghrib:
+                </label>
+                <input
+                  type="text"
+                  id="magribTime"
+                  onChange={(e) => setMagrib(e.target.value)}
+                  name="magrib"
+                  value={magrib || ""}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="">
+                <label
+                  htmlFor="ishaTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Isha:
+                </label>
+                <input
+                  type="text"
+                  id="ishaTime"
+                  onChange={(e) => setIsha(e.target.value)}
+                  name="isha"
+                  value={isha || ""}
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="">
+                <label
+                  htmlFor="jummaTime"
+                  className="block text-sm font-bold mb-2"
+                >
+                  Jumma:
+                </label>
+                <input
+                  type="text"
+                  id="jummaTime"
+                  onChange={(e) => setJummah(e.target.value)}
+                  value={jummah || ""}
+                  name="juma"
+                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  required
+                />
+              </div>
             </div>
           </div>
           <div className="text-center mb-6 mt-6">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline">
+            <button
+              className={`${
+                !fajr || !zuhr || !asr || !magrib || !isha || !jummah
+                  ? "bg-blue-300"
+                  : "bg-blue-500 hover:bg-blue-700"
+              } text-white font-bold py-2 w-52 rounded focus:outline-none focus:shadow-outline`}
+              disabled={
+                !fajr || !zuhr || !asr || !magrib || !isha || !jummah
+                  ? true
+                  : false
+              }
+            >
               {!namazTime ? "Submit" : "Update"}
             </button>
           </div>

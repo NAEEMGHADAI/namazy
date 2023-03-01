@@ -124,28 +124,28 @@ const MosqueInfo = ({ userId }) => {
                               <p>{UserInfo.email}</p>
                             </div>
                             <div class="mx-auto lg:mx-0 w-full pt-3 border-b-2 border-blue-500 opacity-25"></div>
-                            <div>
-                              <div className="flex gap-2 text-xs sm:text-base">
-                                {screenSize > 768 ? (
-                                  <>
-                                    <svg
-                                      width="21"
-                                      height="21"
-                                      fill="none"
-                                      stroke="#4d3ad9"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path d="m21 3-6.5 18a.55.55 0 0 1-1 0L10 14l-7-3.5a.55.55 0 0 1 0-1L21 3Z"></path>
-                                    </svg>
-                                  </>
-                                ) : (
-                                  <p>Location: </p>
-                                )}
-                              </div>
+
+                            <div className="flex gap-2 text-xs sm:text-base">
+                              {screenSize > 768 ? (
+                                <>
+                                  <svg
+                                    width="21"
+                                    height="21"
+                                    fill="none"
+                                    stroke="#4d3ad9"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path d="m21 3-6.5 18a.55.55 0 0 1-1 0L10 14l-7-3.5a.55.55 0 0 1 0-1L21 3Z"></path>
+                                  </svg>
+                                </>
+                              ) : (
+                                <p>Location: </p>
+                              )}
+                              <p>{UserInfo.mosqueAddress}</p>
                             </div>
                           </div>
                         </div>

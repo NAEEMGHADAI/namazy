@@ -1,4 +1,5 @@
 const MosqueSchema = require("../model/Mosque.js");
+const User = require("../model/User.js");
 
 const getAllNamazTime = async (req, res) => {
   const mosques = await MosqueSchema.find();
@@ -12,7 +13,6 @@ const createNewTime = async (req, res) => {
   if (
     !req?.body?.username ||
     !req?.body?.userId ||
-    !req?.body?.mosqueName ||
     !req?.body?.fajr ||
     !req?.body?.zuhr ||
     !req?.body?.asr ||
@@ -25,10 +25,15 @@ const createNewTime = async (req, res) => {
   }
 
   try {
+    const user = await User.findById(req.body.userId);
+    if (!user) {
+      return res.status(204).json({ message: "No user found" });
+    }
+
     const result = await MosqueSchema.create({
       username: req.body.username,
       userId: req.body.userId,
-      mosqueName: req.body.mosqueName,
+      mosqueName: user.mosqueName,
       fajr: req.body.fajr,
       zuhr: req.body.zuhr,
       asr: req.body.asr,
@@ -57,7 +62,6 @@ const updateNamazTime = async (req, res) => {
       .json({ message: `No mosque matches userId ${req.body.userId}.` });
   }
 
-  if (req.body?.mosqueName) mosque.mosqueName = req.body.mosqueName;
   if (req.body?.fajr) mosque.fajr = req.body.fajr;
   if (req.body?.zuhr) mosque.zohar = req.body.zuhr;
   if (req.body?.asr) mosque.asr = req.body.asr;
