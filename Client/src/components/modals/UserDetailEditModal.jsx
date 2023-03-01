@@ -21,7 +21,6 @@ const MOSQUE_ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 export default function UserDetailEditModal({ user }) {
   const [open, setOpen] = useState(false);
   const [accordion, setAccordion] = useState(false);
-  const [namazTime, setNamazTime] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const { setChanged } = useContent();
   const UPDATE_URL = `/manageuser/${user._id}`;
@@ -42,6 +41,14 @@ export default function UserDetailEditModal({ user }) {
 
   const [number, setNumber] = useState(user.phonenumber);
   const [validNumber, setValidNumber] = useState(false);
+
+  const [namazTime, setNamazTime] = useState();
+  const [fajr, setFajr] = useState("");
+  const [zuhr, setZuhr] = useState("");
+  const [asr, setAsr] = useState("");
+  const [magrib, setMagrib] = useState("");
+  const [isha, setIsha] = useState("");
+  const [juma, setJuma] = useState("");
 
   const [address, setAddress] = useState(user.address);
   const [validAddress, setValidAddress] = useState(false);
@@ -132,6 +139,42 @@ export default function UserDetailEditModal({ user }) {
       });
       console.log(response.data);
       console.log(JSON.stringify(response));
+
+      if (fajr && zuhr && asr && magrib && isha && juma) {
+        const data = {
+          fajr,
+          zuhr,
+          asr,
+          magrib,
+          isha,
+          username: user.username,
+          userId: user._id,
+          juma,
+          lastModified: new Date(),
+        };
+
+        if (!namazTime) {
+          const response = await axiosPrivate.post(
+            "/mosque",
+            JSON.stringify(data)
+          );
+          console.log(JSON.stringify(response?.data));
+        } else {
+          const response = await axiosPrivate.put(
+            "/mosque",
+            JSON.stringify(data)
+          );
+          console.log(JSON.stringify(response?.data));
+        }
+      } else {
+        setFajr("");
+        setZuhr("");
+        setAsr("");
+        setMagrib("");
+        setIsha("");
+        setJuma("");
+      }
+
       setChanged(response);
       setOpen(false);
     } catch (err) {
@@ -157,20 +200,15 @@ export default function UserDetailEditModal({ user }) {
         const response = await axiosPrivate.get(`/mosque/${user._id}`, {
           signal: controller.signal,
         });
-        console.log(response);
-        for (const key in response.data) {
-          setNamazTime((prev) => {
-            if (
-              key !== "username" &&
-              key !== "mosqueName" &&
-              key !== "_id" &&
-              key !== "__v"
-            ) {
-              return [...prev, [key, response.data[key]]];
-            } else {
-              return prev;
-            }
-          });
+
+        if (response.data) {
+          setNamazTime(response.data);
+          setFajr(response.data.fajr);
+          setZuhr(response.data.zuhr);
+          setAsr(response.data.asr);
+          setMagrib(response.data.magrib);
+          setIsha(response.data.isha);
+          setJuma(response.data.juma);
         }
       } catch (err) {
         console.error(err);
@@ -700,29 +738,140 @@ export default function UserDetailEditModal({ user }) {
                                           )}
                                         </h1>
                                         <AccordionBody>
-                                          {namazTime.length > 0 ? (
-                                            namazTime.map((time, i) => (
-                                              <div
-                                                className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-                                                key={i}
-                                              >
-                                                <dt className="text-sm font-medium text-gray-500">
-                                                  {time[0]}
-                                                </dt>
-                                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                                  {time[0] === "lastModified"
-                                                    ? timeSince(time[1])
-                                                    : time[1]}
-                                                </dd>
-                                              </div>
-                                            ))
-                                          ) : (
+                                          <>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                No timings added
+                                                fajr
                                               </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="fajr"
+                                                  value={fajr}
+                                                  onChange={(e) =>
+                                                    setFajr(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
                                             </div>
-                                          )}
+                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                              <dt className="text-sm font-medium text-gray-500">
+                                                Zohar
+                                              </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="zohar"
+                                                  value={zuhr}
+                                                  onChange={(e) =>
+                                                    setZuhr(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
+                                            </div>
+                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                              <dt className="text-sm font-medium text-gray-500">
+                                                Asr
+                                              </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="asr"
+                                                  value={asr}
+                                                  onChange={(e) =>
+                                                    setAsr(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
+                                            </div>
+                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                              <dt className="text-sm font-medium text-gray-500">
+                                                Maghrib
+                                              </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="maghrib"
+                                                  value={magrib}
+                                                  onChange={(e) =>
+                                                    setMagrib(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
+                                            </div>
+                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                              <dt className="text-sm font-medium text-gray-500">
+                                                Isha
+                                              </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="isha"
+                                                  value={isha}
+                                                  onChange={(e) =>
+                                                    setIsha(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
+                                            </div>
+                                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                              <dt className="text-sm font-medium text-gray-500">
+                                                Juma
+                                              </dt>
+                                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                                <input
+                                                  type="text"
+                                                  id="juma"
+                                                  value={juma}
+                                                  onChange={(e) =>
+                                                    setJuma(e.target.value)
+                                                  }
+                                                  autoComplete="off"
+                                                  required
+                                                  // aria-invalid={
+                                                  //   validNumber ? "false" : "true"
+                                                  // }
+                                                  // aria-describedby="telnote"
+                                                  className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
+                                                />
+                                              </dd>
+                                            </div>
+                                          </>
                                         </AccordionBody>
                                       </Accordion>
                                     </Fragment>
