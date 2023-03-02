@@ -3,6 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import jwtDecode from "jwt-decode";
 import useContent from "../hooks/useContent";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 const NEW_ENTRY_URL = "/mosque";
 
 const EditNamazTime = () => {
@@ -16,6 +17,7 @@ const EditNamazTime = () => {
   const [isha, setIsha] = useState("");
   const [jummah, setJummah] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const errRef = useRef();
   const successRef = useRef();
@@ -37,6 +39,7 @@ const EditNamazTime = () => {
 
     const getNamazTime = async () => {
       try {
+        setLoading(true);
         const response = await axiosPrivate.get(`/mosque/${userId}`, {
           signal: controller.signal,
         });
@@ -52,6 +55,7 @@ const EditNamazTime = () => {
       } catch (err) {
         console.error(err);
       }
+      setLoading(false);
     };
     getNamazTime();
 
@@ -107,7 +111,9 @@ const EditNamazTime = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <section className="flex flex-col flex-wrap content-center justify-center w-full">
       <form
         onSubmit={handleSubmit}

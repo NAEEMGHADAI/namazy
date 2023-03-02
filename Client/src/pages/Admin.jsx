@@ -6,6 +6,7 @@ import useContent from "../hooks/useContent";
 import timeSince from "../helper/timeSince";
 import UserDetailsModal from "../components/modals/UserDetailsModal";
 import UserDetailEditModal from "../components/modals/UserDetailEditModal";
+import Loading from "../components/Loading";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -66,7 +67,9 @@ const Admin = () => {
     currentUsers = filteredData.slice(firstPostIndex, lastPostIndex);
   }
 
-  return (
+  return !users ? (
+    <Loading />
+  ) : (
     <section className="container px-4 mx-auto">
       <div className="flex flex-col">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6">

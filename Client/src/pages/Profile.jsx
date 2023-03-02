@@ -3,9 +3,11 @@ import useContent from "../hooks/useContent";
 import jwtDecode from "jwt-decode";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const Profile = () => {
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
   const { auth } = useContent();
   const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
   const id = decoded?.UserInfo?.id || "";
@@ -17,6 +19,7 @@ const Profile = () => {
 
     const getUser = async () => {
       try {
+        setLoading(true);
         const response = await axiosPrivate.get(`manageuser/${id}`, {
           signal: controller.signal,
         });
@@ -24,6 +27,7 @@ const Profile = () => {
       } catch (err) {
         console.error(err);
       }
+      setLoading(false);
     };
     getUser();
     return () => {
@@ -31,7 +35,9 @@ const Profile = () => {
       controller.abort();
     };
   }, [axiosPrivate, id]);
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="max-w-4xl flex items-center  flex-wrap mx-auto my-32 lg:my-0">
       <div
         id="profile"
@@ -52,7 +58,7 @@ const Profile = () => {
           <h1 className="sm:text-3xl text-xl font-bold pt-8 lg:pt-0">
             {user.username} - {user.mosqueName}
           </h1>
-          <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-blue-500 opacity-25"></div>
+          <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-blue-500"></div>
           <p className="pt-4 sm:text-base text-xs sm:font-bold flex items-center justify-center lg:justify-start">
             <svg
               width="21"
