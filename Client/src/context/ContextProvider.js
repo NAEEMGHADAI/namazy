@@ -4,24 +4,24 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const StateContext = createContext({});
 export const ContextProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
-  const [darkMode, setDarkMode] = useState(true);
   const [activeMenu, setActiveMenu] = useState(true);
   const [screenSize, setScreenSize] = useState(undefined);
   const [bookmark, setBookmark] = useLocalStorage("bookmark", []);
   const [changed, setChanged] = useState("");
+  const [pageName, setPageName] = useState("Mosque Near By");
   return (
     <StateContext.Provider
       value={{
         auth,
         setAuth,
-        darkMode,
-        setDarkMode,
         activeMenu,
         setActiveMenu,
         screenSize,
         setScreenSize,
         bookmark,
         setBookmark,
+        pageName,
+        setPageName,
         changed,
         setChanged,
       }}

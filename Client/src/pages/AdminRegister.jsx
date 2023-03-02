@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import ImageModal from "../components/modals/ImageModal";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import useContent from "../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
@@ -24,7 +23,6 @@ const REGITSER_URL = "/manageuser/adminregister";
 const AdminRegister = () => {
   const userRef = useRef();
   const errRef = useRef();
-  const { darkMode } = useContent();
   const axiosPrivate = useAxiosPrivate();
 
   const [user, setUser] = useState("");
@@ -249,9 +247,8 @@ const AdminRegister = () => {
         <section className="flex flex-col flex-wrap content-center justify-center w-full">
           <form
             onSubmit={handleSubmit}
-            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
-              darkMode ? "text-white" : ""
-            }  `}
+            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 rounded-2xl pr-4 pl-4 pt-6 pb-6 
+             text-white `}
           >
             <p
               ref={errRef}

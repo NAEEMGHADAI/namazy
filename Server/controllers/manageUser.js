@@ -10,6 +10,14 @@ const newRequestEmailTemplate = require("../utils/newRequestEmailTemplate");
 const cloudinary = require("../middleware/cloudinary");
 const Mosque = require("../model/Mosque");
 
+const getAllUsers = async (req, res) => {
+  const users = await User.find();
+  if (!users) {
+    res.status(204).json({ message: "No employees found" });
+  }
+  res.json(users);
+};
+
 const handleNewUser = async (req, res) => {
   const { user, name, email, phonenumber, address, mosqueName, mosqueAddress } =
     req.body;
@@ -474,4 +482,5 @@ module.exports = {
   handleNewUserByAdmin,
   updateUser,
   getUser,
+  getAllUsers,
 };

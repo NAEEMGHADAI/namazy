@@ -25,7 +25,7 @@ const RequestHandler = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get("/users", {
+        const response = await axiosPrivate.get("/manageuser", {
           signal: controller.signal,
         });
         const filterData = response.data.filter((user) =>

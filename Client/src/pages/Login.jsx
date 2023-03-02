@@ -13,7 +13,7 @@ import useToggle from "../hooks/useToggle";
 
 const LOGIN_URL = "/auth";
 const Login = () => {
-  const { setAuth, darkMode } = useContent();
+  const { setAuth } = useContent();
 
   const navigate = useNavigate();
   // const location = useLocation();
@@ -90,9 +90,7 @@ const Login = () => {
     <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
       <form
         onSubmit={handleSubmit}
-        className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
-          darkMode ? "text-white" : ""
-        }  `}
+        className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 text-white`}
       >
         <p
           ref={errRef}

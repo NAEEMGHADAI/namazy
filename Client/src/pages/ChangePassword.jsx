@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
-import useContent from "../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -16,7 +15,6 @@ const REGITSER_URL = "/manageuser/changepassword";
 const ChangePassword = () => {
   const userRef = useRef();
   const errRef = useRef();
-  const { darkMode } = useContent();
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -133,9 +131,7 @@ const ChangePassword = () => {
         <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">
           <form
             onSubmit={handleSubmit}
-            className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
-              darkMode ? "text-white" : ""
-            }  `}
+            className={`bg-secondary-dark-bg h-fit xl:w-1/4 lg:w-1/2 md:w-4/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 text-white `}
           >
             <p
               ref={errRef}

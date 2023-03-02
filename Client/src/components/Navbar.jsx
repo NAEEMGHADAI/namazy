@@ -12,7 +12,7 @@ const Navbar = () => {
     setActiveMenu,
     screenSize,
     setScreenSize,
-    // pageName
+    pageName,
   } = useContent();
 
   const navigate = useNavigate();
@@ -39,7 +39,11 @@ const Navbar = () => {
   }, [screenSize, setActiveMenu]);
   return !activeMenu ? (
     <div className="flex justify-between text-white pt-4 pb-4 sm:pt-10 pl-5 pr-5 sm:pb-5 md:ml-6 md:mr-6 relative">
-      <img src={logo2} alt="" width="50" height="50" />
+      {screenSize <= 1000 && !activeMenu ? (
+        <img src={logo2} alt="" width="50" height="50" />
+      ) : (
+        <h1 className="text-2xl capitalize">{pageName}</h1>
+      )}
 
       {auth?.accessToken ? (
         <>
@@ -81,7 +85,7 @@ const Navbar = () => {
     screenSize >= 1000 && (
       <>
         <div className="flex justify-between w-full text-white pt-4 pb-4 sm:pt-10 pl-5 pr-5 sm:pb-5 md:ml-6 md:mr-6 relative">
-          <h1 className="text-2xl capitalize">Dashboard</h1>
+          <h1 className="text-2xl capitalize">{pageName}</h1>
 
           {auth?.accessToken ? (
             <>

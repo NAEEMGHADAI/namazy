@@ -22,7 +22,6 @@ const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 const EditProfile = () => {
   const userRef = useRef();
   const errRef = useRef();
-  const { darkMode } = useContent();
 
   const { auth } = useContent();
   const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
@@ -205,9 +204,7 @@ const EditProfile = () => {
         <section className="flex flex-col flex-wrap content-center justify-center w-full  h-screen">
           <form
             onSubmit={handleSubmit}
-            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 ${
-              darkMode ? "text-white" : ""
-            }  `}
+            className={`bg-secondary-dark-bg h-fit xl:w-1/2 lg:w-9/12 md:w-5/6 w-11/12 mt-12 rounded-2xl pr-4 pl-4 pt-6 pb-6 text-white`}
           >
             <p
               ref={errRef}

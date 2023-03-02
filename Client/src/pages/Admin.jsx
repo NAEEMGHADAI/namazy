@@ -22,7 +22,7 @@ const Admin = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get("/users", {
+        const response = await axiosPrivate.get("/manageuser", {
           signal: controller.signal,
         });
 

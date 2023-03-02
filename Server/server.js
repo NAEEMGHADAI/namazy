@@ -6,10 +6,9 @@ const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const root = require("./routes/root");
-const users = require("./routes/api/users");
 const Mosque = require("./routes/api/Mosque");
 const register = require("./routes/register");
-const manageUser = require("./routes/manageUser");
+const manageUser = require("./routes/api/manageUser");
 const auth = require("./routes/auth");
 const refresh = require("./routes/refresh");
 const logout = require("./routes/logout");
@@ -54,8 +53,6 @@ app.use("/manageuser", manageUser);
 app.use("/auth", auth);
 app.use("/refresh", refresh);
 app.use("/logout", logout);
-
-app.use("/users", users);
 app.use("/mosque", Mosque);
 
 app.all("*", (req, res) => {

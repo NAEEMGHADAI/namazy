@@ -6,27 +6,22 @@ import logo from "../data/logo.PNG";
 import useContent from "../hooks/useContent";
 
 export default function Sidebar() {
-  const {
-    auth,
-    activeMenu,
-    setActiveMenu,
-    screenSize,
-    // setPageName
-  } = useContent();
+  const { auth, activeMenu, setActiveMenu, screenSize, setPageName } =
+    useContent();
   const activeLink =
     "flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-md text-white bg-active-link-bg text-md border-l-4 border-blue-700 mt-2 mb-2";
   const normalLink =
     "flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-200 hover:bg-active-link-bg mt-2 mb-2";
 
-  const handleCloseSideBar = () => {
+  const handleCloseSideBar = (title) => {
     if (activeMenu && screenSize <= 1000) {
       setActiveMenu((prev) => {
         return !prev;
       });
     }
-    // if (typeof title === "string") {
-    // 	setPageName(title);
-    // }
+    if (typeof title === "string") {
+      setPageName(title);
+    }
   };
 
   const filterNav = () => {

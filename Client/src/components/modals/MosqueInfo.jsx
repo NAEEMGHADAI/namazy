@@ -13,7 +13,7 @@ const MosqueInfo = ({ userId }) => {
     setShowModal(true);
     const getUserInfo = async () => {
       try {
-        const response = await axios.get(`/users/${userId}`);
+        const response = await axios.get(`/manageuser/${userId}`);
         setUserInfo(response.data);
       } catch (err) {
         console.error(err);
