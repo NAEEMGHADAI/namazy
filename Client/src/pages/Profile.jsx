@@ -34,14 +34,14 @@ const Profile = () => {
     };
   }, [axiosPrivate, id]);
   return (
-    <div class="max-w-4xl flex items-center  flex-wrap mx-auto my-32 lg:my-0">
+    <div className="max-w-4xl flex items-center  flex-wrap mx-auto my-32 lg:my-0">
       <div
         id="profile"
-        class=" w-11/12 lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-secondary-dark-bg text-white mx-3 lg:mx-0"
+        className=" w-11/12 lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-secondary-dark-bg text-white mx-3 lg:mx-0"
       >
-        <div class="p-4 md:p-8 text-center lg:text-left">
+        <div className="p-4 md:p-8 text-center lg:text-left">
           <div
-            class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
+            className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
             style={{
               backgroundImage: `url(${
                 user.imageUrl
@@ -51,9 +51,11 @@ const Profile = () => {
             }}
           ></div>
 
-          <h1 class="text-3xl font-bold pt-8 lg:pt-0">{user.username}</h1>
-          <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-blue-500 opacity-25"></div>
-          <p class="pt-4 sm:text-base text-xs sm:font-bold flex items-center justify-center lg:justify-start">
+          <h1 className="sm:text-3xl text-xl font-bold pt-8 lg:pt-0">
+            {user.username} - {user.mosqueName}
+          </h1>
+          <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-blue-500 opacity-25"></div>
+          <p className="pt-4 sm:text-base text-xs sm:font-bold flex items-center justify-center lg:justify-start">
             <svg
               width="21"
               height="21"
@@ -71,7 +73,7 @@ const Profile = () => {
             </svg>
             {user.email}
           </p>
-          <p class="pt-2  text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+          <p className="pt-2  text-xs lg:text-sm flex items-center justify-center lg:justify-start">
             <svg
               width="21"
               height="21"
@@ -86,18 +88,18 @@ const Profile = () => {
             </svg>
             {user.phonenumber}
           </p>
-          <p class="pt-8 text-sm">{user.address}</p>
+          <p className="pt-8 text-sm">{user.address}</p>
 
-          <div class="pt-12 pb-8 flex justify-between w-full items-center md:flex-row flex-col">
+          <div className="pt-12 pb-8 flex justify-between w-full items-center md:flex-row flex-col">
             <Link
               to="/editprofile"
-              class="bg-blue-700 hover:bg-blue-900 md:w-fit sm:w-1/2 w-4/5 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-blue-700 hover:bg-blue-900 md:w-fit sm:w-1/2 w-4/5 text-white font-bold py-2 px-4 rounded-full"
             >
               <button>Edit Profile</button>
             </Link>
             <Link
               to="/edit"
-              class="bg-green-700 hover:bg-green-900 md:w-fit sm:w-1/2 w-4/5 mt-4 md:mt-0 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-green-700 hover:bg-green-900 md:w-fit sm:w-1/2 w-4/5 mt-4 md:mt-0 text-white font-bold py-2 px-4 rounded-full"
             >
               <button>Edit Mosque Details</button>
             </Link>
@@ -105,7 +107,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div class="w-full lg:w-2/5">
+      <div className="w-full lg:w-2/5">
         <img
           src={`${
             user.imageUrl
@@ -113,7 +115,7 @@ const Profile = () => {
               : "https://pixabay.com/get/g84bce345da3f00b57adfa3ec41e647d6f9f98c55034a4fcb23ca0020d1f44e488dcd17902ffc140f5e10d9c632fe6acfb29c2926255f7c3c0fa2961b84a175066cbf3614a2a7cb7fa29ed40d22bccd74_640.png"
           }`}
           alt=""
-          class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+          className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
         />
       </div>
     </div>

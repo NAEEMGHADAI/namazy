@@ -72,7 +72,7 @@ const Admin = () => {
   return (
     <section className="container px-4 mx-auto">
       <div className="flex flex-col">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
               <div className="p-4">

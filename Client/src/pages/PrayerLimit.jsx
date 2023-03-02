@@ -27,12 +27,10 @@ const PrayerLimit = () => {
   return (
     <>
       {!data ? (
-        <div className="grid h-screen place-items-center">
-          <Loading />
-        </div>
+        <Loading />
       ) : (
-        <section className="flex flex-col flex-wrap content-center justify-center">
-          <section className="mx-3 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8 sm:w-4/5">
+        <section className="flex flex-col flex-wrap content-center justify-center sm:mx-10 mx-5">
+          <section className="mx-3 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8">
             <Dropdown
               placeholder="country"
               data={country}

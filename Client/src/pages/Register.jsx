@@ -213,183 +213,200 @@ const Register = () => {
               <h1 className="text-3xl font-bold mb-4 text-center">Register</h1>
 
               <h2 className="text-xl font-bold mb-4 text-left">User Details</h2>
-              <div className="mb-6">
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Username:{" "}
-                  {!user ? <span className="text-red-600 mr-2">*</span> : null}
-                  <span
-                    className={validName ? "text-green-600 ml-1" : "hidden"}
+              <div className="grid sm:grid-cols-2 gap-x-16">
+                <div className="mb-6">
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-bold mb-2"
                   >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
+                    Username:{" "}
+                    {!user ? (
+                      <span className="text-red-600 mr-2">*</span>
+                    ) : null}
+                    <span
+                      className={validName ? "text-green-600 ml-1" : "hidden"}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span
+                      className={
+                        validName || !user ? "hidden" : "text-red-600 ml-1"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={(e) => setUser(e.target.value)}
+                    required
+                    value={user}
+                    aria-invalid={validName ? "false" : "true"}
+                    aria-describedby="uidnote"
+                    onFocus={() => setUserFocus(true)}
+                    onBlur={() => setUserFocus(false)}
+                    className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  />
+                  <p
+                    id="uidnote"
                     className={
-                      validName || !user ? "hidden" : "text-red-600 ml-1"
+                      userFocus && user && !validName
+                        ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                        : "hidden"
                     }
                   >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  ref={userRef}
-                  autoComplete="off"
-                  onChange={(e) => setUser(e.target.value)}
-                  required
-                  value={user}
-                  aria-invalid={validName ? "false" : "true"}
-                  aria-describedby="uidnote"
-                  onFocus={() => setUserFocus(true)}
-                  onBlur={() => setUserFocus(false)}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                />
-                <p
-                  id="uidnote"
-                  className={
-                    userFocus && user && !validName
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                  Letters, numbers, underscores, hyphens allowed.
-                </p>
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
+                    Letters, numbers, underscores, hyphens allowed.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-bold mb-2"
+                  >
+                    Full Name:{" "}
+                    {!name ? (
+                      <span className="text-red-600 mr-2">*</span>
+                    ) : null}
+                    <span
+                      className={validOgName ? "text-green-600 ml-1" : "hidden"}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span
+                      className={
+                        validOgName || !name ? "hidden" : "text-red-600 ml-1"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    autoComplete="off"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    value={name}
+                    aria-invalid={validOgName ? "false" : "true"}
+                    aria-describedby="namenote"
+                    onFocus={() => setNameFocus(true)}
+                    onBlur={() => setNameFocus(false)}
+                    className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  />
+                  <p
+                    id="namenote"
+                    className={
+                      nameFocus && name && !validOgName
+                        ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                        : "hidden"
+                    }
+                  >
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
+                    Letters, numbers, underscores, hyphens allowed.
+                  </p>
+                </div>
               </div>
-              <div className="mb-6">
-                <label htmlFor="name" className="block text-sm font-bold mb-2">
-                  Full Name:{" "}
-                  {!name ? <span className="text-red-600 mr-2">*</span> : null}
-                  <span
-                    className={validOgName ? "text-green-600 ml-1" : "hidden"}
+              <div className="grid sm:grid-cols-2 gap-x-16">
+                <div className="mb-6">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-bold mb-2"
                   >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
+                    Email:{" "}
+                    {!email ? (
+                      <span className="text-red-600 mr-2">*</span>
+                    ) : null}
+                    <span
+                      className={validEmail ? "text-green-600 ml-1" : "hidden"}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span
+                      className={
+                        validEmail || !email ? "hidden" : "text-red-600 ml-1"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="off"
+                    required
+                    value={email}
+                    aria-invalid={validEmail ? "false" : "true"}
+                    aria-describedby="emailnote"
+                    onFocus={() => setEmailFocus(true)}
+                    onBlur={() => setEmailFocus(false)}
+                    className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  />
+                  <p
+                    id="emailnote"
                     className={
-                      validOgName || !name ? "hidden" : "text-red-600 ml-1"
+                      emailFocus && email && !validEmail
+                        ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                        : "hidden"
                     }
                   >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  autoComplete="off"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  value={name}
-                  aria-invalid={validOgName ? "false" : "true"}
-                  aria-describedby="namenote"
-                  onFocus={() => setNameFocus(true)}
-                  onBlur={() => setNameFocus(false)}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                />
-                <p
-                  id="namenote"
-                  className={
-                    nameFocus && name && !validOgName
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                  Letters, numbers, underscores, hyphens allowed.
-                </p>
-              </div>
-              <div className="mb-6">
-                <label htmlFor="email" className="block text-sm font-bold mb-2">
-                  Email:{" "}
-                  {!email ? <span className="text-red-600 mr-2">*</span> : null}
-                  <span
-                    className={validEmail ? "text-green-600 ml-1" : "hidden"}
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    {/*write message for invalid email */}
+                    Please enter a valid email address.
+                  </p>
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="tel" className="block text-sm font-bold mb-2">
+                    Phone Number:{" "}
+                    {!number ? (
+                      <span className="text-red-600 mr-2">*</span>
+                    ) : null}
+                    <span
+                      className={validNumber ? "text-green-600 ml-1" : "hidden"}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span
+                      className={
+                        validNumber || !number ? "hidden" : "text-red-600 ml-1"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="tel"
+                    onChange={(e) => setNumber(e.target.value)}
+                    autoComplete="off"
+                    required
+                    value={number}
+                    aria-invalid={validNumber ? "false" : "true"}
+                    aria-describedby="telnote"
+                    onFocus={() => setNumberFocus(true)}
+                    onBlur={() => setNumberFocus(false)}
+                    className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  />
+                  <p
+                    id="telnote"
                     className={
-                      validEmail || !email ? "hidden" : "text-red-600 ml-1"
+                      numberFocus && number && !validNumber
+                        ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
+                        : "hidden"
                     }
                   >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="off"
-                  required
-                  value={email}
-                  aria-invalid={validEmail ? "false" : "true"}
-                  aria-describedby="emailnote"
-                  onFocus={() => setEmailFocus(true)}
-                  onBlur={() => setEmailFocus(false)}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                />
-                <p
-                  id="emailnote"
-                  className={
-                    emailFocus && email && !validEmail
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid email */}
-                  Please enter a valid email address.
-                </p>
-              </div>
-              <div className="mb-6">
-                <label htmlFor="tel" className="block text-sm font-bold mb-2">
-                  Phone Number:{" "}
-                  {!number ? (
-                    <span className="text-red-600 mr-2">*</span>
-                  ) : null}
-                  <span
-                    className={validNumber ? "text-green-600 ml-1" : "hidden"}
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
-                    className={
-                      validNumber || !number ? "hidden" : "text-red-600 ml-1"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="tel"
-                  id="tel"
-                  onChange={(e) => setNumber(e.target.value)}
-                  autoComplete="off"
-                  required
-                  value={number}
-                  aria-invalid={validNumber ? "false" : "true"}
-                  aria-describedby="telnote"
-                  onFocus={() => setNumberFocus(true)}
-                  onBlur={() => setNumberFocus(false)}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
-                />
-                <p
-                  id="telnote"
-                  className={
-                    numberFocus && number && !validNumber
-                      ? "text-xs rounded-lg bg-black text-white p-1 relative -bottom-3"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  {/*write message for invalid number */}
-                  Please enter a valid phone number.
-                </p>
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    {/*write message for invalid number */}
+                    Please enter a valid phone number.
+                  </p>
+                </div>
               </div>
               <div className="mb-6">
                 <label

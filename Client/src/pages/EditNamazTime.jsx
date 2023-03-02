@@ -125,7 +125,7 @@ const EditNamazTime = () => {
     <section className="flex flex-col flex-wrap content-center justify-center w-full">
       <form
         onSubmit={handleSubmit}
-        className={`bg-secondary-dark-bg h-fit w-5/6 rounded-2xl py-6 text-white`}
+        className={`bg-secondary-dark-bg h-fit w-11/12 rounded-2xl py-6 text-white`}
       >
         <p
           ref={errRef}
@@ -163,7 +163,8 @@ const EditNamazTime = () => {
                   htmlFor="fajrTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  Fajr:
+                  Fajr:{" "}
+                  {!fajr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
                   type="text"
@@ -180,7 +181,8 @@ const EditNamazTime = () => {
                   htmlFor="zuhrTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  zuhr:
+                  zuhr:{" "}
+                  {!zuhr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
                   type="text"
@@ -197,7 +199,8 @@ const EditNamazTime = () => {
                   htmlFor="asrTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  Asr:
+                  Asr:{" "}
+                  {!asr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
                   type="text"
@@ -214,7 +217,10 @@ const EditNamazTime = () => {
                   htmlFor="magribTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  maghrib:
+                  maghrib:{" "}
+                  {!magrib ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
                 </label>
                 <input
                   type="text"
@@ -231,7 +237,8 @@ const EditNamazTime = () => {
                   htmlFor="ishaTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  Isha:
+                  Isha:{" "}
+                  {!isha ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
                   type="text"
@@ -248,7 +255,10 @@ const EditNamazTime = () => {
                   htmlFor="jummaTime"
                   className="block text-sm font-bold mb-2"
                 >
-                  Jumma:
+                  Jumma:{" "}
+                  {!jummah ? (
+                    <span className="text-red-600 mr-2">*</span>
+                  ) : null}
                 </label>
                 <input
                   type="text"

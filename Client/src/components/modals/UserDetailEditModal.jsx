@@ -313,12 +313,15 @@ export default function UserDetailEditModal({ user }) {
                         <br />
                         <div className="flex justify-center">
                           <label class="block">
-                            <span class="sr-only">Choose File</span>
+                            <span class="sr-only">
+                              Choose File{" "}
+                              {!file ? (
+                                <span className="text-red-600 mr-2">*</span>
+                              ) : null}
+                            </span>
                             <input
                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                              // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                               id="file"
-                              //   value={file}
                               type="file"
                               accept=".jpg,.jpeg,.png"
                               aria-describedby="filenote"
@@ -349,7 +352,12 @@ export default function UserDetailEditModal({ user }) {
                                 <dl>
                                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
-                                      Username{" "}
+                                      Username
+                                      {!username ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validName
@@ -403,6 +411,11 @@ export default function UserDetailEditModal({ user }) {
                                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                       Full name{" "}
+                                      {!name ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validOgName
@@ -536,6 +549,11 @@ export default function UserDetailEditModal({ user }) {
                                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                       Mosque Name{" "}
+                                      {!mosqueName ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validMosqueName
@@ -577,6 +595,11 @@ export default function UserDetailEditModal({ user }) {
                                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                       Mosque Address{" "}
+                                      {!mosqueAddress ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validMosqueAddress
@@ -621,6 +644,11 @@ export default function UserDetailEditModal({ user }) {
                                   <div className=" bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
                                       Email address{" "}
+                                      {!email ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validEmail
@@ -660,7 +688,12 @@ export default function UserDetailEditModal({ user }) {
                                   </div>
                                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">
-                                      Phone Number
+                                      Phone Number{" "}
+                                      {!number ? (
+                                        <span className="text-red-600 mr-2">
+                                          *
+                                        </span>
+                                      ) : null}
                                       <span
                                         className={
                                           validNumber
@@ -741,7 +774,12 @@ export default function UserDetailEditModal({ user }) {
                                           <>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                fajr
+                                                fajr{" "}
+                                                {!fajr ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
@@ -753,17 +791,18 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
                                             </div>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                Zohar
+                                                Zohar{" "}
+                                                {!zuhr ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
@@ -775,17 +814,18 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
                                             </div>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                Asr
+                                                Asr{" "}
+                                                {!asr ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
@@ -797,17 +837,18 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
                                             </div>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                Maghrib
+                                                Maghrib{" "}
+                                                {!magrib ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
@@ -819,17 +860,18 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
                                             </div>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                Isha
+                                                Isha{" "}
+                                                {!isha ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
@@ -841,17 +883,18 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
                                             </div>
                                             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                               <dt className="text-sm font-medium text-gray-500">
-                                                Juma
+                                                Juma{" "}
+                                                {!juma ? (
+                                                  <span className="text-red-600 mr-2">
+                                                    *
+                                                  </span>
+                                                ) : null}
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
