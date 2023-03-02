@@ -33,16 +33,13 @@ const EditNamazTime = () => {
     let isMounted = true;
     const controller = new AbortController();
     const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
-    const username = decoded?.UserInfo?.username || "";
     const userId = decoded?.UserInfo?.id || "";
-    console.log("EditNamaz Time", decoded, username);
 
     const getNamazTime = async () => {
       try {
         const response = await axiosPrivate.get(`/mosque/${userId}`, {
           signal: controller.signal,
         });
-        console.log(response);
 
         isMounted && setNamazTime(response.data);
         setMosqueName(response.data.mosqueName);
@@ -83,34 +80,23 @@ const EditNamazTime = () => {
     };
     try {
       if (!namazTime) {
-        const response = await axiosPrivate.post(
-          NEW_ENTRY_URL,
-          JSON.stringify(data),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
+        await axiosPrivate.post(NEW_ENTRY_URL, JSON.stringify(data), {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
         setSuccess("Successfully Added");
-        console.log(JSON.stringify(response?.data));
       } else {
-        const response = await axiosPrivate.put(
-          NEW_ENTRY_URL,
-          JSON.stringify(data),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
+        await axiosPrivate.put(NEW_ENTRY_URL, JSON.stringify(data), {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
         setSuccess("Successfully Updated");
-        console.log(JSON.stringify(response?.data));
       }
       navigate("/", { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        console.log(err.response);
         setErrMsg("All Fields are Required");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");

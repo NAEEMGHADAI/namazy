@@ -34,7 +34,7 @@ const ShowNamazTime = ({ data }) => {
 
   let lastPostIndex = currentPage * postsPerPage;
   let firstPostIndex = lastPostIndex - postsPerPage;
-  console.log(data, filteredData);
+
   let currentPosts;
   if (!filteredData) {
     currentPosts = data.slice(firstPostIndex, lastPostIndex);
@@ -53,9 +53,9 @@ const ShowNamazTime = ({ data }) => {
       ) : (
         <section className="text-white">
           <div className="flex justify-end mr-10 mb-4">
-            <div class="flex border-b w-4/5 sm:w-auto border-white py-2">
+            <div className="flex border-b w-4/5 sm:w-auto border-white py-2">
               <input
-                class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
                 placeholder="Mosque name..."
                 aria-label="Full name"
@@ -74,11 +74,11 @@ const ShowNamazTime = ({ data }) => {
                     key={ele._id}
                     className="sm:mx-10 mx-5 overflow-x-auto shadow-md rounded-lg"
                   >
-                    <table class="w-full text-sm text-left border-separate border-spacing-2 border border-slate-500 text-gray-400 overflow-hidden">
+                    <table className="w-full text-sm text-left border-separate border-spacing-2 border border-slate-500 text-gray-400 overflow-hidden">
                       <tbody>
-                        <tr class=" border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className=" border-b bg-secondary-dark-bg border-gray-700">
                           <td
-                            class="px-6 py-4 text-white text-center"
+                            className="px-6 py-4 text-white text-center"
                             colSpan={2}
                           >
                             <div className="flex justify-between">
@@ -150,15 +150,15 @@ const ShowNamazTime = ({ data }) => {
                                 </Fragment>
                               </div>
 
-                              {/* <div class="group relative inline-block">
+                              {/* <div className="group relative inline-block">
                                 <img
                                   src="https://img.icons8.com/dotty/35/ffffff/add-bookmark.png"
                                   alt="bookmark"
                                   className=" cursor-pointer"
                                   data-tooltip-target="tooltip-default"
                                 />
-                                <div class="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
-                                  <span class="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
+                                <div className="bg-blue-500 absolute top-full left-1/2 z-20 mt-3 -translate-x-1/2 whitespace-nowrap rounded py-[6px] px-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
+                                  <span className="bg-blue-500 absolute top-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm"></span>
                                   Bookmark
                                 </div>
                               </div> */}
@@ -166,69 +166,69 @@ const ShowNamazTime = ({ data }) => {
                           </td>
                         </tr>
 
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Fajr
                           </th>
-                          <td class="px-6 py-4">{ele.fajr}</td>
+                          <td className="px-6 py-4">{ele.fajr}</td>
                         </tr>
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Zuhr
                           </th>
-                          <td class="px-6 py-4">{ele.zuhr}</td>
+                          <td className="px-6 py-4">{ele.zuhr}</td>
                         </tr>
 
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Asr
                           </th>
-                          <td class="px-6 py-4">{ele.asr}</td>
+                          <td className="px-6 py-4">{ele.asr}</td>
                         </tr>
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Magrib
                           </th>
-                          <td class="px-6 py-4">{ele.magrib}</td>
+                          <td className="px-6 py-4">{ele.magrib}</td>
                         </tr>
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Isha
                           </th>
-                          <td class="px-6 py-4">{ele.isha}</td>
+                          <td className="px-6 py-4">{ele.isha}</td>
                         </tr>
-                        <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Juma
                           </th>
-                          <td class="px-6 py-4">{ele.juma}</td>
+                          <td className="px-6 py-4">{ele.juma}</td>
                         </tr>
-                        <tr class=" border-b bg-secondary-dark-bg border-gray-700">
+                        <tr className=" border-b bg-secondary-dark-bg border-gray-700">
                           <th
                             scope="row"
-                            class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                            className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                           >
                             Last Update
                           </th>
-                          <td class="px-6 py-4 ">
+                          <td className="px-6 py-4 ">
                             {timeSince(ele.lastModified)}
                           </td>
                         </tr>

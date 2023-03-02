@@ -59,10 +59,6 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
-
   useEffect(() => {
     const result = USER_REGEX.test(user);
     setValidName(result);
@@ -112,7 +108,6 @@ const Register = () => {
     const v6 = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
     const v7 = NAME_REGEX.test(name);
 
-    console.log(v1, v2, v3, v4);
     if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !v7 || !file) {
       setErrMsg("Invalid Entry");
       return;
@@ -128,16 +123,13 @@ const Register = () => {
       form.append("mosqueAddress", mosqueAddress);
       form.append("file", file);
 
-      console.log(form);
       setLoading(true);
 
-      const response = await axios.post(REGITSER_URL, form, {
+      await axios.post(REGITSER_URL, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data);
-      console.log(JSON.stringify(response));
       setSuccess(true);
       setLoading(false);
       //clear input fields
@@ -569,7 +561,6 @@ const Register = () => {
                 <label className="block">
                   <input
                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                    // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="file"
                     type="file"
                     accept=".jpg,.jpeg,.png"

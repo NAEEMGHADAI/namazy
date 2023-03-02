@@ -8,11 +8,7 @@ import Loading from "./Loading";
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const {
-    auth,
-    // persist
-  } = useContent();
-  // console.log(auth);
+  const { auth } = useContent();
   const [persist] = useLocalStorage("persist", false);
 
   useEffect(() => {
@@ -33,11 +29,6 @@ const PersistLogin = () => {
 
     return () => (isMounted = false);
   }, [auth, refresh, persist]);
-
-  useEffect(() => {
-    console.log(`isLoading: ${isLoading}`);
-    console.log(`aT: ${JSON.stringify(auth?.accessToken)}`);
-  }, [isLoading, auth]);
 
   return (
     <>

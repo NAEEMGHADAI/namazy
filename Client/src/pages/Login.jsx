@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Link,
-  // useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import useContent from "../hooks/useContent";
 import useInput from "../hooks/useInput";
-import useLocalStorage from "../hooks/useLocalStorage";
-// import useLogin from "../hooks/useLogin";
 import useToggle from "../hooks/useToggle";
 
 const LOGIN_URL = "/auth";
@@ -16,19 +10,15 @@ const Login = () => {
   const { setAuth } = useContent();
 
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, resetUser, userAttributes] = useInput("user", ""); //useState("");
+  const [user, resetUser, userAttributes] = useInput("user", "");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const [check, toggleCheck] = useToggle("persist", false);
-  const [isLogin, setLogin] = useLocalStorage("isLogin", false);
-  console.log(isLogin, setLogin);
 
   useEffect(() => {
     userRef.current.focus();
@@ -50,19 +40,10 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      // console.log(JSON.stringify(response?.data));
-      // console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
-      // const roles = response?.data?.roles;
       setAuth({ user, accessToken });
-      console.log("setLogin reached", isLogin);
-
-      setLogin(true);
-
-      // setUser("");
       resetUser();
       setPwd("");
-      // setSuccess(true);
       navigate("/edit", { replace: true });
     } catch (err) {
       if (!err?.response) {
@@ -77,14 +58,6 @@ const Login = () => {
       errRef.current.focus();
     }
   };
-
-  // const togglePersist = () => {
-  //   setPersist((prev) => !prev);
-  // };
-
-  // useEffect(() => {
-  //   localStorage.setItem("persist", persist);
-  // }, [persist]);
 
   return (
     <section className="flex flex-col flex-wrap content-center justify-center w-full h-screen">

@@ -39,15 +39,11 @@ const ChangePassword = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(newPwd);
-    console.log(result);
-    console.log(newPwd);
     setValidPwd(result);
     const match = newPwd === matchPwd;
     setValidMatch(match);
@@ -62,25 +58,17 @@ const ChangePassword = () => {
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(newPwd);
     const match = newPwd === matchPwd;
-    console.log(v1, v2);
     if (!v1 || !v2 || !match) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
-      const response = await axios.patch(
-        REGITSER_URL,
-        JSON.stringify({ user, pwd, newPwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      console.log(response.data);
-      console.log(JSON.stringify(response));
+      await axios.patch(REGITSER_URL, JSON.stringify({ user, pwd, newPwd }), {
+        headers: { "Content-Type": "application/json" },
+      });
       setSuccess(true);
       //clear input fields
     } catch (err) {
-      console.log(err);
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 404 || err.response?.status === 401) {
@@ -206,8 +194,6 @@ const ChangePassword = () => {
                   onChange={(e) => setPwd(e.target.value)}
                   required
                   aria-describedby="pwdnote"
-                  //   onFocus={() => setPwdFocus(true)}
-                  //   onBlur={() => setPwdFocus(false)}
                   className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
                 />
               </div>

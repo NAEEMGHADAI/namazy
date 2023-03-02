@@ -30,7 +30,6 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [setScreenSize]);
   useEffect(() => {
-    console.log(screenSize);
     if (screenSize <= 1000) {
       setActiveMenu(false);
     } else {
@@ -72,7 +71,6 @@ const Navbar = () => {
       <button
         onClick={() =>
           setActiveMenu((prev) => {
-            console.log(prev);
             return !prev;
           })
         }

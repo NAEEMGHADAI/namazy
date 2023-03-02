@@ -9,7 +9,6 @@ const ImageModal = ({ file }) => {
       <div className="shrink-0">
         <img
           className="object-cover w-16 h-16 rounded-full cursor-pointer"
-          // src="https://cdn.pixabay.com/photo/2016/04/22/04/57/graduation-1345143__340.png"
           src={
             file
               ? typeof file === "string"

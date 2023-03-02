@@ -55,10 +55,6 @@ const EditProfile = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
-
   useEffect(() => {
     const result = USER_REGEX.test(user);
     setValidName(result);
@@ -98,7 +94,6 @@ const EditProfile = () => {
           signal: controller.signal,
         });
 
-        console.log(response.data);
         isMounted && setUser(response.data.username);
         isMounted && setName(response.data.name);
         isMounted && setEmail(response.data.email);
@@ -124,7 +119,6 @@ const EditProfile = () => {
     const v4 = ADDRESS_REGEX.test(address);
     const v5 = NAME_REGEX.test(name);
 
-    console.log(v1, v2, v3, v4);
     if (!v1 || !v2 || !v3 || !v4 || !v5 || !file) {
       setErrMsg("Invalid Entry");
       return;
@@ -138,16 +132,13 @@ const EditProfile = () => {
       form.append("address", address);
       form.append("file", file);
 
-      console.log(form);
       setLoading(true);
 
-      const response = await axios.put(`/manageuser/${id}`, form, {
+      await axios.put(`/manageuser/${id}`, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data);
-      console.log(JSON.stringify(response));
       setSuccess(true);
       setLoading(false);
       //clear input fields
@@ -464,13 +455,11 @@ const EditProfile = () => {
                 <ImageModal file={file} />
                 <br />
                 <div className="flex justify-center">
-                  <label class="block">
-                    <span class="sr-only">Choose File</span>
+                  <label className="block">
+                    <span className="sr-only">Choose File</span>
                     <input
-                      class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                      // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                       id="file"
-                      //   value={file}
                       type="file"
                       accept=".jpg,.jpeg,.png"
                       aria-describedby="filenote"

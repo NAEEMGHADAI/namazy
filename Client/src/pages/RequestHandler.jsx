@@ -31,7 +31,6 @@ const RequestHandler = () => {
         const filterData = response.data.filter((user) =>
           user.isApproved === "Pending" ? true : false
         );
-        console.log(response.data);
         isMounted && setUsers(filterData);
       } catch (err) {
         console.error(err);
@@ -72,7 +71,6 @@ const RequestHandler = () => {
   } else {
     currentUsers = filteredData.slice(firstPostIndex, lastPostIndex);
   }
-  console.log(currentUsers.length);
 
   return (
     <section className="container px-4 mx-auto">
@@ -201,7 +199,6 @@ const RequestHandler = () => {
           </div>
         </div>
       </div>
-      {console.log(filteredData, users)}
       <Pagination
         totalPosts={filteredData ? filteredData.length : users.length}
         postsPerPage={userPerPage}

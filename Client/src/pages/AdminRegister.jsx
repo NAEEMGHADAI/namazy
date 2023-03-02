@@ -75,36 +75,26 @@ const AdminRegister = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = NAME_REGEX.test(name);
-    console.log(result);
-    console.log(name);
     setValidOgName(result);
   }, [name]);
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = NUMBER_REGEX.test(number);
-    console.log(result);
-    console.log(number);
     setValidNumber(result);
   }, [number]);
 
   useEffect(() => {
     const result = ADDRESS_REGEX.test(address);
-    console.log(result);
-    console.log(address);
     setValidAddress(result);
   }, [address]);
 
@@ -120,8 +110,6 @@ const AdminRegister = () => {
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatch(match);
@@ -153,7 +141,6 @@ const AdminRegister = () => {
     const v7 = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
     const v8 = NAME_REGEX.test(name);
     const match = pwd === matchPwd;
-    console.log(v1, v2);
     if (
       !v1 ||
       !v2 ||
@@ -183,14 +170,11 @@ const AdminRegister = () => {
 
       setLoading(true);
 
-      const response = await axiosPrivate.post(REGITSER_URL, form, {
+      await axiosPrivate.post(REGITSER_URL, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
-      console.log(response.accessToken);
-      console.log(JSON.stringify(response));
       setSuccess(true);
       setLoading(false);
       //clear input fields
@@ -723,7 +707,6 @@ const AdminRegister = () => {
                   <span className="sr-only">Choose File</span>
                   <input
                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                    // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="file"
                     type="file"
                     accept=".jpg,.jpeg,.png"

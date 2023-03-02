@@ -20,8 +20,6 @@ const Profile = () => {
         const response = await axiosPrivate.get(`manageuser/${id}`, {
           signal: controller.signal,
         });
-
-        console.log(response.data);
         isMounted && setUser(response.data);
       } catch (err) {
         console.error(err);

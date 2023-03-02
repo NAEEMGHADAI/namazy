@@ -10,7 +10,6 @@ const Home = () => {
   useEffect(() => {
     const reqApi = async () => {
       let response = await axios("/mosque");
-      console.log(response.data);
       setData(response.data);
     };
     reqApi();

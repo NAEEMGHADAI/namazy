@@ -25,8 +25,6 @@ const Admin = () => {
         const response = await axiosPrivate.get("/manageuser", {
           signal: controller.signal,
         });
-
-        console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {
         console.error(err);
@@ -67,7 +65,6 @@ const Admin = () => {
   } else {
     currentUsers = filteredData.slice(firstPostIndex, lastPostIndex);
   }
-  console.log(currentUsers.length);
 
   return (
     <section className="container px-4 mx-auto">
@@ -160,11 +157,11 @@ const Admin = () => {
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
                             {user.roles["Admin"] === 5150 ? (
-                              <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                              <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                 Admin
                               </p>
                             ) : (
-                              <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 User
                               </p>
                             )}
@@ -195,7 +192,7 @@ const Admin = () => {
                             </div>
                           )}
                           {user.isApproved === "Approved" && (
-                            <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                               <svg
                                 width="12"
                                 height="12"
@@ -212,11 +209,11 @@ const Admin = () => {
                                 />
                               </svg>
 
-                              <h2 class="text-sm font-normal">Accepted</h2>
+                              <h2 className="text-sm font-normal">Accepted</h2>
                             </div>
                           )}
                           {user.isApproved === "Rejected" && (
-                            <div class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                            <div className="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
                               <svg
                                 width="12"
                                 height="12"
@@ -233,7 +230,7 @@ const Admin = () => {
                                 />
                               </svg>
 
-                              <h2 class="text-sm font-normal">Rejected</h2>
+                              <h2 className="text-sm font-normal">Rejected</h2>
                             </div>
                           )}
                         </td>
@@ -270,7 +267,6 @@ const Admin = () => {
           </div>
         </div>
       </div>
-      {console.log(filteredData, users)}
       <Pagination
         totalPosts={filteredData ? filteredData.length : users.length}
         postsPerPage={userPerPage}

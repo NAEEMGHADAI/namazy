@@ -15,7 +15,6 @@ const RejectUserModal = ({ username }) => {
         user: username,
         isApproved: "Rejected",
       });
-      console.log(response);
       setChanged(response);
       setShowModal(false);
     } catch (err) {
@@ -44,7 +43,6 @@ const RejectUserModal = ({ username }) => {
         </svg>
         Decline
       </button>
-      {console.log(showModal)}
       <Transition.Root show={showModal} as={Fragment}>
         <Dialog
           as="div"

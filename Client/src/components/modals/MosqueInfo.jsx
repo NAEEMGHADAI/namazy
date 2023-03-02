@@ -24,7 +24,7 @@ const MosqueInfo = ({ userId }) => {
 
   return (
     <div className="flex justify-center">
-      <div class="shrink-0">
+      <div className="shrink-0">
         <svg
           width="21"
           height="21"
@@ -123,7 +123,7 @@ const MosqueInfo = ({ userId }) => {
                               )}
                               <p>{UserInfo.email}</p>
                             </div>
-                            <div class="mx-auto lg:mx-0 w-full pt-3 border-b-2 border-blue-500 opacity-25"></div>
+                            <div className="mx-auto lg:mx-0 w-full pt-3 border-b-2 border-blue-500 opacity-25"></div>
 
                             <div className="flex gap-2 text-xs sm:text-base">
                               {screenSize > 768 ? (

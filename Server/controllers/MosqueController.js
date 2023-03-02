@@ -82,7 +82,6 @@ const getNamazTime = async (req, res) => {
   let mosque = await MosqueSchema.findOne({
     userId: req.params.userId,
   }).exec();
-  console.log("getNamazTime: ", mosque);
   if (!mosque) {
     return res.status(204).json({
       message: `No Mosque matches username ${req.params.userId}.`,

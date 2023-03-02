@@ -1,7 +1,4 @@
-import {
-  // FaMap,
-  FaPray,
-} from "react-icons/fa";
+import { FaPray } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { IoBookmarks } from "react-icons/io5";

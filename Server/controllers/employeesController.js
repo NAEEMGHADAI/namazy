@@ -60,7 +60,6 @@ const getEmployee = async (req, res) => {
   }
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
     let employee = await Employee.findOne({ _id: req.params.id }).exec();
-    console.log(employee);
     if (!employee) {
       return res
         .status(204)

@@ -13,12 +13,10 @@ const PrayerLimit = () => {
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
-    console.log(cityName, countryName, methodName, schoolName);
     const apiCall = async () => {
       const response = await axios.get(
         `https://api.aladhan.com/v1/timingsByCity?city=${cityName.name}&country=${countryName.name}&method=${methodName.id}&school=${schoolName.id}`
       );
-      console.log(response.data);
       setData(response.data);
     };
     apiCall();
@@ -89,80 +87,80 @@ const PrayerLimit = () => {
           <section>
             <h2 className="text-lg mx-4 my-5 text-white">Namaz Timing:</h2>
             <div className="mx-4 my-5 overflow-x-auto shadow-md rounded-lg">
-              <table class="w-full text-sm text-left text-gray-400">
+              <table className="w-full text-sm text-left text-gray-400">
                 <tbody>
-                  <tr class=" border-b bg-secondary-dark-bg  border-gray-700">
+                  <tr className=" border-b bg-secondary-dark-bg  border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium whitespace-nowrap text-white"
                     >
                       Sahr (Imsak)
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Imsak}</td>
+                    <td className="px-6 py-4">{data.data.timings.Imsak}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Fajr Start
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Fajr}</td>
+                    <td className="px-6 py-4">{data.data.timings.Fajr}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Fajr End (Sunrise)
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Sunrise}</td>
+                    <td className="px-6 py-4">{data.data.timings.Sunrise}</td>
                   </tr>
 
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Zuhr Start
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Dhuhr}</td>
+                    <td className="px-6 py-4">{data.data.timings.Dhuhr}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Asr Start
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Asr}</td>
+                    <td className="px-6 py-4">{data.data.timings.Asr}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Asr End (Sunset)
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Sunset}</td>
+                    <td className="px-6 py-4">{data.data.timings.Sunset}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Maghrib Start
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Maghrib}</td>
+                    <td className="px-6 py-4">{data.data.timings.Maghrib}</td>
                   </tr>
-                  <tr class="border-b bg-secondary-dark-bg border-gray-700">
+                  <tr className="border-b bg-secondary-dark-bg border-gray-700">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium  whitespace-nowrap text-white"
+                      className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                     >
                       Maghrib End & Isha Start
                     </th>
-                    <td class="px-6 py-4">{data.data.timings.Isha}</td>
+                    <td className="px-6 py-4">{data.data.timings.Isha}</td>
                   </tr>
                 </tbody>
               </table>

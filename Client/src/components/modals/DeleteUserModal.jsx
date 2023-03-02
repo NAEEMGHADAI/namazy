@@ -9,11 +9,9 @@ const DeleteUserModal = ({ username }) => {
   const axiosPrivate = useAxiosPrivate();
   const { setChanged } = useContent();
   const cancelButtonRef = useRef(null);
-  console.log("delete user", username);
   const handleSubmit = async () => {
     try {
       const response = await axiosPrivate.delete(`/manageuser/${username}`);
-      console.log(response);
       setChanged(response);
       setShowModal(false);
     } catch (err) {
@@ -45,7 +43,6 @@ const DeleteUserModal = ({ username }) => {
         </svg>
         Delete
       </button>
-      {console.log(showModal)}
       <Transition.Root show={showModal} as={Fragment}>
         <Dialog
           as="div"

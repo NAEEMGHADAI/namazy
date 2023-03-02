@@ -15,7 +15,6 @@ const AcceptUserModal = ({ username }) => {
         user: username,
         isApproved: "Approved",
       });
-      console.log(response);
       setChanged(response);
       setShowModal(false);
     } catch (err) {

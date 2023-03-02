@@ -7,13 +7,12 @@ const Pagination = ({
   currentPage,
 }) => {
   let pages = [];
-  console.log(currentPage, postsPerPage);
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pages.push(i);
   }
   return (
     <div>
-      <div class="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between mt-6">
         <button
           className="flex items-center px-5 py-2 text-sm  capitalize transition-colors duration-200 border rounded-md gap-x-2  bg-gray-900 text-gray-200 border-gray-700 hover:bg-gray-800"
           onClick={() => {
@@ -29,7 +28,7 @@ const Pagination = ({
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-5 h-5 rtl:-scale-x-100"
+            className="w-5 h-5 rtl:-scale-x-100"
           >
             <path
               stroke-linecap="round"
@@ -39,7 +38,7 @@ const Pagination = ({
           </svg>
           <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
         </button>
-        <div class="items-center hidden md:flex gap-x-3">
+        <div className="items-center hidden md:flex gap-x-3">
           {pages.map((page, i) => (
             <>
               <p
@@ -72,7 +71,7 @@ const Pagination = ({
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-5 h-5 rtl:-scale-x-100"
+            className="w-5 h-5 rtl:-scale-x-100"
           >
             <path
               stroke-linecap="round"

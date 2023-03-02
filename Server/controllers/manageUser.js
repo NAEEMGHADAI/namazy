@@ -249,7 +249,6 @@ const handleNewUserByAdmin = async (req, res) => {
     mosqueName,
     mosqueAddress,
   } = req.body;
-  console.log(req);
   if (!user || !pwd) {
     return res.status(400).json({ message: "Username and password required" });
   }
@@ -324,7 +323,6 @@ const handleNewUserByAdmin = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { user } = req.params;
-  console.log("delete user body", user, req.params);
 
   if (!user) {
     return res.status(400).json({ message: "Username is required" });
@@ -350,7 +348,6 @@ const deleteUser = async (req, res) => {
         username: user,
       });
     }
-    console.log("delete: ", result);
 
     sendEmail({
       from: "mohdnaeemghadai@gmail.com",

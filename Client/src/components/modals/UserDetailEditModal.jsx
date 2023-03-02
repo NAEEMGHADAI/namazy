@@ -1,7 +1,6 @@
 import { Fragment, useState, useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-// import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import timeSince from "../../helper/timeSince";
@@ -25,7 +24,6 @@ export default function UserDetailEditModal({ user }) {
   const { setChanged } = useContent();
   const UPDATE_URL = `/manageuser/${user._id}`;
 
-  console.log(user);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -91,7 +89,6 @@ export default function UserDetailEditModal({ user }) {
   useEffect(() => {
     const result = MOSQUE_NAME_REGEX.test(mosqueName);
     setValidMosqueName(result);
-    console.log(result);
   }, [mosqueName]);
 
   useEffect(() => {
@@ -112,7 +109,6 @@ export default function UserDetailEditModal({ user }) {
     const v5 = MOSQUE_ADDRESS_REGEX.test(mosqueAddress);
     const v6 = NAME_REGEX.test(name);
 
-    console.log(v1, v2, v3, v4);
     if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !file) {
       setErrMsg("Invalid Entry");
       return;
@@ -137,8 +133,6 @@ export default function UserDetailEditModal({ user }) {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data);
-      console.log(JSON.stringify(response));
 
       if (fajr && zuhr && asr && magrib && isha && juma) {
         const data = {
@@ -154,17 +148,9 @@ export default function UserDetailEditModal({ user }) {
         };
 
         if (!namazTime) {
-          const response = await axiosPrivate.post(
-            "/mosque",
-            JSON.stringify(data)
-          );
-          console.log(JSON.stringify(response?.data));
+          await axiosPrivate.post("/mosque", JSON.stringify(data));
         } else {
-          const response = await axiosPrivate.put(
-            "/mosque",
-            JSON.stringify(data)
-          );
-          console.log(JSON.stringify(response?.data));
+          await axiosPrivate.put("/mosque", JSON.stringify(data));
         }
       } else {
         setFajr("");
@@ -292,7 +278,7 @@ export default function UserDetailEditModal({ user }) {
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900 flex justify-between">
                           User Details
                           {user.newUser ? (
-                            <span class=" text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full bg-red-600 ">
+                            <span className=" text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full bg-red-600 ">
                               New
                             </span>
                           ) : null}
@@ -312,15 +298,15 @@ export default function UserDetailEditModal({ user }) {
                         <ImageModal file={file} />
                         <br />
                         <div className="flex justify-center">
-                          <label class="block">
-                            <span class="sr-only">
+                          <label className="block">
+                            <span className="sr-only">
                               Choose File{" "}
                               {!file ? (
                                 <span className="text-red-600 mr-2">*</span>
                               ) : null}
                             </span>
                             <input
-                              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                               id="file"
                               type="file"
                               accept=".jpg,.jpeg,.png"
@@ -397,11 +383,11 @@ export default function UserDetailEditModal({ user }) {
                                         />
 
                                         {user.roles["Admin"] === 5150 ? (
-                                          <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                          <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                             Admin
                                           </p>
                                         ) : (
-                                          <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                          <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                             User
                                           </p>
                                         )}
@@ -460,7 +446,7 @@ export default function UserDetailEditModal({ user }) {
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                       {user.isApproved === "Approved" && (
-                                        <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 ">
+                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 ">
                                           <svg
                                             width="12"
                                             height="12"
@@ -477,7 +463,7 @@ export default function UserDetailEditModal({ user }) {
                                             />
                                           </svg>
 
-                                          <h2 class="text-sm font-normal">
+                                          <h2 className="text-sm font-normal">
                                             Accepted
                                           </h2>
                                         </div>
@@ -509,7 +495,7 @@ export default function UserDetailEditModal({ user }) {
                                       )}
                                       {user.isApproved === "Rejected" && (
                                         <>
-                                          <div class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2  bg-emerald-100/60 ">
+                                          <div className="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2  bg-emerald-100/60 ">
                                             <svg
                                               width="12"
                                               height="12"
@@ -526,7 +512,7 @@ export default function UserDetailEditModal({ user }) {
                                               />
                                             </svg>
 
-                                            <h2 class="text-sm font-normal">
+                                            <h2 className="text-sm font-normal">
                                               Rejected
                                             </h2>
                                           </div>
@@ -906,10 +892,6 @@ export default function UserDetailEditModal({ user }) {
                                                   }
                                                   autoComplete="off"
                                                   required
-                                                  // aria-invalid={
-                                                  //   validNumber ? "false" : "true"
-                                                  // }
-                                                  // aria-describedby="telnote"
                                                   className="shadow appearance-none text-black rounded-2xl w-full py-2 px-3 focus:outline-none bg-gray-200 focus:shadow-outline"
                                                 />
                                               </dd>
@@ -964,10 +946,10 @@ export default function UserDetailEditModal({ user }) {
                                       Applied on
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                      <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2  border border-gray-500">
+                                      <span className="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2  border border-gray-500">
                                         <svg
                                           aria-hidden="true"
-                                          class="w-3 h-3 mr-1"
+                                          className="w-3 h-3 mr-1"
                                           fill="currentColor"
                                           viewBox="0 0 20 20"
                                           xmlns="http://www.w3.org/2000/svg"
@@ -988,10 +970,10 @@ export default function UserDetailEditModal({ user }) {
                                       Last updated
                                     </dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                      <span class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded  border border-blue-400">
+                                      <span className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded  border border-blue-400">
                                         <svg
                                           aria-hidden="true"
-                                          class="w-3 h-3 mr-1"
+                                          className="w-3 h-3 mr-1"
                                           fill="currentColor"
                                           viewBox="0 0 20 20"
                                           xmlns="http://www.w3.org/2000/svg"

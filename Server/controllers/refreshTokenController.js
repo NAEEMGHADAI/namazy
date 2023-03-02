@@ -5,11 +5,9 @@ const path = require("path");
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log(cookies);
   if (!cookies?.jwt) {
     return res.sendStatus(401); //Unauthorized
   }
-  console.log(cookies.jwt);
   const refreshToken = cookies.jwt;
 
   const foundUser = await User.findOne({ refreshToken }).exec();
