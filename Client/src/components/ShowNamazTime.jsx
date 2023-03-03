@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 import useContent from "../hooks/useContent";
 import MosqueInfo from "./modals/MosqueInfo";
 import timeSince from "../helper/timeSince";
+import formatTime from "../helper/formatTime";
 
 const ShowNamazTime = ({ data }) => {
   const [filteredData, setFilteredData] = useState([]);
@@ -45,11 +46,7 @@ const ShowNamazTime = ({ data }) => {
   return (
     <section>
       {!currentPosts ? (
-        <>
-          <div className="grid h-screen place-items-center">
-            <Loading />
-          </div>
-        </>
+        <Loading />
       ) : (
         <section className="text-white">
           <div className="flex justify-end mr-10 mb-4">
@@ -173,7 +170,7 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Fajr
                           </th>
-                          <td className="px-6 py-4">{ele.fajr}</td>
+                          <td className="px-6 py-4">{formatTime(ele.fajr)}</td>
                         </tr>
                         <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
@@ -182,7 +179,7 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Zuhr
                           </th>
-                          <td className="px-6 py-4">{ele.zuhr}</td>
+                          <td className="px-6 py-4">{formatTime(ele.zuhr)}</td>
                         </tr>
 
                         <tr className="border-b bg-secondary-dark-bg border-gray-700">
@@ -192,7 +189,7 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Asr
                           </th>
-                          <td className="px-6 py-4">{ele.asr}</td>
+                          <td className="px-6 py-4">{formatTime(ele.asr)}</td>
                         </tr>
                         <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
@@ -201,7 +198,9 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Magrib
                           </th>
-                          <td className="px-6 py-4">{ele.magrib}</td>
+                          <td className="px-6 py-4">
+                            {formatTime(ele.magrib)}
+                          </td>
                         </tr>
                         <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
@@ -210,7 +209,7 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Isha
                           </th>
-                          <td className="px-6 py-4">{ele.isha}</td>
+                          <td className="px-6 py-4">{formatTime(ele.isha)}</td>
                         </tr>
                         <tr className="border-b bg-secondary-dark-bg border-gray-700">
                           <th
@@ -219,7 +218,7 @@ const ShowNamazTime = ({ data }) => {
                           >
                             Juma
                           </th>
-                          <td className="px-6 py-4">{ele.juma}</td>
+                          <td className="px-6 py-4">{formatTime(ele.juma)}</td>
                         </tr>
                         <tr className=" border-b bg-secondary-dark-bg border-gray-700">
                           <th
