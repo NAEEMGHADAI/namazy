@@ -82,7 +82,7 @@ const RequestHandler = () => {
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
               <div className="p-4">
-                <label for="table-search" className="sr-only">
+                <label htmlFor="table-search" className="sr-only">
                   Search
                 </label>
                 <div className="flex justify-start mt-1">
@@ -155,9 +155,9 @@ const RequestHandler = () => {
                               height="12"
                               fill="none"
                               stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
                               viewBox="0 0 24 24"
                               xmlns="http://www.w3.org/2000/svg"
                             >

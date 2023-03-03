@@ -56,9 +56,9 @@ export default function UserDetailsModal({ user }) {
           height="17"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -214,9 +214,9 @@ export default function UserDetailsModal({ user }) {
                                               <path
                                                 d="M10 3L4.5 8.5L2 6"
                                                 stroke="currentColor"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                               />
                                             </svg>
 
@@ -233,9 +233,9 @@ export default function UserDetailsModal({ user }) {
                                               height="12"
                                               fill="none"
                                               stroke="currentColor"
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth="2"
                                               viewBox="0 0 24 24"
                                               xmlns="http://www.w3.org/2000/svg"
                                             >
@@ -262,9 +262,9 @@ export default function UserDetailsModal({ user }) {
                                               <path
                                                 d="M9 3L3 9M3 3L9 9"
                                                 stroke="currentColor"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                               />
                                             </svg>
 
@@ -305,9 +305,9 @@ export default function UserDetailsModal({ user }) {
                                                 height="21"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
                                                 viewBox="0 0 24 24"
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >
@@ -319,9 +319,9 @@ export default function UserDetailsModal({ user }) {
                                                 height="21"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
                                                 viewBox="0 0 24 24"
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >

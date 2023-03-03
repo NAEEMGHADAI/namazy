@@ -20,11 +20,11 @@ export default function Dropdown({ placeholder, data, settingFunction }) {
             aria-label="Default select example"
             onChange={handleChange}
           >
-            {data.map((person) => (
+            {data.map((person, i) => (
               <>
                 <option
                   value={JSON.stringify(person)}
-                  key={person.id}
+                  key={i}
                   className={`cursor-default select-none py-2 pl-10 pr-4 `}
                 >
                   {person.name}
