@@ -143,14 +143,12 @@ const EditNamazTime = () => {
         </p>
         <div className="mx-5">
           <h1 className="sm:text-3xl font-bold mb-4 text-center">
-            {!namazTime
-              ? "Add New Entry"
-              : `Upadate Values here: ${mosqueName}`}
+            {!namazTime ? "Add New Entry" : `Update Values here: ${mosqueName}`}
           </h1>
 
           <div className="flex flex-col flex-wrap content-center justify-center w-full h-fit">
             <div className="grid sm:grid-cols-2 sm:w-11/12 gap-x-16">
-              <div className="">
+              <div className="w-full">
                 <label
                   htmlFor="fajrTime"
                   className="block text-sm font-bold mb-2"
@@ -159,12 +157,12 @@ const EditNamazTime = () => {
                   {!fajr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="fajrTime"
                   onChange={(e) => setFajr(e.target.value)}
                   name="fajr"
                   value={fajr || ""}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
@@ -177,12 +175,12 @@ const EditNamazTime = () => {
                   {!zuhr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="zuhrTime"
                   onChange={(e) => setZuhr(e.target.value)}
                   value={zuhr || ""}
                   name="zuhr"
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
@@ -195,12 +193,12 @@ const EditNamazTime = () => {
                   {!asr ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="asrTime"
                   onChange={(e) => setAsr(e.target.value)}
                   name="asr"
                   value={asr || ""}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
@@ -215,12 +213,12 @@ const EditNamazTime = () => {
                   ) : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="magribTime"
                   onChange={(e) => setMagrib(e.target.value)}
                   name="magrib"
                   value={magrib || ""}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
@@ -233,12 +231,12 @@ const EditNamazTime = () => {
                   {!isha ? <span className="text-red-600 mr-2">*</span> : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="ishaTime"
                   onChange={(e) => setIsha(e.target.value)}
                   name="isha"
                   value={isha || ""}
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
@@ -253,12 +251,12 @@ const EditNamazTime = () => {
                   ) : null}
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   id="jummaTime"
                   onChange={(e) => setJummah(e.target.value)}
                   value={jummah || ""}
                   name="juma"
-                  className="shadow appearance-none text-white rounded-2xl w-full py-2 px-3 focus:outline-none bg-active-link-bg focus:shadow-outline"
+                  className="shadow appearance-none text-white rounded-2xl w-full sm:py-2 sm:px-3  py-2 pl-3 pr-28 focus:outline-none bg-active-link-bg focus:shadow-outline"
                   required
                 />
               </div>
