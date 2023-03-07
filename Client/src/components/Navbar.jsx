@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import logo2 from "../data/logo-2.PNG";
+import logo2 from "../data/logo-3.png";
 import useContent from "../hooks/useContent";
 import useLogout from "../hooks/useLogout";
 

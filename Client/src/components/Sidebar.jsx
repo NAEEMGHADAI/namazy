@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { AiOutlineClose } from "react-icons/ai";
 import { links } from "../data/dummy";
-import logo from "../data/logo.PNG";
+import logo from "../data/logo-3.png";
 import useContent from "../hooks/useContent";
 
 export default function Sidebar() {
@@ -54,7 +54,7 @@ export default function Sidebar() {
               to="/"
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-white text-slate-1000"
             >
-              <img src={logo} alt="" width="200" height="200" />
+              <img src={logo} alt="" className=" h-20 sm:ml-10 ml-2" />
             </Link>
             {/* <ReactTooltip place="bottom" id="close" effect="solid">
               Close
