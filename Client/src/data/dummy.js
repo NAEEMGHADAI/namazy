@@ -5,7 +5,7 @@ import { IoBookmarks } from "react-icons/io5";
 
 export const links = [
   {
-    title: "Mosque Near by",
+    title: "Mosque Nearby",
     link: "",
     icon: <FaPray />,
     isProtected: false,
