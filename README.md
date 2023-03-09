@@ -15,10 +15,9 @@ Live Site: https://namazzyy.web.app
 ## Features
 
 - *Comprehensive CMS:* Namazzyy is a comprehensive content management system designed to efficiently manage prayer times for various mosques.
-- *Full-Stack Development:* The CMS is built using a full-stack approach, utilizing both front-end and back-end technologies to provide a complete solution for managing mosque prayer timings.
 - *User-Friendly Interface:* Namazzyy has a user-friendly interface that allows users to easily track, manage, and update prayer timings for different mosques.
 - *Cloudinary Integration:* The CMS utilizes Cloudinary to store images instead of storing images in the database, resulting in faster app performance.
-- *SendInBlue Integration:* The SendInBlue service is used for sending mail to users, making it easy to keep them informed about any updates or changes to the prayer timings.
+- *Email Notifications:* The SendInBlue service is used for sending mail to users, making it easy to keep them informed about any updates or changes of the status of there application.
 - *Role-Based APIs:* Namazzyy has a range of APIs, with some restricted to admins, some available to both admins and users, and some open to the public.
 - *Mobile Responsive:* The frontend of the CMS is mobile responsive, ensuring that it can be easily accessed and used on mobile devices.
 - *Deployment on Firebase and Cyclic:* The client is deployed on Firebase, while the server is deployed on Cyclic, making it easy to manage and maintain the application.
