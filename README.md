@@ -8,7 +8,7 @@
   </a>
 </p>
 
-Namazzyy is a comprehensive full-stack content management system (CMS) designed to efficiently manage prayer times for various mosques. With Namazzyy, users can easily track, manage, and update prayer timings for different mosques. This CMS is developed using a full-stack approach, meaning it is built with both front-end and back-end technologies to provide a complete solution for managing mosque prayer timings. Its user-friendly interface and extensive features make it an excellent tool for efficient prayer time tracking and management.
+> Namazzyy is a comprehensive full-stack content management system (CMS) designed to efficiently manage prayer times for various mosques. With Namazzyy, users can easily track, manage, and update prayer timings for different mosques. This CMS is developed using a full-stack approach, meaning it is built with both front-end and back-end technologies to provide a complete solution for managing mosque prayer timings. Its user-friendly interface and extensive features make it an excellent tool for efficient prayer time tracking and management.
 
 Live Site: https://namazzyy.web.app
 
@@ -25,9 +25,9 @@ Live Site: https://namazzyy.web.app
 
 ## Tech Stack
 
-**Client:** React and TailwindCSS <br/>
-**Server:** Node.js and Express.js <br/>
-**Database:** MongoDB 
+- **Client:** React and TailwindCSS
+- **Server:** Node.js and Express.js
+- **Database:** MongoDB 
 
 ## Demo
 
