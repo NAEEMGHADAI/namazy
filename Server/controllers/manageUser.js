@@ -175,17 +175,22 @@ const updateUser = async (req, res) => {
       return res.sendStatus(409); //Conflict
     }
 
-    // update user details
-    if (userData.username !== user) {
-      let mosqueDetails = await Mosque.findOne({
-        username: userData.username,
-      }).exec();
-      if (mosqueDetails) {
+    let mosqueDetails = await Mosque.findOne({
+      username: userData.username,
+    }).exec();
+
+    if (mosqueDetails) {
+      if (mosqueDetails.username !== user) {
         mosqueDetails.username = user;
         await mosqueDetails.save();
       }
-      userData.username = user;
+      if (userData.mosqueName !== mosqueName) {
+        mosqueDetails.mosqueName = mosqueName;
+        await mosqueDetails.save();
+      }
     }
+
+    // update user details
     userData.username = user;
     userData.name = name;
     userData.phonenumber = phonenumber;
