@@ -10,11 +10,11 @@ import ImageModal from "./ImageModal";
 import useContent from "../../hooks/useContent";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const NAME_REGEX = /^[a-zA-Z ]+$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]*$/;
-const MOSQUE_NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const MOSQUE_NAME_REGEX = /^[a-zA-Z ]+$/;
 const MOSQUE_ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 
 export default function UserDetailEditModal({ user }) {
@@ -769,7 +769,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="fajr"
                                                   value={fajr}
                                                   onChange={(e) =>
@@ -792,7 +792,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="zohar"
                                                   value={zuhr}
                                                   onChange={(e) =>
@@ -815,7 +815,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="asr"
                                                   value={asr}
                                                   onChange={(e) =>
@@ -838,7 +838,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="maghrib"
                                                   value={magrib}
                                                   onChange={(e) =>
@@ -861,7 +861,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="isha"
                                                   value={isha}
                                                   onChange={(e) =>
@@ -884,7 +884,7 @@ export default function UserDetailEditModal({ user }) {
                                               </dt>
                                               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <input
-                                                  type="text"
+                                                  type="time"
                                                   id="juma"
                                                   value={juma}
                                                   onChange={(e) =>

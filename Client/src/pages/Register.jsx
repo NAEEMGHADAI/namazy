@@ -11,8 +11,8 @@ import Loading from "../components/Loading";
 import ImageModal from "../components/modals/ImageModal";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
-const MOSQUE_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const NAME_REGEX = /^[a-zA-Z ]+$/;
+const MOSQUE_REGEX = /^[a-zA-Z ]+$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]*$/;
@@ -299,8 +299,8 @@ const Register = () => {
                     }
                   >
                     <FontAwesomeIcon icon={faInfoCircle} />
-                    4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                    Letters, numbers, underscores, hyphens allowed.
+                    Please enter a valid name with only letters and spaces,
+                    without any numbers or special characters.
                   </p>
                 </div>
               </div>
@@ -496,8 +496,8 @@ const Register = () => {
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                  Letters, numbers, underscores, hyphens allowed.
+                  Please enter a valid Mosques Name with only letters and
+                  spaces, without any numbers or special characters.
                 </p>
               </div>
               <div className="mb-6">

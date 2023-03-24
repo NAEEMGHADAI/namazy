@@ -11,12 +11,12 @@ import ImageModal from "../components/modals/ImageModal";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const NAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const NAME_REGEX = /^[a-zA-Z ]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
 const NUMBER_REGEX = /^[0-9]{10}$/;
-const ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]*$/;
-const MOSQUE_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
+const ADDRESS_REGEX = /^[a-zA-Z ]+$/;
+const MOSQUE_REGEX = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/;
 const MOSQUE_ADDRESS_REGEX = /^[a-zA-Z0-9.,#\-/\s]+$/;
 const REGITSER_URL = "/manageuser/adminregister";
 
@@ -343,8 +343,8 @@ const AdminRegister = () => {
                     }
                   >
                     <FontAwesomeIcon icon={faInfoCircle} />
-                    4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                    Letters, numbers, underscores, hyphens allowed.
+                    Please enter a valid name with only letters and spaces,
+                    without any numbers or special characters.
                   </p>
                 </div>
               </div>
@@ -641,8 +641,8 @@ const AdminRegister = () => {
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  4 to 24 characters. <br /> Must begin with a letter. <br />{" "}
-                  Letters, numbers, underscores, hyphens allowed.
+                  Please enter a valid Mosque Name with only letters and spaces,
+                  without any numbers or special characters.
                 </p>
               </div>
               <div className="mb-6">
