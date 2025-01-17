@@ -14,24 +14,23 @@ Live Site: https://namazzyy.web.app
 
 ## Features
 
-- *Comprehensive CMS:* Namazzyy is a comprehensive content management system designed to efficiently manage prayer times for various mosques.
-- *User-Friendly Interface:* Namazzyy has a user-friendly interface that allows users to easily track, manage, and update prayer timings for different mosques.
-- *Cloudinary Integration:* The CMS utilizes Cloudinary to store images instead of storing images in the database, resulting in faster app performance.
-- *Email Notifications:* The SendInBlue service is used for sending mail to users, making it easy to keep them informed about any updates or changes of the status of there application.
-- *Role-Based APIs:* Namazzyy has a range of APIs, with some restricted to admins, some available to both admins and users, and some open to the public.
-- *Mobile Responsive:* The frontend of the CMS is mobile responsive, ensuring that it can be easily accessed and used on mobile devices.
-- *Deployment on Firebase and Cyclic:* The client is deployed on Firebase, while the server is deployed on Cyclic, making it easy to manage and maintain the application.
+- _Comprehensive CMS:_ Namazzyy is a comprehensive content management system designed to efficiently manage prayer times for various mosques.
+- _User-Friendly Interface:_ Namazzyy has a user-friendly interface that allows users to easily track, manage, and update prayer timings for different mosques.
+- _Cloudinary Integration:_ The CMS utilizes Cloudinary to store images instead of storing images in the database, resulting in faster app performance.
+- _Email Notifications:_ The SendInBlue service is used for sending mail to users, making it easy to keep them informed about any updates or changes of the status of there application.
+- _Role-Based APIs:_ Namazzyy has a range of APIs, with some restricted to admins, some available to both admins and users, and some open to the public.
+- _Mobile Responsive:_ The frontend of the CMS is mobile responsive, ensuring that it can be easily accessed and used on mobile devices.
+- _Deployment on Firebase and Render:_ The client is deployed on Firebase, while the server is deployed on Render, making it easy to manage and maintain the application.
 
 ## Tech Stack
 
 - **Client:** React and TailwindCSS
 - **Server:** Node.js and Express.js
-- **Database:** MongoDB 
+- **Database:** MongoDB
 
 ## Demo
 
 [![Demo](https://user-images.githubusercontent.com/51822103/223980003-0ea88c76-f2eb-4c1a-b996-3da4d6904bfe.png)](https://www.youtube.com/watch?v=86eUpUEQhmc)
-
 
 ## Run this project on your computer
 
@@ -91,10 +90,10 @@ Start the Server
 
 👤 **Ghadai Mohd Naeem**
 
-* Website: https://naeemghadai.github.io
-* Twitter: [@GhadaiNaeem](https://twitter.com/GhadaiNaeem)
-* Github: [@NAEEMGHADAI](https://github.com/NAEEMGHADAI)
-* LinkedIn: [@Naeem Ghadai](https://linkedin.com/in/naeem-ghadai)
+- Website: https://naeemghadai.github.io
+- Twitter: [@GhadaiNaeem](https://twitter.com/GhadaiNaeem)
+- Github: [@NAEEMGHADAI](https://github.com/NAEEMGHADAI)
+- LinkedIn: [@Naeem Ghadai](https://linkedin.com/in/naeem-ghadai)
 
 ## Feedback
 
@@ -103,4 +102,3 @@ If you have any feedback, please reach out to us at mohdnaeemghadai@gmail.com
 ## Show your support
 
 Give a ⭐️ if this you liked this project!
-
