@@ -22,6 +22,44 @@ Live Site: https://namazzyy.web.app
 - _Mobile Responsive:_ The frontend of the CMS is mobile responsive, ensuring that it can be easily accessed and used on mobile devices.
 - _Deployment on Firebase and Render:_ The client is deployed on Firebase, while the server is deployed on Render, making it easy to manage and maintain the application.
 
+## Flow and Functionality of Namazzyy
+
+**Namazzyy** is designed to simplify and streamline the process of managing prayer times for mosques. Below is a detailed flow of the app’s functionality for both users and administrators:
+
+1. **User Registration and Access Approval**:
+
+   - Any individual can sign up to become a user.
+   - A user is allowed to manage prayer timings for only one mosque.
+   - Upon signing up, the user and the admin receive email notifications.
+     - The admin reviews the user's request and can either approve or reject it.
+     - If rejected, the user is notified via email about the rejection.
+     - If approved, the user is provided with a username and password. The user can either use the assigned password or update it.
+
+2. **Verification Process**:
+
+   - Users must upload proof (e.g., documents or images) to verify their identity and the mosque details.
+   - Uploaded documents are stored using **Cloudinary**, ensuring efficient and secure image handling.
+
+3. **Post-Approval User Access**:
+
+   - After logging in, users can:
+     - Add prayer timings for their mosque.
+     - Update existing prayer timings as needed.
+     - Manage their own profile details.
+
+4. **Admin Features**:
+
+   - The admin has comprehensive control over the app's operations:
+     - Approve or reject new user requests.
+     - Update or delete user details.
+     - Directly add new users, bypassing the standard sign-up and approval process.
+
+5. **User-Friendly Features**:
+   - Bookmark mosques for quick access.
+   - View prayer times and prayer limits for different prayers at various mosques.
+
+**Namazzyy** ensures a seamless experience for both users and administrators, leveraging modern technologies to enhance performance, reliability, and usability.
+
 ## Tech Stack
 
 - **Client:** React and TailwindCSS
