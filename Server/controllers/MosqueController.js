@@ -63,7 +63,7 @@ const updateNamazTime = async (req, res) => {
   }
 
   if (req.body?.fajr) mosque.fajr = req.body.fajr;
-  if (req.body?.zuhr) mosque.zohar = req.body.zuhr;
+  if (req.body?.zuhr) mosque.zuhr = req.body.zuhr;
   if (req.body?.asr) mosque.asr = req.body.asr;
   if (req.body?.magrib) mosque.magrib = req.body.magrib;
   if (req.body?.isha) mosque.isha = req.body.isha;

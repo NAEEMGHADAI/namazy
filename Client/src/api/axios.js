@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://plain-cummerbund-dog.cyclic.app";
+const BASE_URL = "https://namazzyy.onrender.com/";
 
 export default axios.create({
   baseURL: BASE_URL,
